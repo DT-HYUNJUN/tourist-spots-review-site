@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .models import Post, PostComment
+from .forms import PostForm, PostCommentForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.

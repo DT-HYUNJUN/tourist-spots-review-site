@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+articles index
+{% for article in articles %}
+  <a href="#">{{ article.title }}</a>
+{% empty %}
+  <p>empty</p>
+{% endfor %}
+{% endblock content %}
