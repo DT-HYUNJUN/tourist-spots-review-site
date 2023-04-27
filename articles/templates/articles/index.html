@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-articles index
+<p>articles index</p>
+
 {% for article in articles %}
-  <a href="#">{{ article.title }}</a>
+  <a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
 {% empty %}
   <p>empty</p>
 {% endfor %}
+
 {% endblock content %}

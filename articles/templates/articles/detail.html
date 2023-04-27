@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>articles detail</p>
+<p>{{ article.title }}</p>
+{% if article.image %}
+  <img src="{{ article.image.url }}" alt="{{ article.image }}">
+{% else %}
+  <p>No Image</p>
+{% endif %}
+
+{% endblock content %}
