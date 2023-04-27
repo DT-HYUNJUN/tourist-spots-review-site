@@ -37,3 +37,30 @@ def detail(request, article_pk):
         'article': article
     }
     return render(request, 'articles/detail.html', context)
+
+
+@login_required
+def delete(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    if request.user == article.user:
+        article.delete()
+    return redirect('articles:index')
+
+
+@login_required
+def update(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    if request.user == article.user:
+        if request.method == 'POST':
+            form = ArticleForm(request.POST, request.FILES, instance=article)
+            if form.is_valid(): 
+                form.save()
+                return redirect('articles:detail', article_pk)
+        else:
+            form = ArticleForm(instance=article)
+    context = {
+        'form': form,
+        'article': article,
+    }
+    return render(request, 'articles/update.html', context)
+    
