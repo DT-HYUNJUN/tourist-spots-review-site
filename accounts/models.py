@@ -7,7 +7,7 @@ import os
 
 # Create your models here.
 class User(AbstractUser):
-    follower = models.ManyToManyField('self', symmetrical=False, related_name='following')
+    followers = models.ManyToManyField('self', symmetrical=False, related_name='following')
     def profile(instance, filename):
         return f'profiles/{instance.username}/{filename}'
     profile_image = ProcessedImageField(blank=False,

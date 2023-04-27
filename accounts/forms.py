@@ -74,6 +74,7 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm):
+        model = get_user_model()
         fields = ('email', 'profile_image', 'mbti', 'birthday',)
     email = forms.EmailField(
         required=True,
