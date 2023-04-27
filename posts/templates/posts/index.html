@@ -8,7 +8,9 @@ index
 <a href="{% url 'accounts:profile' user.username %}">{{user}}</a>
 <a href="{% url 'accounts:signup' %}">회원가입</a>
 <a href="{% url 'accounts:login' %}">로그인</a>
-<a href="{% url 'accounts:update' %}">회원수정</a>
+
+<a href="{% url 'posts:create' %}">[CREATE]</a>
+
 
 <form action="{% url 'accounts:logout' %}" method='POST'>
   {% csrf_token %}
@@ -22,7 +24,7 @@ index
 
 
 {% for post in posts %}
-  {{ post.title }}
+  <a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a>
 {% empty %}
   <p>empty</p>
 {% endfor %}
