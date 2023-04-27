@@ -5,11 +5,12 @@ index
 <a href="http://127.0.0.1:8000/">home</a>
 <a href="{% url 'accounts:signup' %}">회원가입</a>
 <a href="{% url 'accounts:login' %}">로그인</a>
+<a href="{% url 'posts:create' %}">[CREATE]</a>
 
 
 
 {% for post in posts %}
-  {{ post.title }}
+  <a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a>
 {% empty %}
   <p>empty</p>
 {% endfor %}
