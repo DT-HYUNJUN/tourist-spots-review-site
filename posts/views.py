@@ -45,4 +45,21 @@ def delete(request, post_pk):
     if request.user == post.user:
         post.delete()
     return redirect('posts:index')
-    
+
+
+@login_required
+def update(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
+    if request.user == post.user:
+        if request.method == 'POST':
+            form = PostForm(request.POST, request.FILES, instance=post)
+            if form.is_valid():
+                form.save()
+                return redirect('posts:detail', post_pk)
+        else:
+            form = PostForm(instance=post)
+    context = {
+        'form': form,
+        'post': post,
+    }
+    return render(request, 'posts/update.html', context)
