@@ -11,7 +11,7 @@ class PostForm(forms.ModelForm):
         )
     )
     content = forms.CharField(
-        widget=forms.TimeInput(
+        widget=forms.Textarea(
             attrs={
                 'class': 'form-control'
             }
