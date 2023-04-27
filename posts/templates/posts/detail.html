@@ -7,4 +7,11 @@
   <input type="submit" value="[DELETE]">
 </form>
 {{ post.title }}
+
+{% if post.image %}
+  <img src="{{ post.image.url }}" alt="">
+{% else %}
+  <p>No Image</p>
+{% endif %}
+
 {% endblock content %}
