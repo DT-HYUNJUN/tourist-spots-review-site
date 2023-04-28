@@ -3,14 +3,14 @@
 {% block content %}
 index
 <a href="http://127.0.0.1:8000/">home</a>
-<a href="{% url 'accounts:login' %}">로그인</a>
-<a href="{% url 'accounts:signup' %}">회원가입</a>
 
 {% comment %} --
 <a href="{% url 'accounts:profile' user.username %}">{{user}}</a>
+<a href="{% url 'accounts:login' %}">로그인</a>
+<a href="{% url 'accounts:signup' %}">회원가입</a>
+
 
 <a href="{% url 'posts:create' %}">[CREATE]</a>
-
 
 <form action="{% url 'accounts:logout' %}" method='POST'>
   {% csrf_token %}
