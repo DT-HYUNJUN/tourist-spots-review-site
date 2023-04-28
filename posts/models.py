@@ -12,6 +12,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
+    is_new = models.BooleanField(default=False)
+    place = models.CharField(max_length=100)
     
     def post_image_path(instance, filename):
         return f'posts/{instance.pk}/{filename}'
@@ -52,6 +54,7 @@ class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_comments')
     
     @property
     def created_string(self):
