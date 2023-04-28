@@ -63,4 +63,3 @@ def update(request, article_pk):
         'article': article,
     }
     return render(request, 'articles/update.html', context)
-    
