@@ -3,8 +3,14 @@ from django.conf import settings
 from datetime import datetime, timedelta
 from django.utils import timezone
 import os
+import re
 
 # Create your models here.
+
+class Tag(models.Model):
+    tag_content = models.TextField(max_length=20, unique=True)
+    def __str__(self):
+        return self.tag_content
 
 
 class Article(models.Model):
@@ -14,11 +20,12 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_articles')
+    tagging = models.ManyToManyField(Tag, blank=True, related_name='tagged')
     
     def post_image_path(instance, filename):
         return f'posts/{instance.pk}/{filename}'
     image = models.ImageField(blank=True, upload_to=post_image_path)
-    
+
     def delete(self, *args, **kargs):
         if self.image:
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
@@ -31,6 +38,17 @@ class Article(models.Model):
                 if old_review.image:
                     os.remove(os.path.join(settings.MEDIA_ROOT, old_review.image.name))
         super(Article, self).save(*args, **kwargs)
+
+
+    def save(self, *args, **kwargs):
+    # content 필드에서 해시태그 추출
+        tags = re.findall(r'#(\w+)\b', self.content)
+        if tags:
+            # 추출한 해시태그를 이용하여 Tag 모델에 저장
+            for tag in tags:
+                tag_obj, created = Tag.objects.get_or_create(tag_content=tag.lower())
+                self.tagging.add(tag_obj)
+        super().save(*args, **kwargs)
     
     @property
     def created_string(self):
@@ -71,3 +89,4 @@ class ArticleComment(models.Model):
             return str(time.days) + '일 전'
         else:
             return self.strftime('%Y-%m-%d')
+        
