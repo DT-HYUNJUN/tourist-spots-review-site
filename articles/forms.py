@@ -28,3 +28,17 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ('title', 'content', 'image', )
+
+
+class ArticleCommentForm(forms.ModelForm):
+    class Meta:
+        model = ArticleComment
+        fields = ('content',)
+    content = forms.CharField(
+        widget = forms.TextInput(
+            attrs= {
+                'class' : 'form-control',
+                'placeholder' : '댓글을 입력해주세요'
+            }
+        )
+    )
