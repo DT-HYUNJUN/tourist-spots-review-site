@@ -1,9 +1,20 @@
 {% extends 'base.html' %}
 
+{% block style %}
+<style>
+</style>
+{% endblock style %}
+
 {% block content %}
-  <form action="{% url 'accounts:login' %}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="제출">
-  </form>
+  <article>
+    <section class="main--form--wrap">
+      <h1>log in</h1>
+      <form class="d-grid" action="{% url 'accounts:login' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="log in" class="btn btn-success">
+      </form>
+    </section>
+  </article>
+
 {% endblock content %}

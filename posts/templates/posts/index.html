@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+  <style>
+    *{
+      box-sizing: border-box;
+    }
+
+    .box{
+      border: 1px solid black;
+      margin: 1px 1px 1px 1px
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    #container-posts{
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows; 1fr;
+      column-gap: 3px;
+      row-gap: 10px;
+      background-color: red;
+    }
+  
+    @media all and (max-width:479px) {
+      #container-posts {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+        column-gap: 10px;
+        row-gap: 10px;
+        background-color : yellow;
+      }
+    }
+
+    .post-item {
+      height:250px;
+      overflow: hidden;
+    }
+    
+    img{
+      height: 200px;
+      object-fit: cover;
+    }
+
+  </style>
+{% endblock style %}
+{% block content %}
+
+
+<main>
+  <section class='box'>
+    <div id="container-posts">
+    {% for post in posts %}
+    <div class="post-item">
+      <a href="#" class="card">
+          {% if post.image %}
+          <img src="{{ post.image.url }}" alt="..." class='card-img-top'>
+          {% else %}
+          <img src="https://img.icons8.com/dotty/80/null/no-image.png" alt="..." class='card-img-top'>
+          {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+</section>
+</main> 
+
+
+{% endblock content %}
