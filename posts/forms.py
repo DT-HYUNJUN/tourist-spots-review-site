@@ -22,7 +22,8 @@ class PostForm(forms.ModelForm):
             attrs={
                 'class': 'form-control'
             }
-        )
+        ),
+        required=False
     )
     class Meta:
         model = Post

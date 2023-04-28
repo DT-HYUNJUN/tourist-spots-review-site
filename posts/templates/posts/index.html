@@ -4,8 +4,27 @@
 index
 <a href="http://127.0.0.1:8000/">home</a>
 
+{% comment %} --
+<a href="{% url 'accounts:profile' user.username %}">{{user}}</a>
+<a href="{% url 'accounts:signup' %}">회원가입</a>
+<a href="{% url 'accounts:login' %}">로그인</a>
+
+<a href="{% url 'posts:create' %}">[CREATE]</a>
+
+
+<form action="{% url 'accounts:logout' %}" method='POST'>
+  {% csrf_token %}
+  <input type="submit" value='로그아웃'>
+</form>
+<form action="{% url 'accounts:delete' %}" method='POST'>
+  {% csrf_token %}
+  <input type="submit"value='탈퇴'>
+</form>
+-- {% endcomment %}
+
+
 {% for post in posts %}
-  {{ post.title }}
+  <a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a>
 {% empty %}
   <p>empty</p>
 {% endfor %}

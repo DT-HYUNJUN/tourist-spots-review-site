@@ -1,5 +1,45 @@
 {% extends 'base.html' %}
+{% block style %}
+<style>
+  .box{
+    box-sizing: border-box;
+    border: 1px solid black;
+    margin: 1px 1px 1px 1px
+  }
 
+  #container-posts{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows; 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+    background-color: red;
+  }
+
+  @media all and (max-width:479px) {
+    #container-posts {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      column-gap: 10px;
+      row-gap: 10px;
+      background-color : yellow;
+    }
+  }
+</style>
+{% endblock style %}
 {% block content %}
-<a href="{% url 'posts:index' %}">posts</a>
+<main>
+  <div class="article box">
+    <section class="box">배너</section>
+    <section class="box">
+      <div id="container-posts">
+        <div class="box post-item">post1</div>
+        <div class="box post-item">post2</div>
+        <div class="box post-item">post3</div>
+        <div class="box post-item">post4</div>
+      </div>
+    </section>
+    <section class="box">articles</section>
+  </div>
+</main>
 {% endblock content %}
