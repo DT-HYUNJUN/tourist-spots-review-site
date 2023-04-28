@@ -10,6 +10,16 @@ class PostForm(forms.ModelForm):
             }
         )
     )
+    place = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'id': 'place_field',
+                'class': 'form-control',
+                'autocomplete': 'off',
+                'list': 'address-list',
+            }
+        )
+    )
     content = forms.CharField(
         widget=forms.Textarea(
             attrs={
@@ -27,7 +37,7 @@ class PostForm(forms.ModelForm):
     )
     class Meta:
         model = Post
-        fields = ('title', 'content', 'image')
+        fields = ('title', 'place', 'content', 'image')
 
 
 class PostCommentForm(forms.ModelForm):

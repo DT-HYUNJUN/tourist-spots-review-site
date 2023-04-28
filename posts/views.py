@@ -4,16 +4,47 @@ from django.utils import timezone
 from .models import Post, PostComment
 from .forms import PostForm, PostCommentForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+import requests
 
 # Create your views here.
-
+"""
+def search_keyword(keyword):
+    searching = keyword
+    url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query={}'.format(searching)
+    headers = {
+        "Authorization": "KakaoAK 2caddc4f25bdd55869865a211f7d13bb"
+    }
+    places = requests.get(url, headers = headers).json()['documents']
+    lst = []
+    for place in places:
+        lst.append(
+            {
+                'place_name': place['place_name'],
+                'address_name': place['address_name'],
+            }
+        )
+"""
 
 def index(request):
     posts = Post.objects.all().order_by('-pk')
     context = {
         'posts': posts,
+        'app': posts,
     }
     return render(request, 'posts/index.html', context)
+
+
+def search(request):
+    query = request.GET.get('q', '')
+    if query:
+        search = Post.objects.filter(
+            Q(title__icontains=query)|
+            Q(user__username__exact=query)
+        )
+    else:
+        search = Post.objects.all()[::-1] 
+    return render(request, 'posts/index.html', {'posts':search, 'app':'posts'})
 
 
 @login_required
@@ -24,7 +55,7 @@ def create(request):
             post = form.save(commit=False)
             post.user = request.user
             form.save()
-            return redirect('posts:index')
+            return redirect('posts:detail', post.pk)
     else:
         form = PostForm()
     context = {
