@@ -13,10 +13,21 @@
 {% else %}
   <p>No Image</p>
 {% endif %}
+
+<form action="{% url 'articles:likes' article.pk %}" method='POST'>
+  {% csrf_token %}
+  {% if request.user in article.like_users.all %}
+    <input type="submit" value='unlike'>
+    {% else %}
+    <input type="submit" value='like'>
+    {% endif %}
+</form>
+
 <form action="{% url 'articles:comment_create' article.pk %}" method='POST'>
   {% csrf_token %}
   {{ comment_form.content }}
   <input type="submit" value='작성'>
 </form>
+
 
 {% endblock content %}
