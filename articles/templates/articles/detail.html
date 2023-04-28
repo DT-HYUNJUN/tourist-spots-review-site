@@ -21,6 +21,7 @@
     {% else %}
     <input type="submit" value='like'>
     {% endif %}
+    {{ article.like_users.all|length }}
 </form>
 
 <form action="{% url 'articles:comment_create' article.pk %}" method='POST'>
@@ -28,6 +29,23 @@
   {{ comment_form.content }}
   <input type="submit" value='작성'>
 </form>
+{% for comment in comments %}
+  {{comment.user}} - {{comment.content}}
+  <form action="{% url 'articles:comment_likes' article.pk comment.pk %}" mehtod='POST'>
+    {% csrf_token %}
+    {% if request.user in comment.like_users.all %}
+    <p></p>
+      <input type="submit" value='unlike'>
+      {% else %}
+      <input type="submit" value='like'>
+      {% endif %}
+      {{ comment.like_users.all|length }}
+  </form>
+  <form action="{% url 'articles:comment_delete' article.pk comment.pk %}" method='POST'>
+    {% csrf_token %}
+    <input type="submit" value='삭제'>
+  </form>
+{% endfor %}
 
 
 {% endblock content %}

@@ -55,11 +55,11 @@ class ArticleComment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_comment')
     
     @property
     def created_string(self):
         time = datetime.now(tz=timezone.utc) - self.created_at
-
         if time < timedelta(minutes=1):
             return '방금 전'
         elif time < timedelta(hours=1):
