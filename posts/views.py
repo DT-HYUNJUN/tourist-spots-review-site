@@ -33,8 +33,12 @@ def create(request):
 
 def detail(request, post_pk):
     post = Post.objects.get(pk=post_pk)
+    comment_form = PostCommentForm()
+    comments = post.postcomment_set.all()
     context = {
+        'comment_form': comment_form,
         'post': post,
+        'comments': comments,
     }
     return render(request, 'posts/detail.html', context)
 
@@ -63,3 +67,24 @@ def update(request, post_pk):
         'post': post,
     }
     return render(request, 'posts/update.html', context)
+
+
+@login_required
+def comment_create(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
+    comment_form = PostCommentForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.post = post
+        comment.user = request.user
+        comment_form.save()
+        return redirect('posts:detail', post_pk)
+    detail(request, post_pk)
+
+
+@login_required
+def comment_delete(request, post_pk, comment_pk):
+    comment = PostComment.objects.get(pk=comment_pk)
+    if request.user == comment.user:
+        comment.delete()
+    return redirect('posts:detail', post_pk)
