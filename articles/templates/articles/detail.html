@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{{article.title}}
+{{article.user}}
+{{article.content}}
+{% if article.image %}
+<img src=" {{article.image.url}} " alt="img">
+{% endif %}
+{% for tag in article.tagging.all %}
+
+<b>#{{tag.tagcontent}}</b>
+{% endfor %}
+
+<form action="{% url 'articles:tag_add' article.pk %}">
+  {% csrf_token %}
+  {{tag_form.as_p}}
+  <input type="submit">
+</form>
+
+{% endblock content %}
