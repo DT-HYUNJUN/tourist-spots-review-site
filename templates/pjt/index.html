@@ -30,7 +30,29 @@
 {% block content %}
 <main>
   <div class="article box">
-    <section class="box">배너</section>
+    <section class="box">
+      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://i.pinimg.com/originals/2b/87/cb/2b87cb68f4f68ec1ed798983442e9fe6.png" class="d-block w-100" alt="광고배너1">
+          </div>
+          <div class="carousel-item">
+            <img src="https://i.pinimg.com/originals/63/b2/ef/63b2efd90ea72fe0cced0e7a70a0bfc1.jpg" class="d-block w-100" alt="광고배너2">
+          </div>
+          <div class="carousel-item">
+            <img src="https://i.pinimg.com/originals/e6/55/86/e6558615dd7bbd84af6d28c9aeeb4bc6.jpg" class="d-block w-100" alt="광고배너3">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
     <section class="box">
       <div id="container-posts">
         <div class="box post-item">post1</div>
