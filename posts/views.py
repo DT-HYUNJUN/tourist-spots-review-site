@@ -93,7 +93,7 @@ def comment_delete(request, post_pk, comment_pk):
 
 
 @login_required
-def likes(request, post_pk):
+def post_likes(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     if post.like_users.filter(pk=request.user.pk).exists():
         post.like_users.remove(request.user)
@@ -110,3 +110,12 @@ def new_posts(posts):
             post.is_new = True
         else:
             post.is_new = False
+
+
+def comment_likes(request, post_pk, comment_pk):
+    comment = PostComment.objects.get(pk=comment_pk)
+    if comment.like_users.filter(pk=request.user.pk).exists():
+        comment.like_users.remove(request.user)
+    else:
+        comment.like_users.add(request.user)
+    return redirect('posts:detail', post_pk)
