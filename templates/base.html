@@ -24,14 +24,14 @@
       body {
         display: grid;
         grid-template-rows: auto auto minmax(0, 1fr) auto auto auto;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(8, 1fr);
         grid-template-areas:
-          "header header header header header"
-          ". main main main ."
-          ". main main main ."
-          ". main main main ."
-          ". main main main ."
-          "footer footer footer footer footer"
+        "header header header header header header header header"
+        ". main main main main main main ."
+        ". main main main main main main ."
+        ". main main main main main main ."
+        ". main main main main main main ."
+        "footer footer footer footer footer footer footer footer"
       }
       header.item {
         grid-area: header;
@@ -42,62 +42,144 @@
         height: 1000px;
         background-color: #aafafa;
       }
+    
       footer.item {
         grid-area: footer;
         background-color: #f0f0f0;
       }
-      @media screen and (min-width: 768px) {
- 
-}
-   
+
       {% comment %}  header {% endcomment %}
       .header--wrap{
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         grid-template-areas: 
-          " . left . right ."
+          " . header-left . header-right ."
         ;
-        height: 100px;
-        margin: 2.5rem 0 1rem 0;
+        height: auto;
+        margin-top: 2rem;
+        padding-bottom: 1rem;
       }
+
       .header--left--wrap {
-        grid-area: left;
+        grid-area: header-left;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
       }
+
       .logo--image{
         width: 160px;
         height: 60px;
         background-color: #10f0f0;
       }
+
       .nav--flex{
         display: flex;
       }
+
       .nav__posts {
         margin-right: 1rem;
       }
+
       .header--right--wrap {
-        grid-area: right;
+        grid-area: header-right;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: flex-end;
       }
-      .login--wrap {
+
+      .header--login--wrap {
         display: flex;
         align-items: flex-end;
         margin-top: 1.2rem;
       }
-      .login {
+
+      .header--login {
         margin-right: 1rem;
       }
+
       .search--form{
         display: flex;
       }
-      .search--input{
+      .searc
+      h--input{
         width: 15rem;
         margin-right: 0.2rem;
+      }
+
+      .sm--hader {
+        display: none;
+      }
+
+      @media screen and (max-width: 1080px) {
+        .header--sm--grid--wrap{
+          display: grid; grid-template-columns: repeat(5, 1fr);
+          grid-template-areas: 
+            " . header-md header-md header-md ."
+          ;
+        }
+        .header--wrap {
+          grid-area: header-md;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 0;
+          height: 100%;%
+          {% comment %} justify-content: center;  {% endcomment %}
+          
+        }
+        .header--left--wrap {
+        }
+        .nav--wrap{
+          display: flex;
+          justify-content: center;
+          margin-top: 1.5rem;
+        }
+        .header--right--wrap {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: space-between;
+          width: 100%;
+        }
+        .header--login {
+          margin-left: 2rem;
+        }
+      }
+
+      @media all and (max-width:680px) {
+        .header--wrap {
+          heigth: 100px;
+        }
+        .header--right--wrap {
+          display:none;
+          
+        }
+        .nav--wrap {
+          display: none;
+        }
+        .sm--hader {
+          display: block;
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          background-color: #e0e0e0;
+          padding: 2rem 1.5rem;
+        }
+        .sm--search--form{
+          margin-bottom: 1rem;
+        }
+        .sm--nav--grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .sm--nav__icon--wrap {
+          display: flex;
+          flex-direction: column;
+        }
+        .sm--nav__icon--wrap > i {
+          width: 50px;
+        }
       }
 
       aside {
@@ -105,44 +187,107 @@
         bottom: 2rem;
         right: 2rem;
       }
+
+      {% comment %} main {% endcomment %}
+      .main--form--wrap {
+        margin: 2em 1em 2em 1em;
+      }
     </style>
     {% block style %}
     {% endblock style %}
   </head>
   <body>
     <header class="item">
-      <div class="header--wrap">
-        <div class="header--left--wrap">
-          <a href="">
-            <div class="logo--image">Trip Topper</div>
-          </a>
-          <nav class="">
-            <ul class="nav--flex">
-              <li class="nav__posts">
-                <a href="#">posts</a>
+      <div class="header--sm--grid--wrap">
+        <div class="header--wrap">
+          <div class="header--left--wrap">
+            <a href="http://127.0.0.1:8000/">
+              <div class="logo--image">Trip Topper</div>
+            </a>
+            <nav class="nav--wrap">
+              <ul class="nav--flex">
+                <li class="nav__posts">
+                  <a href="#">posts</a>
+                </li>
+                <li>
+                  <a href="#">articles</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="header--right--wrap">
+            <div class="header--login--wrap">
+              <a class="header--login" href="{% url 'accounts:login' %}">log in</a>
+              <a href="{% url 'accounts:signup' %}" type="button" class="btn btn-success">sign up</a>
+            </div>
+            <div class="header--search--form--wrap">
+              <form class="search--form">
+                <input class="search--input form-control form-control-sm" type="text" placeholder="search">
+                <a type="submit">
+                  <i class="bi bi-search"></i>
+                </a>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="sm--hader">
+          <form class="search--form sm--search--form">
+            <input class="sm--search--input form-control form-control-sm" type="text" placeholder="search">
+            <a type="submit">
+              <i class="bi bi-search"></i>
+            </a>
+          </form>
+          <nav class="sm--nav--wrap">
+            <ul class="sm--nav--grid">
+              <li>
+                <a href="#" class="sm--nav__icon--wrap">
+                  <i class="bi bi-image"></i>
+                  <span>posts</span>
+                </a>
               </li>
               <li>
-                <a href="#">articles</a>
+                <a href="#" class="sm--nav__icon--wrap">
+                  <i class="bi bi-person-lines-fill"></i>
+                  <span>community</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'accounts:login' %}" class="sm--nav__icon--wrap">
+                  <i class="bi bi-person-square"></i>
+                  <span>log in</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'accounts:signup' %}"  class="sm--nav__icon--wrap">
+                  <i class="bi bi-box-arrow-in-right"></i>
+                  <span>sign up</span>
+                </a>
               </li>
             </ul>
           </nav>
         </div>
+
         <div class="header--right--wrap">
           <div class="login--wrap">
-            <a class="login" href="#">log in</a>
-            <a href="#" type="button" class="btn btn-success">sigin up</a>
+            <a class="login" href="{% url 'accounts:login' %}">log in</a>
+            <a href="{% url 'accounts:signup' %}" type="button" class="btn btn-success" >sigin up</a>
           </div>
           <div>
-            <form class="search--form">
-              <input class="search--input form-control form-control-sm" type="text" placeholder="search">
-              <a type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <form class="search--form" 
+            {% if app == 'articles' %}
+              action='{% url 'articles:search' %}' 
+            {% else %}
+              action='{% url 'posts:search' %}' 
+            {% endif %}
+            role='search'>
+              <input class="search--input form-control form-control-sm" type="search" placeholder="search" name='q' aria-label="Search">
+              <button type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                </svg>
-              </a>
+                </svg></button>
             </form>
           </div>
         </div>
+
       </div>
     </header>
 
