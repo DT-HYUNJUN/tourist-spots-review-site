@@ -1,4 +1,6 @@
+from datetime import timezone
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from .models import Post, PostComment
 from .forms import PostForm, PostCommentForm
 from django.contrib.auth.decorators import login_required
@@ -88,3 +90,23 @@ def comment_delete(request, post_pk, comment_pk):
     if request.user == comment.user:
         comment.delete()
     return redirect('posts:detail', post_pk)
+
+
+@login_required
+def likes(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
+    if post.like_users.filter(pk=request.user.pk).exists():
+        post.like_users.remove(request.user)
+    else:
+        post.like_users.add(request.user)
+    return redirect('posts:detail', post_pk)
+
+
+def new_posts(posts):
+    now = timezone.now()
+    for post in posts:
+        time_diff = now - post.created_at
+        if time_diff < timezone.timedelta(secondes=1):
+            post.is_new = True
+        else:
+            post.is_new = False

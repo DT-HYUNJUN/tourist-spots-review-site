@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <form action="{% url 'posts:likes' post.pk %}" method="POST">
+    {% csrf_token %}
+    {% if request.user in post.like_users.all %}
+    <input type="submit" value="좋아요 취소">
+    {% else %}
+    <input type="submit" value="좋아요">
+    {% endif %}
+  </form>
+{% endblock content %}
