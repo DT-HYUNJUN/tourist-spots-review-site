@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <form action="{% url 'articles:update' article.pk %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="input-group">
+        {{ field }}
+      </div>
+    {% endfor %}
+    <input type="submit" value="수정">
+  </form>
+{% endblock content %}

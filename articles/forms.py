@@ -1,12 +1,12 @@
 from django import forms
-from .models import Post, PostComment
+from .models import Article, ArticleComment
 
 
-class PostForm(forms.ModelForm):
+class ArticleForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
             }
         )
     )
@@ -26,18 +26,5 @@ class PostForm(forms.ModelForm):
         required=False
     )
     class Meta:
-        model = Post
-        fields = ('title', 'content', 'image')
-
-
-class PostCommentForm(forms.ModelForm):
-    content = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )
-    )
-    class Meta:
-        model = PostComment
-        fields = ('content',)
+        model = Article
+        fields = ('title', 'content', 'image', )
