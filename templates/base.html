@@ -129,8 +129,8 @@
         </div>
         <div class="header--right--wrap">
           <div class="login--wrap">
-            <a class="login" href="#">log in</a>
-            <a href="#" type="button" class="btn btn-success">sigin up</a>
+            <a class="login" href="{% url 'accounts:login' %}">log in</a>
+            <a href="{% url 'accounts:signup' %}" type="button" class="btn btn-success">sigin up</a>
           </div>
           <div>
             <form class="search--form">
