@@ -14,6 +14,9 @@ class Post(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
     is_new = models.BooleanField(default=False)
     place = models.CharField(max_length=100)
+    region = models.CharField(max_length=50)
+    start_date = models.DateField(default='2023-05-01')
+    end_date = models.DateField(default='2023-05-07')
     
     def post_image_path(instance, filename):
         return f'posts/{instance.pk}/{filename}'

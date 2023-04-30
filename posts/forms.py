@@ -13,12 +13,21 @@ class PostForm(forms.ModelForm):
     place = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'id': 'place_field',
+                'id': 'place-field',
                 'class': 'form-control',
                 'autocomplete': 'off',
                 'list': 'address-list',
             }
         )
+    )
+    region = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'id': 'region-field',
+                'class': 'form-control',
+            }
+        ),
+        
     )
     content = forms.CharField(
         widget=forms.Textarea(
@@ -35,9 +44,25 @@ class PostForm(forms.ModelForm):
         ),
         required=False
     )
+    start_date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control',
+                'type': 'date',
+            }
+        )
+    )
+    end_date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control',
+                'type': 'date',
+            }
+        )
+    )
     class Meta:
         model = Post
-        fields = ('title', 'place', 'content', 'image')
+        fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date')
 
 
 class PostCommentForm(forms.ModelForm):

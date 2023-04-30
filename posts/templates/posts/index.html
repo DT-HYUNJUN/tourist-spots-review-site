@@ -48,8 +48,16 @@
   </style>
 {% endblock style %}
 {% block content %}
-
-
+<form method="GET">
+  <div class="d-flex justify-content-end align-items-center gap-1 mb-2">
+    <select name="select_sorting" id="select_sorting" class="p-1 rounded-1">
+      <option value="최신순" {% if select_sorting == '최신순' %}selected{% endif %}>최신순</option>
+      <option value="오래된순" {% if select_sorting == '오래된순' %}selected{% endif %}>오래된순</option>
+    </select>
+    <input type="submit" class="btn btn-secondary btn-sm" value="정렬">
+  </div>
+</form>
+<a href="{% url 'posts:region' '서울' %}" data-subject="서울">서울</a>
 <main>
   <section class='box'>
     <div id="container-posts">
@@ -62,7 +70,7 @@
           <img src="https://img.icons8.com/dotty/80/null/no-image.png" alt="..." class='card-img-top'>
           {% endif %}
         <div class="card-body">
-          <h5 class="card-title">{{ post.title }}</h5>
+          <h5 class="card-title">{{ post.pk }}</h5>
         </div>
       </a>
     </div>
