@@ -1,9 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'style/rating.css' %}">
+{% endblock style %}
 
 {% block content %}
   <form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+    {% comment %} <div class="star-rating">
+      <input id="star-1" name="rating" type="radio" value="1" style="display: none;"/>
+      <label class="star-label" for="star-1" title="1 star">☆</label>
+      <input id="star-2" name="rating" type="radio" value="2" style="display: none;"/>
+      <label class="star-label" for="star-2" title="2 stars">☆</label>
+      <input id="star-3" name="rating" type="radio" value="3" style="display: none;"/>
+      <label class="star-label" for="star-3" title="3 stars">☆</label>
+      <input id="star-4" name="rating" type="radio" value="4" style="display: none;"/>
+      <label class="star-label" for="star-4" title="4 stars">☆</label>
+      <input id="star-5" name="rating" type="radio" value="5" style="display: none;"/>
+      <label class="star-label" for="star-5" title="5 stars">☆</label>
+    </div> {% endcomment %}
+    <div class="rate">
+      <input type="radio" id="star5" name="rating" value="5" />
+      <label for="star5" title="text">5 stars</label>
+      <input type="radio" id="star4" name="rating" value="4" />
+      <label for="star4" title="text">4 stars</label>
+      <input type="radio" id="star3" name="rating" value="3" />
+      <label for="star3" title="text">3 stars</label>
+      <input type="radio" id="star2" name="rating" value="2" />
+      <label for="star2" title="text">2 stars</label>
+      <input type="radio" id="star1" name="rating" value="1" />
+      <label for="star1" title="text">1 star</label>
+    </div>
     {% for field in form %}
       <div class="input-group">
         {% if field.name == 'place' %}
@@ -19,7 +46,6 @@
     <input type="submit">
   </form>
 
-  
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -39,9 +65,9 @@
       </div>
     </div>
   </div>
-
 {% endblock content %}
 
 {% block javascript %}
 <script src="{% static 'js/place_input.js' %}"></script>
+<script src="{% static 'js/rating.js' %}"></script>
 {% endblock javascript %}

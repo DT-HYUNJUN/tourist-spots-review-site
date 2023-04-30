@@ -6,7 +6,8 @@ class PostForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'placeholder': '제목',
             }
         )
     )
@@ -17,6 +18,7 @@ class PostForm(forms.ModelForm):
                 'class': 'form-control',
                 'autocomplete': 'off',
                 'list': 'address-list',
+                'placeholder': '장소',
             }
         )
     )
@@ -25,14 +27,15 @@ class PostForm(forms.ModelForm):
             attrs={
                 'id': 'region-field',
                 'class': 'form-control',
+                'placeholder': '지역',
             }
         ),
-        
     )
     content = forms.CharField(
         widget=forms.Textarea(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'placeholder': '내용',
             }
         )
     )
@@ -60,9 +63,10 @@ class PostForm(forms.ModelForm):
             }
         )
     )
+    
     class Meta:
         model = Post
-        fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date')
+        fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date',)
 
 
 class PostCommentForm(forms.ModelForm):

@@ -68,6 +68,7 @@ def create(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
+            post.rating = int(request.POST.get('rating', 0))
             form.save()
             return redirect('posts:detail', post.pk)
     else:

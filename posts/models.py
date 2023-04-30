@@ -1,7 +1,9 @@
+import math
 from django.db import models
 from django.conf import settings
 from datetime import datetime, timedelta
 from django.utils import timezone
+from django.core.validators import MinValueValidator, MaxValueValidator
 import os
 # Create your models here.
 
@@ -17,15 +19,32 @@ class Post(models.Model):
     region = models.CharField(max_length=50)
     start_date = models.DateField(default='2023-05-01')
     end_date = models.DateField(default='2023-05-07')
+    rating = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)])
     
+
+    def rating_to_string(self):
+        return self.rating * '★'
+
+
+    # def rating_to_string(self):
+    #     rates = self.rating
+    #     full_star = int(rates) * '★'
+    #     if rates - int(rates):
+    #         half_star = '☆'
+    #         return full_star + half_star
+    #     return full_star
+
+
     def post_image_path(instance, filename):
         return f'posts/{instance.pk}/{filename}'
     image = models.ImageField(blank=True, upload_to=post_image_path)
+    
     
     def delete(self, *args, **kargs):
         if self.image:
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
         super(Post, self).delete(*args, **kargs)
+
 
     def save(self, *args, **kwargs):
         if self.id:
@@ -34,7 +53,8 @@ class Post(models.Model):
                 if old_review.image:
                     os.remove(os.path.join(settings.MEDIA_ROOT, old_review.image.name))
         super(Post, self).save(*args, **kwargs)
-    
+
+
     @property
     def created_string(self):
         time = datetime.now(tz=timezone.utc) - self.created_at
@@ -58,7 +78,8 @@ class PostComment(models.Model):
     content = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_comments')
-    
+
+
     @property
     def created_string(self):
         time = datetime.now(tz=timezone.utc) - self.created_at

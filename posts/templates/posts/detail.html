@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
   <form action="{% url 'posts:post_likes' post.pk %}" method="POST">
@@ -10,8 +10,9 @@
     <input type="submit" value="좋아요">
     {% endif %}
   </form>
+  {{ post.rating_to_string }}
 
-  <div id="map" style="width:500px;height:400px;"></div>
+  <div id="map" style="width:500px;height:400px;" data-place="{{ post.place }}"></div>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=041f7958a74d4cc56ff03e9e35664757&libraries=services"></script>
 {% endblock content %}
 
@@ -22,7 +23,7 @@
   mapOption = {
       center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
       level: 3 // 지도의 확대 레벨
-  };  
+  };
 
   // 지도를 생성합니다    
   const map = new kakao.maps.Map(mapContainer, mapOption); 
@@ -44,11 +45,11 @@
         position: coords
       });
 
-      // 인포윈도우로 장소에 대한 설명을 표시합니다
-      // const infowindow = new kakao.maps.InfoWindow({
-      //   content: '<div style="width:150px;text-align:center;padding:6px 0;"></div>'
-      // });
-      // infowindow.open(map, marker);
+      //// 인포윈도우로 장소에 대한 설명을 표시합니다
+      //const infowindow = new kakao.maps.InfoWindow({
+      //  content: '<div style="width:150px;text-align:center;padding:6px 0;"></div>'
+      //});
+      //infowindow.open(map, marker);
 
       // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
       map.setCenter(coords);

@@ -2,7 +2,7 @@ const place_input = document.getElementById('place_input')
   const place_field = document.getElementById('place-field')
   const region_field = document.getElementById('region-field')
   const getAddress = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const searching = e.target.value;
     axios.get('https://dapi.kakao.com/v2/local/search/keyword.json', {
       params: {
@@ -13,7 +13,7 @@ const place_input = document.getElementById('place_input')
       }
     })
       .then(function (response) {
-        const places = response.data.documents;
+        const places = response.data.documents
         let lst = []
         for (let i = 0; i < places.length; i++) {
           lst.push({
@@ -24,14 +24,14 @@ const place_input = document.getElementById('place_input')
         printAddress(lst)
       })
       .catch(function (error) {
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
   const printAddress = (lst) => {
     const addressList = document.querySelector('ol')
     addressList.textContent = ""
     for (let i = 0; i < lst.length; i++) {
-      const element = lst[i];
+      const element = lst[i]
 
       const liTag = document.createElement('li')
       liTag.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start',)
@@ -65,7 +65,7 @@ const place_input = document.getElementById('place_input')
         const modalInstance = bootstrap.Modal.getInstance(modal)
         modalInstance.hide()
       })
-    });
+    })
   }
   place_input.addEventListener('keyup', getAddress);
   const modal = document.querySelector('#exampleModal')
