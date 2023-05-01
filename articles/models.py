@@ -20,6 +20,8 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_articles')
+    bookmark_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='bookmark_articles')
+    views = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='view_articles')
     tagging = models.ManyToManyField(Tag, blank=True, related_name='tagged')
     
     def post_image_path(instance, filename):
@@ -50,6 +52,7 @@ class Article(models.Model):
                 self.tagging.add(tag_obj)
         super().save(*args, **kwargs)
     
+
     @property
     def created_string(self):
         time = datetime.now(tz=timezone.utc) - self.created_at

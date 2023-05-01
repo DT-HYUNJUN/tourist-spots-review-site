@@ -7,15 +7,18 @@
 {% if article.image %}
 <img src=" {{article.image.url}} " alt="img">
 {% endif %}
-{% for tag in article.tagging.all %}
 
-<b>#{{tag.tagcontent}}</b>
-{% endfor %}
+<form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>
+  {% csrf_token %}
+  <input type="submit" value='bookmark'>
+</form>
+<p> {{ article.bookmark_user.all|length }} </p>
 
-<form action="{% url 'articles:tag_add' article.pk %}">
+{% comment %} <form action="{% url 'articles:tag_add' article.pk %}">
   {% csrf_token %}
   {{tag_form.as_p}}
   <input type="submit">
-</form>
+</form> {% endcomment %}
 
 {% endblock content %}
+
