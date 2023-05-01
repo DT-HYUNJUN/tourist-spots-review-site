@@ -1,75 +1,171 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block style %}
-  <style>
-    *{
-      box-sizing: border-box;
-    }
+{% extends 'base.html' %} {% load static %} {% block style %}
+<style>
+  *{
+    box-sizing: border-box;
+  }
 
-    .box{
-      border: 1px solid black;
-      margin: 1px 1px 1px 1px
-    }
+  {% comment %} .box{
+    border: 1px solid black;
+  } {% endcomment %}
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+  section {
+    margin-bottom: 1rem;
+  }
 
-    #container-posts{
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows; 1fr;
-      column-gap: 3px;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #container-posts{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows; 1fr;
+    column-gap: 5px;
+    row-gap: 10px;
+    background-color: red;
+  }
+
+  @media all and (max-width:479px) {
+    #container-posts {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      column-gap: 10px;
       row-gap: 10px;
-      background-color: red;
+      background-color : yellow;
     }
+  }
+
+  .card-user{
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .username{
+    margin-left: 0.5em;
+  }
   
-    @media all and (max-width:479px) {
-      #container-posts {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(4, 1fr);
-        column-gap: 10px;
-        row-gap: 10px;
-        background-color : yellow;
-      }
-    }
+  .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card {
+    height: auto;
+    border: 1px solid black;
+    box-shadow: 3px 3px 10px;
+    margin: auto;
+    margin-bottom: 30px;
+    transition: all 0.5s;
+    transition-delay: 0.4s;
+  }
 
-    .post-item {
-      height:250px;
-      overflow: hidden;
-    }
-    
-    img{
-      height: 200px;
-      object-fit: cover;
-    }
 
-  </style>
-{% endblock style %}
+  .post-item img{
+    height: 200px;
+    object-fit: fill;
+    position: relative;
+  }
+
+  .like-user{
+    position: absolute;
+    top : 0;
+    right: 0;
+    background: none;
+    border: none;
+  }
+
+  .user-profile:not(.post.image){
+    width: 1.5em;
+    height: 1.5em;
+  }
+
+  .main-img {
+    width: 100%;
+    height: 10em;
+    object-fit: fill;
+  }
+
+  .noimage-img{
+    display: block;
+    margin: auto;
+    width: 80%;
+    object-fit: fill;
+  }
+
+  .viewed-order{
+    display: flex;
+  }
+
+  .viewed-order-buttons{
+    margin-left: auto;
+  }
+
+</style>
+{% endblock style %} 
+
 {% block content %}
-
-
 <main>
-  <section class='box'>
-    <div id="container-posts">
-    {% for post in posts %}
-    <div class="post-item">
-      <a href="#" class="card">
-          {% if post.image %}
-          <img src="{{ post.image.url }}" alt="..." class='card-img-top'>
-          {% else %}
-          <img src="https://img.icons8.com/dotty/80/null/no-image.png" alt="..." class='card-img-top'>
-          {% endif %}
-        <div class="card-body">
-          <h5 class="card-title">{{ post.title }}</h5>
-        </div>
-      </a>
+  <section class="box">
+    <img src="{% static 'img/c.jpg' %}" class="main-img" alt="" />
+  </section>
+  <section class='Box viewed-order'>
+    <div class="viewed-order-buttons">
+      <button type="button" class="btn btn-outline-dark" >최신순</button>
+      <button type="button" class="btn btn-outline-dark" >인기순</button>
+      <button type="button" class="btn btn-outline-dark" >댓글순</button>
     </div>
-  {% endfor %}
-</div>
-</section>
-</main> 
-
+  </section>
+  <section class="box">
+    <div id="container-posts">
+      {% for post in posts %}
+      <div class="post-item">
+        <a href="{% url 'posts:detail' post.pk %}" class="card">
+          {% if post.image %}
+          <img src="{{ post.image.url }}" alt="여행사진" class="card-img-top" />
+          {% else %}
+          <img
+            src="{% static 'img/noimage.svg' %}"
+            alt="이미지없음"
+            class="card-img-top noimage-img"
+          />
+          <form action="#" method="POST">
+            {% csrf_token %}
+            {% if request.user in post.like_posts.all %}
+            <input class='like-user' type="submit" value="🤍">
+            {% else %}
+            <input class='like-user' type="submit" value="❤">
+            {% endif %}
+          </form>
+          {% endif %}
+          <div class="card-body">
+            <div class="card-user">
+              <p>
+                {% if post.user.profile_image %}
+                <img
+                  class="user-profile"
+                  src="{{ post.user.profile_image }}"
+                  alt="사용자프로필이미지"
+                />
+                {% else %}
+                <img
+                class="user-profile"
+                src="{% static 'img/user_profile.png' %}"
+                alt="기본프로필이미지"
+                />
+              </p>
+                {% endif %}
+              <span class="username">{{user}}</span>
+            </div>
+            <h6 class="card-title">{{ post.title }}</h6>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</main>
 
 {% endblock content %}
