@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load socialaccount %}
 {% block style %}
 <style>
 </style>
@@ -15,5 +15,10 @@
         <input type="submit" value="log in" class="btn btn-success">
       </form>
     </section>
+    <a href="{% provider_login_url 'kakao' method='oauth2' %}">
+      카카오톡 회원가입
+    </a>
   </article>
 {% endblock content %}
+{% block javascript %}
+{% endblock javascript %}
