@@ -13,7 +13,9 @@ urlpatterns = [
     path('<int:article_pk>/likes/', views.likes, name='likes'),
     path('<int:article_pk>/bookmark/', views.bookmark, name='bookmark'),
     path('<int:article_pk>/comments/<int:comment_pk>/likes/', views.comment_likes, name='comment_likes'),
+    path('<int:article_pk>/comments/<int:comment_pk>/dislikes/', views.comment_dislikes, name='comment_dislikes'),
     path('<int:article_pk>/comments/<int:comment_pk>/delete/', views.comment_delete, name='comment_delete'),
     # path('tagadd/<int:article_pk>', views.tag_add, name='tag_add'),
     path('search/', views.search, name='search'),
+
 ]

@@ -3,8 +3,8 @@
 {% block content %}
 {% for article in articles %}
 
-  <form id="myForm" action="{% url 'articles:detail' article.pk %}">
-    {% comment %} {% csrf_token %} {% endcomment %}
+  <form id="myForm" action="{% url 'articles:detail' article.pk %}" method='POST'>
+    {% csrf_token %}
     <a href="{% url 'articles:detail' article.pk %}" id="submitForm">{{ article.title }}</a> 
   </form>
 

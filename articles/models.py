@@ -77,6 +77,8 @@ class ArticleComment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_comment')
+    dislike_user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='dislike_comments')
+
     
     @property
     def created_string(self):
@@ -92,4 +94,4 @@ class ArticleComment(models.Model):
             return str(time.days) + '일 전'
         else:
             return self.strftime('%Y-%m-%d')
-        
+
