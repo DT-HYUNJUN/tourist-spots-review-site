@@ -30,7 +30,7 @@ def search(request):
         search = Post.objects.filter(
             Q(title__icontains=query)|
             Q(user__username__exact=query)
-        )
+        ).order_by('-pk')
     else:
         search = Post.objects.all().order_by('-pk')
     return render(request, 'posts/index.html', {'posts':search, 'app':'posts'})

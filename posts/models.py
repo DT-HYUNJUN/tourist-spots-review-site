@@ -22,19 +22,6 @@ class Post(models.Model):
     rating = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)])
     
 
-    def rating_to_string(self):
-        return self.rating * '★'
-
-
-    # def rating_to_string(self):
-    #     rates = self.rating
-    #     full_star = int(rates) * '★'
-    #     if rates - int(rates):
-    #         half_star = '☆'
-    #         return full_star + half_star
-    #     return full_star
-
-
     def post_image_path(instance, filename):
         return f'posts/{instance.pk}/{filename}'
     image = models.ImageField(blank=True, upload_to=post_image_path)
