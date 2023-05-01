@@ -21,6 +21,12 @@
         padding: 0;
         margin: 0;
       }
+      button {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        outline: inherit;
+      }
       body {
         display: grid;
         grid-template-rows: auto auto minmax(0, 1fr) auto auto auto;
@@ -181,13 +187,40 @@
           width: 50px;
         }
       }
-
-      aside {
+      {% comment %} aside {% endcomment %}
+      .aside--container {
         position: fixed;
         bottom: 2rem;
         right: 2rem;
       }
+      .aside--top--wrap{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 60px;
+        font-size: 40px;
+        text-align: center;
+        color: #198754;
+        border: 3px solid #198754;
+        border-radius: 100%;
+        transform: rotate(90deg);
+      }
+      .aside--top--wrap:hover {
+        transform: rotate(0deg);
+      }
+      @media all and (max-width:680px) {
+        .aside--container{
+          bottom: 12rem;
+          right: 2rem;
+        }
+        .aside--top--wrap {
+          width: 45px;
+          height: 45px;
+          font-size: 30px;
 
+        }
+      }
       {% comment %} main {% endcomment %}
       .main--form--wrap {
         margin: 2em 1em 2em 1em;
@@ -207,36 +240,55 @@
             <nav class="nav--wrap">
               <ul class="nav--flex">
                 <li class="nav__posts">
-                  <a href="#">posts</a>
+                  <a href="{% url 'posts:index' %}">posts</a>
                 </li>
                 <li>
-                  <a href="#">articles</a>
+                  <a href="{% url 'articles:index' %}">articles</a>
                 </li>
               </ul>
             </nav>
           </div>
           <div class="header--right--wrap">
+            {% if user.is_authenticated %}
+            <div class="header--login--wrap">
+              <a class="header--login" href="{% url 'accounts:profile' user.username%}">profile</a>
+              <form action="{% url 'accounts:logout' %}" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-outline-danger" type="submit" value="log out">
+              </form>
+            </div>
+            {% else %}
             <div class="header--login--wrap">
               <a class="header--login" href="{% url 'accounts:login' %}">log in</a>
-              <a href="{% url 'accounts:signup' %}" type="button" class="btn btn-success">sign up</a>
+              <a href="{% url 'accounts:signup' %}" type="button" class="btn btn-outline-success">sign up</a>
             </div>
+            {% endif %}
             <div class="header--search--form--wrap">
-              <form class="search--form">
-                <input class="search--input form-control form-control-sm" type="text" placeholder="search">
-                <a type="submit">
-                  <i class="bi bi-search"></i>
-                </a>
-              </form>
+              <form class="search--form" 
+            {% if request.resolver_match.app_name == 'articles' %}
+              action='{% url 'articles:search' %}' 
+            {% else %}
+              action='{% url 'posts:search' %}' 
+            {% endif %}
+            role='search'>
+              <input class="search--input form-control form-control-sm" type="search" placeholder="search" name='q' aria-label="Search">
+              <button type="submit"><i class="bi bi-search"></i></button>
+            </form>
             </div>
           </div>
         </div>
+        {% comment %} search 2 {% endcomment %}
         <div class="sm--hader">
-          <form class="search--form sm--search--form">
-            <input class="sm--search--input form-control form-control-sm" type="text" placeholder="search">
-            <a type="submit">
-              <i class="bi bi-search"></i>
-            </a>
-          </form>
+          <form class="search--form sm--search--form" 
+          {% if request.resolver_match.app_name == 'articles' %}
+              action='{% url 'articles:search' %}' 
+            {% else %}
+              action='{% url 'posts:search' %}' 
+            {% endif %}
+            role='search'>
+              <input class="search--input form-control form-control-sm" type="search" placeholder="search" name='q' aria-label="Search">
+              <button type="submit"><i class="bi bi-search"></i></button>
+            </form>
           <nav class="sm--nav--wrap">
             <ul class="sm--nav--grid">
               <li>
@@ -266,34 +318,12 @@
             </ul>
           </nav>
         </div>
-
-        <div class="header--right--wrap">
-          <div class="login--wrap">
-            <a class="login" href="{% url 'accounts:login' %}">log in</a>
-            <a href="{% url 'accounts:signup' %}" type="button" class="btn btn-success" >sigin up</a>
-          </div>
-          <div>
-            <form class="search--form" 
-              {% if request.resolver_match.app_name == 'articles' %}
-                  action='{% url 'articles:search' %}' 
-              {% else %}
-                  action='{% url 'posts:search' %}' 
-              {% endif %}
-              role='search'>
-              <input class="search--input form-control form-control-sm" type="search" placeholder="search" name='q' aria-label="Search">
-              <button type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-              </svg></button>
-            </form>
-          </div>
-        </div>
-
       </div>
     </header>
 
-    <aside>
-      <div>
-        <a href="#"><button type="button" class="btn btn-success">TOP</button></a>
+    <aside class="aside--container">
+      <div class="aside--top--wrap">
+        <a href="#"><i class="bi bi-airplane-fill"></i></button></a>
       </div>
     </aside>
 

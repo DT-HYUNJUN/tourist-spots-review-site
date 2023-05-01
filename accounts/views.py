@@ -3,8 +3,8 @@ from django.contrib.auth import login as auth_login, logout as auth_logout, upda
 from django.contrib.auth.decorators import login_required
 from .forms import CustomPasswordChangeForm, CustomAuthenticationForm, CustomUserChangeForm, CustomUserUserCreationForm
 from django.contrib.auth import get_user_model
-# from posts.models import POST
-# from articles.models import Article
+from posts.models import Post
+from articles.models import Article
 
 
 # Create your views here.
@@ -78,12 +78,12 @@ def change_password(request):
 def profile(request, username):
     User = get_user_model()
     person = User.objects.get(username=username)
-    # post = Post.objects.order_by('-pK') 
-    # article = Article.objects.order_by('-pK') 
+    post = Post.objects.order_by('-pk') 
+    article = Article.objects.order_by('-pk') 
     context = {
         'person' : person,
-        # 'post' : post,
-        # 'article' : article
+        'post' : post,
+        'article' : article
     }
     return render(request, 'accounts/profile.html', context)
 

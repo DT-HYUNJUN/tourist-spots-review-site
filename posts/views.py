@@ -5,7 +5,7 @@ from .models import Post, PostComment
 from .forms import PostForm, PostCommentForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-import requests
+# import requests
 
 # Create your views here.
 """
