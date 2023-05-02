@@ -2,9 +2,91 @@
 
 {% block style %}
 <style>
+  .profile--user--wrap{
+    display: flex;
+    align-items: center;
+  }
+  .profile--image--wrap{
+      font-size: 200px;
+      background-color: #eeeeee;
+  }
 </style>
 {% endblock style %}
 
 {% block content %}
-<h1>프로필페이지</h1>
+<article>
+  <h1>{{ person }} 프로필페이지</h1>
+  <section class="profile--user--container">
+    <div class="profile--user--wrap">
+      <div class="profile--image--wrap">
+        {% if pserson.profile_image %}
+        <img src="{{ pserson.profile_image.url }}" alt="profile-image">
+        {% else %}
+        <i class="bi bi-person-circle"></i>
+        {% endif %}    
+      </div>
+      <ul>
+        <li>{{ person.username }}</li>
+        <li>{{ person.email }}</li>
+        <li>{{ person.mbti }}</li>
+        <li>{{ person.birthday }}</li>
+        <li>{{ person.username }}</li>
+      </ul></div>
+    <div class="d-grid">
+      <a class="btn btn-success" type="button" href="{% url 'accounts:update'%}">profile 수정</a>
+    </div>
+  </section>
+  <section class="profile--posts--container">
+    <h3>Posts</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">제목</th>
+          <th scope="col">글쓴이</th>
+          <th scope="col">작성시간</th>
+          <th scope="col">조회수</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% for post in posts %}
+        <tr>
+          <th scope="row">{{ post.pk }}</th>
+          <td><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></td>
+          <td>{{ post.user }}</td>
+          <td>{{ post.created_at }}</td>
+          <td>{{ post.views.all|length }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>    
+    </table>
+  </section>
+  <section class="profile--articles--container">
+    <h3>Community</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">제목</th>
+          <th scope="col">글쓴이</th>
+          <th scope="col">작성시간</th>
+          <th scope="col">조회수</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% for article in articles %}
+        <tr>
+          <th scope="row">{{ article.pk }}</th>
+          <td><a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a></td>
+          <td>{{ article.user }}</td>
+          <td>{{ article.created_at }}</td>
+          <td>{{ article.views.all|length }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>    
+    </table>
+
+  </section>
+
+</article>
 {% endblock content %}

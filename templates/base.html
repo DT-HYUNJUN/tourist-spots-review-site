@@ -221,9 +221,15 @@
         }
       }
       {% comment %} main {% endcomment %}
-      .main--form--wrap {
-        margin: 2em 1em 2em 1em;
+      .main--container{
+        display: flex;
+        justify-content: center;
+
       }
+      .main--article--container{
+        
+      }
+      {% comment %} article {% endcomment %}
     </style>
     {% block style %}
     {% endblock style %}
@@ -326,7 +332,7 @@
       </div>
     </aside>
 
-    <main class="item">
+    <main class="item main--container">
     {% block content %}
     {% endblock content %}
     </main>
