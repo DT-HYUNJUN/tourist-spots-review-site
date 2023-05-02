@@ -1,19 +1,43 @@
 {% extends 'base.html' %}
-
+{% load socialaccount %}
 {% block style %}
 <style>
+  .main--login {
+    display: flex;
+    justify-content: center;
+  }
+  .main--form--wrap {
+    width: 50%;
+  }
+  .main--article--container {
+    display: flex;
+    justify-content: center;
+    padding: 70px 0;
+  }
+  h2 {
+    text-align: center;
+  }
 </style>
 {% endblock style %}
 
 {% block content %}
-  <article>
+{% load static %}
+  <article class="main--article--container">
     <section class="main--form--wrap">
-      <h1>log in</h1>
+      <div class="main--login">
+        <img class="" src="{% static 'img/triptopper_c_logo_01.png' %}" alt="image">
+      </div>
+      <h2>Log in</h2>
       <form class="d-grid" action="{% url 'accounts:login' %}" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="log in" class="btn btn-success">
       </form>
     </section>
+    <a href="{% provider_login_url 'kakao' method='oauth2' %}">
+      카카오톡 회원가입
+    </a>
   </article>
 {% endblock content %}
+{% block javascript %}
+{% endblock javascript %}

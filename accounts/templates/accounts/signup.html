@@ -1,12 +1,33 @@
 {% extends 'base.html' %}
 
 {% block style %}
+<style>
+  .main--login {
+    display: flex;
+    justify-content: center;
+  }
+  .main--form--wrap {
+    width: 50%;
+  }
+  .main--article--container {
+    display: flex;
+    justify-content: center;
+    padding: 70px 0;
+  }
+  h2 {
+    text-align: center;
+  }
+</style>
 {% endblock style %}
 
 {% block content %}
-    <article>
+{% load static %}
+    <article class="main--article--container">
       <section class="main--form--wrap">
-        <h1>sign up</h1>
+        <div class="main--login">
+          <img class="" src="{% static 'img/triptopper_c_logo_01.png' %}" alt="image">
+        </div>
+        <h2>Sign up</h2>
         <form class="d-grid" action="{% url 'accounts:signup' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}

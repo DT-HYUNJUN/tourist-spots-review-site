@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Article, ArticleComment, Tag
 from .forms import ArticleForm, ArticleCommentForm
 from django.contrib.auth.decorators import login_required
+from datetime import date, datetime, timedelta
 from django.db.models import Q
 
 
@@ -26,6 +27,9 @@ def create(request):
             form.save()
             form.save_m2m()
             return redirect('articles:index')
+        
+        else:
+            print(form.errors)
     else:
         form = ArticleForm()
     context = {
@@ -34,11 +38,17 @@ def create(request):
     return render(request, 'articles/create.html', context)
 
 
+
 def detail(request, article_pk):
     article = Article.objects.get(pk=article_pk)
+    # view
+    if request.user not in article.views.all():
+        article.views.add(request.user)
+
     comment_form = ArticleCommentForm()
     comments = article.articlecomment_set.all()
     # tag_form = TagForm
+
     context = {
         'article': article,
         'comment_form' : comment_form,
@@ -102,6 +112,16 @@ def likes(request, article_pk):
 
 
 @login_required
+def bookmark(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    if article.bookmark_user.filter(pk=request.user.pk).exists():
+        article.bookmark_user.remove(request.user)
+    else:
+        article.bookmark_user.add(request.user)
+    return redirect('articles:detail', article_pk)
+
+
+@login_required
 def comment_likes(request, article_pk, comment_pk):
     comment = ArticleComment.objects.get(pk=comment_pk)
     if comment.like_users.filter(pk=request.user.pk).exists():
@@ -109,6 +129,17 @@ def comment_likes(request, article_pk, comment_pk):
     else:
         comment.like_users.add(request.user)
     return redirect('articles:detail', article_pk)
+
+
+@login_required
+def comment_dislikes(request, article_pk, comment_pk):
+    comment = ArticleComment.objects.get(pk=comment_pk)
+    if comment.dislike_user.filter(pk=request.user.pk).exists():
+        comment.dislike_user.remove(request.user)
+    else:
+        comment.dislike_user.add(request.user)
+    return redirect('articles:detail', article_pk)
+
 
 
 @login_required
@@ -129,6 +160,8 @@ def search(request):
     else:
         search = Article.objects.all()[::-1] 
     return render(request, 'articles/index.html', {'articles':search, 'app':'articles'})
+
+
 
 # @login_required
 # def tag_add(request, article_pk):

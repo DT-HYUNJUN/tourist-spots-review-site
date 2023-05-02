@@ -5,7 +5,7 @@ from .models import Post, PostComment
 from .forms import PostForm, PostCommentForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-import requests
+# import requests
 
 # Create your views here.
 
@@ -165,3 +165,11 @@ def comment_likes(request, post_pk, comment_pk):
     else:
         comment.like_users.add(request.user)
     return redirect('posts:detail', post_pk)
+
+
+def index(request):
+    posts = Post.objects.all()
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'pjt/index.html', context)

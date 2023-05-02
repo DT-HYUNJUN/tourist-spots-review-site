@@ -2,8 +2,25 @@
 
 {% block content %}
 {% for article in articles %}
-<a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a> 
 
+  <form id="myForm" action="{% url 'articles:detail' article.pk %}" method='POST'>
+    {% csrf_token %}
+    <a href="{% url 'articles:detail' article.pk %}" id="submitForm">{{ article.title }}</a> 
+  </form>
+
+  {{article.views.all|length}}
 {% endfor %}
 
 {% endblock content %}
+
+{% block javascript %}
+  <script>
+    const submitFormBtn = document.getElementById("submitForm");
+    const myForm = document.getElementById("myForm");
+    
+    submitFormBtn.addEventListener("click", (event) => {
+      event.preventDefault(); // 이벤트 전파 중지
+      myForm.submit(); // 폼 제출
+    });
+  </script>
+{% endblock javascript %}
