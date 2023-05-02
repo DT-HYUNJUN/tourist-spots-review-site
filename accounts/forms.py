@@ -71,6 +71,8 @@ class CustomAuthenticationForm(AuthenticationForm):
         )
     )
 
+class Birthday(forms.DateInput):
+    input_type = 'date'
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm):
@@ -108,7 +110,8 @@ class CustomUserChangeForm(UserChangeForm):
     birthday = forms.DateField(
         required=False,
         label='Profile_image',
-        widget= forms.DateInput(
+        input_formats=['%Y-%m-%d'],
+        widget= Birthday(
           attrs = {
             'class' : 'form-control',
             'placeholder' : '생년월일',

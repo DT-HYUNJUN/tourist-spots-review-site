@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from datetime import datetime, timedelta
 from django.utils import timezone
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 import os
 import re
 
@@ -24,22 +26,22 @@ class Article(models.Model):
     views = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='view_articles')
     tagging = models.ManyToManyField(Tag, blank=True, related_name='tagged')
     
-    def post_image_path(instance, filename):
-        return f'posts/{instance.pk}/{filename}'
-    image = models.ImageField(blank=True, upload_to=post_image_path)
+    # def post_image_path(instance, filename):
+    #     return f'posts/{instance.pk}/{filename}'
+    # image = models.ImageField(blank=True, upload_to=post_image_path)
 
-    def delete(self, *args, **kargs):
-        if self.image:
-            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
-        super(Article, self).delete(*args, **kargs)
+    # def delete(self, *args, **kargs):
+    #     if self.image:
+    #         os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
+    #     super(Article, self).delete(*args, **kargs)
 
-    def save(self, *args, **kwargs):
-        if self.id:
-            old_review = Article.objects.get(id=self.id)
-            if self.image != old_review.image:
-                if old_review.image:
-                    os.remove(os.path.join(settings.MEDIA_ROOT, old_review.image.name))
-        super(Article, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.id:
+    #         old_review = Article.objects.get(id=self.id)
+    #         if self.image != old_review.image:
+    #             if old_review.image:
+    #                 os.remove(os.path.join(settings.MEDIA_ROOT, old_review.image.name))
+    #     super(Article, self).save(*args, **kwargs)
 
 
     def save(self, *args, **kwargs):
@@ -68,6 +70,28 @@ class Article(models.Model):
             return str(time.days) + '일 전'
         else:
             return self.strftime('%Y-%m-%d')
+
+
+class ArticleImage(models.Model):
+    article = models.ForeignKey(Article, null=True, blank=True, on_delete=models.CASCADE)
+
+    def article_image_path(instance, filename):
+        return f'articles/{instance.article.pk}/{filename}'
+           
+    image = ProcessedImageField(blank=True,
+                                upload_to = article_image_path,
+                                processors= [ResizeToFill(200, 200)],
+                                format='JPEG',
+                                options={'quality' : 90},
+                                null = True,
+                                )
+    def delete(self, *args, **kargs):
+        if self.image:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
+            dir_path = os.path.dirname(os.path.join(settings.MEDIA_ROOT, self.image.name))
+            if not os.listdir(dir_path):
+                os.rmdir(dir_path)
+        super(ArticleImage, self).delete(*args, **kargs)
 
 
 class ArticleComment(models.Model):

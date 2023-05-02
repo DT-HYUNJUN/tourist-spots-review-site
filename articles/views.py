@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Article, ArticleComment, Tag
-from .forms import ArticleForm, ArticleCommentForm
+from .models import Article, ArticleComment, ArticleImage,Tag
+from .forms import ArticleForm, ArticleCommentForm , ArticleImageForm
 from django.contrib.auth.decorators import login_required
 from datetime import date, datetime, timedelta
 from django.db.models import Q
+from django.contrib import messages
+
 
 
 # Create your views here.
-
+ 
 
 def index(request):
     articles = Article.objects.all().order_by('-pk')
@@ -20,20 +22,24 @@ def index(request):
 @login_required
 def create(request):
     if request.method == 'POST':
-        form = ArticleForm(request.POST, request.FILES)
+        form = ArticleForm(request.POST)
+        images = request.FILES.getlist('image')
         if form.is_valid():
             article = form.save(commit=False)
             article.user = request.user
-            form.save()
-            form.save_m2m()
-            return redirect('articles:index')
-        
+            article.save()
+            for i in images:
+                ArticleImage.objects.create(article=article, image=i)
+            return redirect('articles:index')       
         else:
             print(form.errors)
     else:
         form = ArticleForm()
+        imageform = ArticleImageForm()
     context = {
         'form': form,
+        'imageform' : imageform
+
     }
     return render(request, 'articles/create.html', context)
 

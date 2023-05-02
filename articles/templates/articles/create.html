@@ -4,7 +4,18 @@
 <form action="{% url 'articles:create' %}" method="POST" enctype='multipart/form-data'>
   {% csrf_token %}
   {{ form.as_p }}
+  {{ imageform.as_p }}
+  {% comment %} {% for field in form %}
+    {{field}} <br />
+  {% endfor %}
+  {% for form in imageform %}
+    {{form}}
+  {% endfor %} {% endcomment %}
+
   <input type="submit" value="제출">
 </form> 
+
+
+
 
 {% endblock content %}
