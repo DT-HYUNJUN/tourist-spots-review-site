@@ -118,11 +118,20 @@
     <img src="{% static 'img/posts-main-img.jpg' %}" class="main-img" alt="triptopper베너이미지" />
   </section>
   <section class='Box viewed-order'>
-    <div class="viewed-order-buttons">
+    {% comment %} <div class="viewed-order-buttons">
       <button type="button" class="btn btn-outline-dark" >최신순</button>
       <button type="button" class="btn btn-outline-dark" >인기순</button>
       <button type="button" class="btn btn-outline-dark" >댓글순</button>
-    </div>
+    </div> {% endcomment %}
+    <form method="GET">
+      <div class="d-flex justify-content-end align-items-center gap-1 mb-2">
+        <select name="select_sorting" id="select_sorting" class="p-1 rounded-1">
+          <option value="최신순" {% if select_sorting == '최신순' %}selected{% endif %}>최신순</option>
+          <option value="오래된순" {% if select_sorting == '오래된순' %}selected{% endif %}>오래된순</option>
+        </select>
+        <input type="submit" class="btn btn-secondary btn-sm" value="정렬">
+      </div>
+    </form>
   </section>
   <section class="box">
     <div id="container-posts">

@@ -1,3 +1,4 @@
+
 *{
   box-sizing: border-box;
 }
@@ -5,6 +6,15 @@
 input[type="date"]:not(.has-value):before{
   color: lightgray;
   content: attr(placeholder);
+}
+
+
+.modal-body {
+  padding: 0;
+}
+
+.list-group {
+  border-radius: 0;
 }
 
 .form-control::-webkit-input-placeholder {
@@ -92,4 +102,3 @@ li:hover {
   color: #ffc700;
   font-size: 30px;
 }
-
