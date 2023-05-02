@@ -2,7 +2,7 @@ from datetime import timezone
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from .models import Post, PostComment
-from .forms import PostForm, PostCommentForm
+from .forms import PostForm, PostChangeForm ,PostCommentForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 # import requests
@@ -104,12 +104,12 @@ def update(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     if request.user == post.user:
         if request.method == 'POST':
-            form = PostForm(request.POST, request.FILES, instance=post)
+            form = PostChangeForm(request.POST, request.FILES, instance=post)
             if form.is_valid():
                 form.save()
                 return redirect('posts:detail', post_pk)
         else:
-            form = PostForm(instance=post)
+            form = PostChangeForm(instance=post)
     context = {
         'form': form,
         'post': post,

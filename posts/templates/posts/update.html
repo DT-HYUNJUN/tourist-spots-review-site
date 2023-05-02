@@ -13,7 +13,7 @@
     </button>
   </div>
   
-  <form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
+  <form action="{% url 'posts:update' post.pk %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="input-group mb-3 mt-3">
       <span class="input-group-text" id="basic-addon1">여행 만족도</span>
@@ -37,14 +37,29 @@
     {% for field in form %}
       <div class="input-group">
         {% if field.name == 'place' %}
-          <input id="place-field" type="text" name="place" aria-label="First name" class="form-control mb-3" placeholder="주소" readonly data-bs-toggle="modal" data-bs-target="#addressList" autocomplete="off">
-          <input id="region-field" type="text" name="region" aria-label="Last name" class="form-control mb-3" placeholder="지역" readonly autocomplete="off">
+          <input id="place-field" type="text" value="{{ post.place }}" name="place" aria-label="First name" class="form-control mb-3" placeholder="주소" readonly data-bs-toggle="modal" data-bs-target="#addressList" autocomplete="off">
+          <input id="region-field" type="text" value="{{ post.region }}" name="region" aria-label="Last name" class="form-control mb-3" placeholder="지역" readonly autocomplete="off">
         {% elif field.name == 'region' %}
         {% elif field.name == 'end_date' %}
+        {% elif field.name == 'rating' %}
         {% elif field.name == 'start_date' %}
           {% now "Y-m-d" as today %}
-          <input type="date" value="{{ today }}" name="start_date" class="form-control mb-3" placeholder="시작">
-          <input type="date" value="{{ today }}" name="end_date" class="form-control mb-3"placeholder="종료">
+          <input type="date" value="{{ post.start_date }}" name="start_date" class="form-control mb-3" placeholder="시작">
+          <input type="date" value="{{ post.end_date }}" name="end_date" class="form-control mb-3"placeholder="종료">
+        {% elif field.name == 'image' %}
+          {% if post.image %}
+          <div class="input-group">
+            <span class="input-group-text mb-3">현재 파일</span>
+            <div class="input-group-text mb-3">
+              <a class="flex-grow-1 text-truncate" href="{{ post.image.url }}">
+                <img style="width: 40px" href="{{ post.image.url }}" src="{{ post.image.url }}" alt="">
+              </a>
+              <input class="ms-3 form-check-input" type="checkbox" name="image-clear" id="image-clear_id">
+              <span class="ms-3">취소</span>
+            </div>
+          </div>
+          {% endif %}
+          <input type="file" name="image" class="form-control rounded-2 mb-3" accept="image/*" id="id_image">
         {% else %}
           {{ field }}
         {% endif %}
@@ -52,11 +67,9 @@
     {% endfor %}
     <div class="d-flex gap-3">
       <button class="btn btn-secondary flex-grow-1">취소</button>
-      <button class="btn btn-success flex-grow-1">작성 완료</button>
+      <button class="btn btn-success flex-grow-1">수정 완료</button>
     </div>
-    
   </form>
-
 
   <div class="modal fade" id="addressList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
