@@ -29,7 +29,7 @@ class PostForm(forms.ModelForm):
     )
     class Meta:
         model = Post
-        fields = ('title', 'place', 'content', 'image', 'start_date', )
+        fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date',)
 
 
 class PostCommentForm(forms.ModelForm):

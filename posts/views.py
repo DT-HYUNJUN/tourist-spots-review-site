@@ -140,6 +140,7 @@ def comment_delete(request, post_pk, comment_pk):
 
 @login_required
 def post_likes(request, post_pk):
+    # 인덱스일 때와 디테일 때와 구분해서 redirect 분리
     post = Post.objects.get(pk=post_pk)
     if post.like_users.filter(pk=request.user.pk).exists():
         post.like_users.remove(request.user)
@@ -165,11 +166,3 @@ def comment_likes(request, post_pk, comment_pk):
     else:
         comment.like_users.add(request.user)
     return redirect('posts:detail', post_pk)
-
-
-def index(request):
-    posts = Post.objects.all()
-    context = {
-        'posts': posts,
-    }
-    return render(request, 'pjt/index.html', context)
