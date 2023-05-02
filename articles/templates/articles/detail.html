@@ -4,9 +4,9 @@
 {{article.title}}
 {{article.user}}
 {{article.content}}
-{% if article.image %}
-<img src=" {{article.image.url}} " alt="img">
-{% endif %}
+{% for image in article.articleimage_set.all %}
+  <img src="{{image.image.url}}" alt="img">
+{% endfor %}
 
 <form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>
   {% csrf_token %}
