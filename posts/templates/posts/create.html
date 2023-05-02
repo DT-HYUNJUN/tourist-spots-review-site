@@ -29,16 +29,16 @@
     </div>
     
     {% for field in form %}
-      <div class="input-group mb-3">
+      <div class="input-group">
         {% if field.name == 'place' %}
-          <input id="place-field" type="text" name="place" aria-label="First name" class="form-control" placeholder="주소" readonly data-bs-toggle="modal" data-bs-target="#addressList" autocomplete="off">
-          <input id="region-field" type="text" name="region" aria-label="Last name" class="form-control" placeholder="지역" readonly autocomplete="off">
+          <input id="place-field" type="text" name="place" aria-label="First name" class="form-control mb-3" placeholder="주소" readonly data-bs-toggle="modal" data-bs-target="#addressList" autocomplete="off">
+          <input id="region-field" type="text" name="region" aria-label="Last name" class="form-control mb-3" placeholder="지역" readonly autocomplete="off">
         {% elif field.name == 'region' %}
         {% elif field.name == 'end_date' %}
         {% elif field.name == 'start_date' %}
           {% now "Y-m-d" as today %}
-          <input type="date" value="{{ today }}" name="start_date" class="form-control" placeholder="시작">
-          <input type="date" value="{{ today }}" name="end_date" class="form-control"placeholder="종료">
+          <input type="date" value="{{ today }}" name="start_date" class="form-control mb-3" placeholder="시작">
+          <input type="date" value="{{ today }}" name="end_date" class="form-control mb-3"placeholder="종료">
         {% else %}
           {{ field }}
         {% endif %}
@@ -55,15 +55,12 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">주소 검색</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <input class="form-control" type="text" list="address-list" id="place_input" autocomplete="off">
+        <input class="form-control border rounded-0" type="text" list="address-list" id="place_input" autocomplete="off">
         <div class="map-modal-wrap">
           <div id="map-modal"></div>
         </div>
         <div class="modal-body">
           <ol class="list-group list-group-numbered"></ol>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

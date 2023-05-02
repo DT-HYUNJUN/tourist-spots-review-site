@@ -3,6 +3,14 @@ input[type="date"]:not(.has-value):before{
   content: attr(placeholder);
 }
 
+.modal-body {
+  padding: 0;
+}
+
+.list-group {
+  border-radius: 0;
+}
+
 .form-control::-webkit-input-placeholder {
   color: lightgray;
 }

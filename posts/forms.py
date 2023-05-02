@@ -6,7 +6,7 @@ class PostForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': 'form-control mb-3',
                 'placeholder': '제목',
             }
         )
@@ -14,15 +14,15 @@ class PostForm(forms.ModelForm):
     content = forms.CharField(
         widget=forms.Textarea(
             attrs={
-                'class': 'form-control',
-                'placeholder': '내용',
+                'class': 'form-control mb-3',
+                'placeholder': '여행지를 소개해주세요~',
             }
         )
     )
     image = forms.ImageField(
         widget=forms.ClearableFileInput(
             attrs={
-                'class': 'form-control',
+                'class': 'form-control mb-3',
             }
         ),
         required=False
