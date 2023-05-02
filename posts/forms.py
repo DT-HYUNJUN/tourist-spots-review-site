@@ -6,38 +6,30 @@ class PostForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control'
-            }
-        )
-    )
-    place = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'id': 'place_field',
                 'class': 'form-control',
-                'autocomplete': 'off',
-                'list': 'address-list',
+                'placeholder': '제목',
             }
         )
     )
     content = forms.CharField(
         widget=forms.Textarea(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'placeholder': '내용',
             }
         )
     )
     image = forms.ImageField(
         widget=forms.ClearableFileInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
             }
         ),
         required=False
     )
     class Meta:
         model = Post
-        fields = ('title', 'place', 'content', 'image')
+        fields = ('title', 'place', 'content', 'image', 'start_date', )
 
 
 class PostCommentForm(forms.ModelForm):

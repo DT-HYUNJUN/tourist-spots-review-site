@@ -8,29 +8,18 @@ from django.db.models import Q
 # import requests
 
 # Create your views here.
-"""
-def search_keyword(keyword):
-    searching = keyword
-    url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query={}'.format(searching)
-    headers = {
-        "Authorization": "KakaoAK 2caddc4f25bdd55869865a211f7d13bb"
-    }
-    places = requests.get(url, headers = headers).json()['documents']
-    lst = []
-    for place in places:
-        lst.append(
-            {
-                'place_name': place['place_name'],
-                'address_name': place['address_name'],
-            }
-        )
-"""
+
 
 def index(request):
     posts = Post.objects.all().order_by('-pk')
+    select_sorting = request.GET.get('select_sorting')
+    posts = sorting(posts, select_sorting)
+    new_posts(posts)
     context = {
         'posts': posts,
+        'region_name': '모든 지역',
         'app': posts,
+        'select_sorting': select_sorting,
     }
     return render(request, 'posts/index.html', context)
 
@@ -41,10 +30,35 @@ def search(request):
         search = Post.objects.filter(
             Q(title__icontains=query)|
             Q(user__username__exact=query)
-        )
+        ).order_by('-pk')
     else:
-        search = Post.objects.all()[::-1] 
+        search = Post.objects.all().order_by('-pk')
     return render(request, 'posts/index.html', {'posts':search, 'app':'posts'})
+
+
+# 카테고리로 찾기
+def region(request, region_name):
+    posts = Post.objects.all().filter(region=region_name).order_by('-pk')
+    select_sorting = request.GET.get('select_sorting')
+    posts = sorting(posts, select_sorting)
+
+    new_posts(posts)
+
+    context = {
+        'posts': posts,
+        'region_name': region_name,
+        'select_sorting': select_sorting,
+    }
+    return render(request, 'posts/index.html', context)
+
+
+def sorting(queryset, select_sorting):
+    if select_sorting == '최신순':
+        return queryset.order_by('-pk')
+    elif select_sorting == '오래된순':
+        return queryset.order_by('pk')
+    else:
+        return queryset
 
 
 @login_required
@@ -54,6 +68,7 @@ def create(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
+            post.rating = int(request.POST.get('rating', 0))
             form.save()
             return redirect('posts:detail', post.pk)
     else:
@@ -137,7 +152,7 @@ def new_posts(posts):
     now = timezone.now()
     for post in posts:
         time_diff = now - post.created_at
-        if time_diff < timezone.timedelta(secondes=1):
+        if time_diff < timezone.timedelta(hours=1):
             post.is_new = True
         else:
             post.is_new = False

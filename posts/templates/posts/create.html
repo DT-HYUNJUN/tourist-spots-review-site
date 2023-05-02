@@ -1,109 +1,83 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'style/create.css' %}">
+<link rel="stylesheet" href="{% static 'style/modal.css' %}">
+{% endblock style %}
 
 {% block content %}
-  <form action="{% url 'posts:create' %}" method="POST">
+  <div class="position-relative">
+    <div id="map" class="map"></div>
+    <button id="modal-button" type="button" class="position-absolute bottom-0 end-0 border-0 z-1 hidden" data-bs-toggle="modal" data-bs-target="#mapModal">
+      <i class="bi bi-arrows-angle-expand"></i>
+    </button>
+  </div>
+  
+  <form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+    <div class="rate">
+      <input type="radio" id="star5" name="rating" value="5"/>
+      <label for="star5" title="text">5 stars</label>
+      <input type="radio" id="star4" name="rating" value="4"/>
+      <label for="star4" title="text">4 stars</label>
+      <input type="radio" id="star3" name="rating" value="3"/>
+      <label for="star3" title="text">3 stars</label>
+      <input type="radio" id="star2" name="rating" value="2"/>
+      <label for="star2" title="text">2 stars</label>
+      <input type="radio" id="star1" name="rating" value="1"/>
+      <label for="star1" title="text">1 star</label>
+    </div>
+    
     {% for field in form %}
-      <div class="input-group">
-        {{ field }}
+      <div class="input-group mb-3">
+        {% if field.name == 'place' %}
+          <input id="place-field" type="text" name="place" aria-label="First name" class="form-control" placeholder="주소" readonly data-bs-toggle="modal" data-bs-target="#addressList" autocomplete="off">
+          <input id="region-field" type="text" name="region" aria-label="Last name" class="form-control" placeholder="지역" readonly autocomplete="off">
+        {% elif field.name == 'start_date' %}
+          {% now "Y-m-d" as today %}
+          <input type="date" value="{{ today }}" name="start_date" class="form-control" placeholder="시작">
+          <input type="date" value="{{ today }}" name="end_date" class="form-control"placeholder="종료">
+        {% else %}
+          {{ field }}
+        {% endif %}
       </div>
     {% endfor %}
     <input type="submit">
   </form>
 
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-  </button>
 
-  {% comment %} <datalist id="address-list"></datalist> {% endcomment %}
-
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade" id="addressList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">주소 검색</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <input class="form-control" type="text" list="address-list" id="place_input" autocomplete="off">
+        <div class="map-modal-wrap">
+          <div id="map-modal"></div>
+        </div>
         <div class="modal-body">
-          <input type="text" list="address-list" id="place_input">
           <ol class="list-group list-group-numbered"></ol>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
   </div>
 
+  <div id="my-modal" class="Modal">
+    <div class="Modal-content rounded-3">
+      <span class="close">&times;</span>
+      <p></p>
+    </div>
+  </div>
+
 {% endblock content %}
-
+  
 {% block javascript %}
-<script>
-  const place_input = document.getElementById('place_input')
-  const place_field = document.getElementById('place_field')
-  const getAddress = (e) => {
-    e.preventDefault();
-    const searching = e.target.value;
-    axios.get('https://dapi.kakao.com/v2/local/search/keyword.json', {
-      params: {
-        query: searching,
-      },
-      headers: {
-        Authorization: 'KakaoAK 2caddc4f25bdd55869865a211f7d13bb',
-      }
-    })
-      .then(function (response) {
-        const places = response.data.documents;
-        let lst = []
-        for (let i = 0; i < places.length; i++) {
-          lst.push({
-            'place_name': places[i].place_name,
-            'address_name': places[i].address_name,
-          })
-        }
-        // console.log(lst);
-        printAddress(lst)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-  const printAddress = (lst) => {
-    const addressList = document.querySelector('ol')
-    addressList.textContent = ""
-    for (let i = 0; i < lst.length; i++) {
-      const element = lst[i];
-
-      const liTag = document.createElement('li')
-      liTag.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start',)
-      liTag.style.cursor = 'pointer'
-
-      const divTag1 = document.createElement('div')
-      divTag1.classList.add('ms-2', 'me-auto')
-      divTag1.textContent = element['place_name']
-
-      const divTag2 = document.createElement('div')
-      divTag2.classList.add('fw-bold')
-      divTag2.setAttribute('id', 'place')
-      divTag2.textContent = element['address_name']
-
-      divTag1.appendChild(divTag2)
-      liTag.appendChild(divTag1)
-      addressList.appendChild(liTag)
-    }
-    const addresses = addressList.querySelectorAll('li')
-    addresses.forEach(address => {
-      address.addEventListener('click', (e) => {
-        const place = address.querySelector('#place')
-        // console.log(address.textContent)
-        place_field.value = place.textContent
-        const modal = document.querySelector('.modal')
-        const modalInstance = bootstrap.Modal.getInstance(modal)
-        modalInstance.hide()
-      })
-    });
-  }
-  place_input.addEventListener('keyup', getAddress);
-</script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46fed7723052d8712b267e8a83ab2fa4&libraries=services"></script>
+<script src="{% static 'js/place_input.js' %}"></script>
+<script src="{% static 'js/mapModal.js' %}"></script>
 {% endblock javascript %}
