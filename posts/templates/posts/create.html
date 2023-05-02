@@ -7,26 +7,32 @@
 
 {% block content %}
   <div class="position-relative">
-    <div id="map" class="map"></div>
-    <button id="modal-button" type="button" class="position-absolute bottom-0 end-0 border-0 z-1 hidden" data-bs-toggle="modal" data-bs-target="#mapModal">
+    <div id="map" class="map rounded-3"></div>
+    <button id="modal-button" type="button" class="position-absolute bottom-0 end-0 border-0 z-1 hidden rounded-3" data-bs-toggle="modal" data-bs-target="#mapModal">
       <i class="bi bi-arrows-angle-expand"></i>
     </button>
   </div>
   
   <form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <div class="rate">
-      <input type="radio" id="star5" name="rating" value="5"/>
-      <label for="star5" title="text">5 stars</label>
-      <input type="radio" id="star4" name="rating" value="4"/>
-      <label for="star4" title="text">4 stars</label>
-      <input type="radio" id="star3" name="rating" value="3"/>
-      <label for="star3" title="text">3 stars</label>
-      <input type="radio" id="star2" name="rating" value="2"/>
-      <label for="star2" title="text">2 stars</label>
-      <input type="radio" id="star1" name="rating" value="1"/>
-      <label for="star1" title="text">1 star</label>
+    <div class="input-group mb-3 mt-3">
+      <span class="input-group-text" id="basic-addon1">여행 만족도</span>
+      <div class="form-control">
+        <div class="rate">
+          <input type="radio" id="star5" name="rating" value="5"/>
+          <label for="star5" title="text">5 stars</label>
+          <input type="radio" id="star4" name="rating" value="4"/>
+          <label for="star4" title="text">4 stars</label>
+          <input type="radio" id="star3" name="rating" value="3"/>
+          <label for="star3" title="text">3 stars</label>
+          <input type="radio" id="star2" name="rating" value="2"/>
+          <label for="star2" title="text">2 stars</label>
+          <input type="radio" id="star1" name="rating" value="1"/>
+          <label for="star1" title="text">1 star</label>
+        </div>
+      </div>
     </div>
+    
     
     {% for field in form %}
       <div class="input-group mb-3">
@@ -44,7 +50,11 @@
         {% endif %}
       </div>
     {% endfor %}
-    <input type="submit">
+    <div class="d-flex gap-3">
+      <button class="btn btn-secondary flex-grow-1">취소</button>
+      <button class="btn btn-success flex-grow-1">작성</button>
+    </div>
+    
   </form>
 
 
