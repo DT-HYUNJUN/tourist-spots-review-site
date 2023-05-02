@@ -6,38 +6,59 @@ class PostForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control'
-            }
-        )
-    )
-    place = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'id': 'place_field',
-                'class': 'form-control',
-                'autocomplete': 'off',
-                'list': 'address-list',
+                'class': 'form-control mb-3',
+                'placeholder': '제목',
             }
         )
     )
     content = forms.CharField(
         widget=forms.Textarea(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control mb-3',
+                'placeholder': '여행지를 소개해주세요~',
             }
         )
     )
     image = forms.ImageField(
         widget=forms.ClearableFileInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control mb-3',
             }
         ),
         required=False
     )
     class Meta:
         model = Post
-        fields = ('title', 'place', 'content', 'image')
+        fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date',)
+
+class PostChangeForm(forms.ModelForm):
+    title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control mb-3',
+                'placeholder': '제목',
+            }
+        )
+    )
+    content = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control mb-3',
+                'placeholder': '여행지를 소개해주세요~',
+            }
+        )
+    )
+    # image = forms.ImageField(
+    #     widget=forms.ClearableFileInput(
+    #         attrs={
+    #             'class': 'form-control mb-3',
+    #         }
+    #     ),
+    #     required=False
+    # )
+    class Meta:
+        model = Post
+        fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date', 'rating', )
 
 
 class PostCommentForm(forms.ModelForm):

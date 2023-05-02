@@ -57,12 +57,10 @@ def update(request):
         if form.is_valid():
             form.save()
             return redirect('accounts:profile')
-        else:
-            print("Form is not valid")
-            print(form.errors)
     else:
         form = CustomUserChangeForm(instance=request.user)
     return render(request, 'accounts/update.html', {'form' : form})
+
 
 
 @login_required

@@ -1,12 +1,24 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
 <article class="main--article--container">
   {{article.title}}
   {{article.user}}
   {{article.content}}
-  {% if article.image %}
-  <img src=" {{article.image.url}} " alt="img">
+  {% for image in article.articleimage_set.all %}
+    <img src="{{image.image.url}}" alt="img">
+  {% endfor %}
+
+  <form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>
+    {% csrf_token %}
+    <input type="submit" value='bookmark'>
+  </form>
+  <p> {{ article.bookmark_user.all|length }} </p>
+
+  <h3 class="mt-5">댓글
+  {% if comments.all|length > 0 %}
+    ({{ comments.all|length }})
   {% endif %}
 
   <form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>

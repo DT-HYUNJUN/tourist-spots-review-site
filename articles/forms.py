@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article, ArticleComment, Tag
+from .models import Article, ArticleComment, ArticleImage, Tag
 
 # class TagForm(forms.ModelForm):
 #     class Meta:
@@ -22,21 +22,27 @@ class ArticleForm(forms.ModelForm):
             }
         )
     )
-    image = forms.ImageField(
-        widget=forms.ClearableFileInput(
-            attrs={
-                'class': 'form-control'
-            }
-        ),
-        required=False
-    )
-
 
     class Meta:
         model = Article
-        fields = ('title', 'content', 'image',)
+        fields = ('title', 'content', )
     
-    
+
+class ArticleImageForm(forms.ModelForm):
+    image = forms.ImageField(
+        label='Image',
+        required=False,
+        widget=forms.ClearableFileInput(
+            attrs={
+            'multiple': True,
+            'class': 'form-control'
+            }
+        )
+    )
+    class Meta:
+        model = ArticleImage
+        fields = ('image',)
+
 
 class ArticleCommentForm(forms.ModelForm):
     class Meta:
