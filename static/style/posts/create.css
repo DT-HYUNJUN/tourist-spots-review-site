@@ -1,7 +1,13 @@
+
+*{
+  box-sizing: border-box;
+}
+
 input[type="date"]:not(.has-value):before{
   color: lightgray;
   content: attr(placeholder);
 }
+
 
 .modal-body {
   padding: 0;
@@ -51,7 +57,8 @@ li:hover {
 
 .rate {
   float: left;
-  height: 46px;
+  height: 3em;
+  line-height: 2.5em;
   padding: 0 10px;
 }
 
