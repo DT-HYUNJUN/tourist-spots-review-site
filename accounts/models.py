@@ -10,7 +10,7 @@ class User(AbstractUser):
     followers = models.ManyToManyField('self', symmetrical=False, related_name='following')
     def profile(instance, filename):
         return f'profiles/{instance.username}/{filename}'
-    profile_image = ProcessedImageField(blank=False,
+    profile_image = ProcessedImageField(blank=True,
                                 upload_to = profile,
                                 processors= [ResizeToFill(90, 90)],
                                 format='JPEG',

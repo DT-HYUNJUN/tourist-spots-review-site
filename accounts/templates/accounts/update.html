@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+</style>
+{% endblock style %}
+
+{% block content %}
+<h2>프로필 수정 페이지</h2>
+<form action="{% url 'accounts:update' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.non_field_errors }}
+    <input type="submit" value="프로필 수정">
+</form>
+{% endblock content %}

@@ -1,66 +1,79 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-{{article.title}}
-{{article.user}}
-{{article.content}}
-{% for image in article.articleimage_set.all %}
-  <img src="{{image.image.url}}" alt="img">
-{% endfor %}
 
-<form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>
-  {% csrf_token %}
-  <input type="submit" value='bookmark'>
-</form>
-<p> {{ article.bookmark_user.all|length }} </p>
+<article class="main--article--container">
+  {{article.title}}
+  {{article.user}}
+  {{article.content}}
+  {% for image in article.articleimage_set.all %}
+    <img src="{{image.image.url}}" alt="img">
+  {% endfor %}
 
-<h3 class="mt-5">댓글
+  <form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>
+    {% csrf_token %}
+    <input type="submit" value='bookmark'>
+  </form>
+  <p> {{ article.bookmark_user.all|length }} </p>
+
+  <h3 class="mt-5">댓글
   {% if comments.all|length > 0 %}
     ({{ comments.all|length }})
   {% endif %}
-  </h3>
-  <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
-  {% csrf_token %}
-  <div class="input-group mb-3">
-    {{ comment_form.content }}
-    <button type="submit" class="btn btn-outline-warning">댓글 작성</button>
-  </div>
+
+  <form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>
+    {% csrf_token %}
+    <input type="submit" value='bookmark'>
   </form>
+  <p> {{ article.bookmark_user.all|length }} </p>
 
-<table class="table">
-  {% for comment in comments %}
-    <tbody>
-      <tr class="border-bottom border-top border-dark-subtle">
-        <td style="width: 20%;" class="table-active"><a href="{% url 'accounts:profile' comment.user.username %}" class="text-decoration-none text-dark">{{ comment.user }}</a></td>
-        <td style="width: 65%;">{{ comment.content }}</td>
-        <td style="width: 25%;" class="text-secondary comment-time">{{ comment.created_string }}</td>
-        <td>
-          <form action="{% url 'articles:comment_likes' article.pk comment.pk %}" method='POST'>
-            {% csrf_token %}
-            <input type="submit" value='추천'
-            {% if request.user in comment.dislike_user.all %} disabled {% endif %}>
-          </form>
-          {{ comment.like_users.all|length }}
+  <h3 class="mt-5">댓글
+    {% if comments.all|length > 0 %}
+      ({{ comments.all|length }})
+    {% endif %}
+    </h3>
+    <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+      {{ comment_form.content }}
+      <button type="submit" class="btn btn-outline-warning">댓글 작성</button>
+    </div>
+    </form>
 
-          <form action="{% url 'articles:comment_dislikes' article.pk comment.pk %}" method='POST'>
-            {% csrf_token %}
-            <input type="submit" value='비추천'
-            {% if request.user in comment.like_users.all %} disabled {% endif %}>
+  <table class="table">
+    {% for comment in comments %}
+      <tbody>
+        <tr class="border-bottom border-top border-dark-subtle">
+          <td style="width: 20%;" class="table-active"><a href="{% url 'accounts:profile' comment.user.username %}" class="text-decoration-none text-dark">{{ comment.user }}</a></td>
+          <td style="width: 65%;">{{ comment.content }}</td>
+          <td style="width: 25%;" class="text-secondary comment-time">{{ comment.created_string }}</td>
+          <td>
+            <form action="{% url 'articles:comment_likes' article.pk comment.pk %}" method='POST'>
+              {% csrf_token %}
+              <input type="submit" value='추천'
+              {% if request.user in comment.dislike_user.all %} disabled {% endif %}>
+            </form>
+            {{ comment.like_users.all|length }}
 
-          </form>
-          {{ comment.dislike_user.all|length }}
-        </td>
-      </tr>
-    </tbody>
-  {% endfor %}
+            <form action="{% url 'articles:comment_dislikes' article.pk comment.pk %}" method='POST'>
+              {% csrf_token %}
+              <input type="submit" value='비추천'
+              {% if request.user in comment.like_users.all %} disabled {% endif %}>
 
-</table>
+            </form>
+            {{ comment.dislike_user.all|length }}
+          </td>
+        </tr>
+      </tbody>
+    {% endfor %}
 
-{% comment %} <form action="{% url 'articles:tag_add' article.pk %}">
-  {% csrf_token %}
-  {{tag_form.as_p}}
-  <input type="submit">
-</form> {% endcomment %}
+  </table>
 
+  {% comment %} <form action="{% url 'articles:tag_add' article.pk %}">
+    {% csrf_token %}
+    {{tag_form.as_p}}
+    <input type="submit">
+  </form> {% endcomment %}
+</article>
 {% endblock content %}
 
