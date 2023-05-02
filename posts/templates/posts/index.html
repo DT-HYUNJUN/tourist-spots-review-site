@@ -113,6 +113,7 @@
 {% block content %}
 
 <main>
+  <a href="{% url 'posts:region' '서울' %}" data-subject="서울">서울</a>
   <section class="box">
     <img src="{% static 'img/posts-main-img.jpg' %}" class="main-img" alt="triptopper베너이미지" />
   </section>
@@ -136,7 +137,8 @@
             alt="이미지없음"
             class="card-img-top noimage-img"
           />
-          <form action="#" method="POST">
+          {% endif %}
+          <form action="{% url 'posts:post_likes' post.pk %}" method="POST">
             {% csrf_token %}
             {% if request.user in post.like_posts.all %}
             <input class='like-user' type="submit" value="🤍">
@@ -144,7 +146,6 @@
             <input class='like-user' type="submit" value="❤">
             {% endif %}
           </form>
-          {% endif %}
 
 
           <div class="card-body">
