@@ -26,7 +26,15 @@
         </p>
         <p>
           <i class="bi bi-star-fill"><span class="mark-text">{{ post.rating }}</span></i>
-          <i class="bi bi-heart-fill"><span class="mark-text">{{ post.like_users.count }}</span></i>
+          <form class="like-form" data-post-id="{{ post.pk }}">
+            {% csrf_token %}
+            {% if request.user in post.like_users.all %}
+            <button type="submit" class="bi bi-heart-fill" id="like-{{ post.pk }}"></button>
+            {% else %}
+            <button type="submit" class="bi bi-heart" id="like-{{ post.pk }}"></button>
+            {% endif %}
+            <span id="like-count" class="mark-text">{{ post.like_users.all|length }}</span>
+          </form>
         </p>
       </article>
       <article>
@@ -44,7 +52,9 @@
                 {% endif %}
                 <div class="ms-2">
                   <div class='username-text'>{{ post.user }}</div>
+                  {% if post.user.mbti %}
                   <div class='userMbit-text'>{{ post.user.mbti }}</div>
+                  {% endif %}
                 </div>
               </div>
             </a> 
@@ -146,5 +156,6 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/map.js' %}"></script>
 <script src="{% static 'js/comments.js' %}"></script>
+<script src="{% static 'js/like.js' %}"></script>
 <script src="{% static 'js/follows.js' %}"></script>
 {% endblock javascript %}

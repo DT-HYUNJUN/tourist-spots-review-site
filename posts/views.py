@@ -145,8 +145,15 @@ def post_likes(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     if post.like_users.filter(pk=request.user.pk).exists():
         post.like_users.remove(request.user)
+        is_liked = False
     else:
         post.like_users.add(request.user)
+        is_liked = True
+    context = {
+        'is_liked': is_liked,
+        'like_count': post.like_users.count(),
+    }
+    return JsonResponse(context)
     return redirect('posts:detail', post_pk)
 
 
