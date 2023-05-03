@@ -1,0 +1,93 @@
+.title-text{
+  font-size: 2.5em;
+  font-weight: 900;
+}
+
+.mark-text{
+  font-weight: 400;
+  color: gray;
+  margin-right: 1.3em;
+}
+
+.bi-star-fill{
+  color: gold;
+}
+
+.bi-heart-fill{
+  color: red;
+}
+
+.post-content-text{
+  font-weight: 500;
+}
+
+.bi-card-text{
+  font-size: 2em;
+}
+
+.post-place-text{
+  font-size: 1em;
+  font-weight: 400;
+}
+.post-img{
+  width: 40em;
+  height: 30em;
+  border-radius: 1em;
+  object-fit: fill;
+}
+
+.partiction-line{
+  color: grey;
+}
+
+.content-info{
+  font-size: 1em;
+  font-weight: 400;
+  color: gray;
+}
+
+.content-fun{
+  text-decoration: underline;
+}
+
+.flex-container{
+  display: flex;
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
+  flex-wrap: wrap-reverse;
+  margin-top: 2em;
+}
+
+.user-profile-container{
+  border: 1px solid lightgrey;
+  box-shadow: 1px 1px 2px ;
+  text-align: center;
+
+  margin-bottom: 2em;
+
+  width: 15em;
+  height: 10em;
+  border-radius: 1em;
+
+  align-self: self-start;
+}
+
+.user-profile-container img {
+  width: 3em;
+  height: 3em;
+}
+
+.user-info{
+  margin-top: 2em;
+  margin-bottom: 1em;
+  justify-content: center;
+}
+
+.username-text{
+  font-weight: 800;
+}
+
+.userMbit-text{
+  font-size: 0.7em;
+  color: gray
+}
