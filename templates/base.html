@@ -14,6 +14,8 @@
         text-decoration: none;
         color: inherit;
       }
+      a:hover{
+      }
       li {
         list-style: none;
         margin: 0;
@@ -58,9 +60,9 @@
       {% comment %}  header {% endcomment %}
       .header--wrap{
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(8, 1fr);
         grid-template-areas: 
-          " . header-left . header-right ."
+          " . header-left header-left . . header-right header-right ."
         ;
         height: auto;
         margin-top: 2rem;
@@ -107,8 +109,7 @@
       .search--form{
         display: flex;
       }
-      .searc
-      h--input{
+      .search--input{
         width: 15rem;
         margin-right: 0.2rem;
       }
@@ -117,11 +118,12 @@
         display: none;
       }
 
-      @media screen and (max-width: 1080px) {
+      @media screen and (max-width: 1350px) {
         .header--sm--grid--wrap{
-          display: grid; grid-template-columns: repeat(5, 1fr);
+          display: grid; 
+          grid-template-columns: repeat(8, 1fr);
           grid-template-areas: 
-            " . header-md header-md header-md ."
+            " . header-md header-md header-md header-md header-md header-md ."
           ;
         }
         .header--wrap {
@@ -152,7 +154,7 @@
         }
       }
 
-      @media all and (max-width:680px) {
+      @media all and (max-width:850px) {
         .header--wrap {
           heigth: 100px;
         }
@@ -221,21 +223,76 @@
         }
       }
       {% comment %} main {% endcomment %}
-      .main--container{
+      .main-padding {
+        padding-top: 180px;
+      }
+
+      {% comment %} article {% endcomment %}
+      {% comment %} footer {% endcomment %}
+      .footer--container{
+        padding: 2rem 0;
+      }
+      .footer--title{
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      .footer--wrap{
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-areas: 
+          " . footer footer footer footer footer footer ."
+        ;
+        height: auto;
+      }
+      .footer--section--wrap{
+        grid-area: footer;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .footer--user--area{
         display: flex;
         justify-content: center;
+      }
+      .footer--section h5 {
+        margin: 0.2rem 0.5rem 0 0;
+      }
+      .footer--section a {
+        text-decoration: underline;
+        margin-bottom: 0.2rem;
+      }
+      .footer--name--area {
+        display: flex;
 
       }
-      .main--article--container{
-        
+      .footer--info--area {
+        font-size: 0.9rem;
+        width: 250px;
       }
-      {% comment %} article {% endcomment %}
+      .footer--copyright {
+        display: flex;
+        justify-content: center;
+        margin: 1.5rem 0 1rem 0;
+      }
+      @media screen and (max-width: 1350px) {
+        .footer--section--wrap {
+          grid-template-rows: repeat(2, 1fr);
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media screen and (max-width: 850px) {
+        .footer--section--wrap {
+          grid-template-rows: repeat(4, 1fr);
+          grid-template-columns: repeat(1, 1fr);
+        }
+        .footer--container{
+        margin-bottom: 8rem;}
+      }
     </style>
     {% block style %}
     {% endblock style %}
   </head>
   <body>
-    <header class="item">
+    <header class="item  position-fixed fixed-top">
       <div class="header--sm--grid--wrap">
         <div class="header--wrap">
           <div class="header--left--wrap">
@@ -327,23 +384,89 @@
     </header>
 
     <aside class="aside--container">
-      <div class="aside--top--wrap">
+      <div class="aside--top--wrap z-5">
         <a href="#"><i class="bi bi-airplane-fill"></i></button></a>
       </div>
     </aside>
 
-    <main class="item main--container">
+
+
+    <main class="item main--container main-padding">
     {% block content %}
     {% endblock content %}
     </main>
 
-    <footer class="item">
-      <div>
-        <p>박현준</p>
-        <p>김민선</p>
-        <p>최지원</p>
-        <p>정미영</p>
+    <footer class="item footer--container">
+      <h2 class="footer--title">10조, TenTen</h2>
+      <div class="footer--wrap">
+        <div class="footer--section--wrap">
+          <section class="footer--user--area">
+            <div class="footer--section">
+              <div class="footer--name--area">
+                <h5>박현준</h5>
+                <a href="https://together.kakao.com/big-five/summary/13985677">
+                  <span class="badge rounded-pill text-bg-warning">BIG 5</span>
+                </a>
+              </div>
+              <ul class="footer--info--area">
+                <li>Backend</li>
+                <li><a class="link-underline-success" href="https://github.com/DT-HYUNJUN">
+                  https://github.com/DT-HYUNJUN</a></li>
+              </ul>
+            </div>
+          </section>
+          <section class="footer--user--area">
+            <div class="footer--section">
+              <div class="footer--name--area">
+                <h5>김민선</h5>
+                <a href="https://together.kakao.com/big-five/summary/16366913">
+                  <span class="badge rounded-pill text-bg-warning">BIG 5</span>
+                </a>
+              </div>
+              <ul class="footer--info--area">
+                <li>Frontend</li>
+                <li><a class="link-underline-success" href="https://github.com/menduck">
+                  https://github.com/menduck</a></li>
+              </ul>
+            </div>
+          </section>
+          <section class="footer--user--area">
+            <div class="footer--section">
+              <div class="footer--name--area">
+                <h5>최지원</h5>
+                <a href="https://together.kakao.com/big-five/summary/795215">
+                  <span class="badge rounded-pill text-bg-warning">BIG 5</span>
+                </a>
+              </div>
+              <ul class="footer--info--area">
+                <li>Backend</li>
+                <li></li>
+                <li><a class="link-underline-success" href="https://github.com/Choi-jw-96">
+                  https://github.com/Choi-jw-96</a></li>
+                <li><a class="link-underline-warning" href="https://support-u-oneday.tistory.com/">
+                  https://support-u-oneday.tistory.com/</a></li>
+              </ul>
+              <br>
+            </div>
+          </section>
+          <section class="footer--user--area">
+            <div class="footer--section">
+              <div class="footer--name--area">
+                <h5>정미영</h5>
+                <a href="https://together.kakao.com/big-five/summary/28211106">
+                  <span class="badge rounded-pill text-bg-warning">BIG 5</span>
+                </a>
+              </div>
+              <ul class="footer--info--area">
+                <li>Frontend</li>
+                <li><a class="link-underline-success" href="https://github.com/qloeo">
+                  https://github.com/qloeo</a></li>
+              </ul>
+            </div>
+          </section>
+        </div>  
       </div>
+      <i class="footer--copyright">copyrightⓒ 2023 All rights reserved by TenTen</i>
     </footer>
 
     {% block javascript %}
