@@ -1,27 +1,141 @@
 {% extends 'base.html' %}
-{% load static %}
 
+{% load static %}
 {% block style %}
+<link rel="stylesheet" href="{% static 'style/posts/detail.css' %}">
 {% endblock style %}
 
 {% block content %}
-  <form action="{% url 'posts:post_likes' post.pk %}" method="POST">
-    {% csrf_token %}
-    {% if request.user in post.like_users.all %}
-    <input type="submit" value="좋아요 취소">
-    {% else %}
-    <input type="submit" value="좋아요">
-    {% endif %}
-  </form>
-  {% for i in ""|ljust:post.rating %}
-    <span class="star">★</span>
-  {% endfor %}
+  <main>
+    <section class="post-content">
+      <div class="mb-5">
+        {% if post.image %}
+        <img src="{{ post.image.url }}" class="post-img" alt="여행이미지">
+        {% else %}
+        <img src="{% static 'img/noimage.jpg' %}" class="post-img" alt="이미지없음">
+        {% endif %}
+      </div>
 
-  <div id="map" style="width:500px;height:400px;" data-place="{{ post.place }}"></div>
-  
+      <header class="title-text mb-2">{{ post.title }}</header>
+      <article class="d-flex text-nowrap">
+        <p class="duration">
+          <i class="bi bi-clock-history mark-text">{{ post.start_date }} ~ {{ post.end_date }}</i>
+        </p>
+        <p class="place">
+          <i class="bi bi-geo-alt mark-text">{{ post.region }}</i>
+        </p>
+        <p>
+          <i class="bi bi-star-fill"><span class="mark-text">{{ post.rating }}</span></i>
+          <i class="bi bi-heart-fill"><span class="mark-text">{{ post.like_users.count }}</span></i>
+        </p>
+      </article>
+      <article>
+        <div class="flex-container">
+          <div class="content-container">
+            <div>{{ post.content|linebreaksbr }}</div>
+            </div>
+          <div class="user-profile-container">
+            <div class="user-info d-flex">
+              {% comment %} <a  href="{% url 'accounts:profile' post.user %}"> {% endcomment %}
+                {% if post.user.profile_image %}
+                <img src="{{ post.user.profile_image }}" alt="사용자프로필이미지" />
+                {% else %}
+                <img src="{% static 'img/user_profile.png' %}" alt="기본프로필이미지" />
+                {% endif %}
+                <div class="ms-2">
+                  <div class='username-text'>{{ post.user }}</div>
+                  <div class='userMbit-text'>{{ post.user.mbti }}</div>
+                </div>
+              {% comment %} </a> {% endcomment %}
+            </div>
+            <div class="user-follow">
+              <button value="팔로우">팔로우</button>
+            </div>
+          </div>
+        </div>
+        
+        <hr class="partition-line">
+        <div id="map" style="width:30em;height:20em;" data-place="{{ post.place }}"></div> 
+        <p class="post-place-text">{{ post.place }}</p>
+      </article>
+    </section>
+    
+    <div class ='content-info'>
+      <span>{{ post.updated_at }}</span>
+      <span class="content-fun"><a href="{% url 'posts:update' post.pk %}">수정</a></span>
+      <span class="content-fun"><a onclick="return confirm('게시글을 삭제하시겠습니까?')" href="{% url 'posts:delete' post.pk %}">삭제</a></span>
+    </div>
+      <hr class="partition-line">
+      <section class="comments">
+        <div class="border-bottom d-flex">
+          <span>댓글 {{ comments|length }}</span>
+        </div>
+        <table id="comment-list" class="table">
+          <tbody>
+            {% for comment in comments %}
+              <tr id="comments" {% if request.user == comment.user %}class="bg-body-tertiary"{% endif %}>
+                <td>
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-start gap-2">
+                      <!-- 프로필 사진 -->
+                      <div class="border rounded-circle position-relative mt-1 profile-img-sm">
+                        {% if comment.user.image %}
+                        <a href="{% url 'accounts:profile' comment.user.username %}">
+                          <img src="{{ comment.user.image.url }}" alt="{{ comment.user }}" class="rounded-circle profile-img-sm">
+                        </a>
+                        {% else %}
+                        <a href="{% url 'accounts:profile' comment.user.username %}">
+                          <div class="position-absolute top-50 start-50 translate-middle">
+                            <img src="{% static 'img/user_profile.png' %}" class="profile-img-sm" alt="기본프로필이미지" />
+                          </div>
+                        </a>
+                        {% endif %}
+                      </div>
+                      <!-- 작성자 / 내용 -->
+                      <div>
+                        <a href="{% url 'accounts:profile' comment.user.username %}">
+                          <span>{{ comment.user }}</span>
+                        </a>
+                        <p class="m-0">{{ comment.content }}</p>
+                        <p class="post-created text-secondary mt-2 mb-0">{{ post.created_at|date:'Y. m. d.  H:i' }}</p>
+                      </div>
+                    </div>
+                    <!-- 삭제 버튼 -->
+                    <div class="text-secondary">
+                      {% if comment.user == request.user %}
+                      <form action="{% url 'posts:comment_delete' post.pk comment.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button  class="bg-transparent border-0 text-danger" type="submit">
+                          <div id="comment_delete" class="hidden"><i class="bi bi-x"></i></div>
+                        </button>
+                      </form>
+                      {% endif %}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        
+        <form id="comment-form" action="{% url 'posts:comment_create' post.pk  %}" method="POST">
+          {% csrf_token %}
+          <div class="border rounded-3 p-3">
+            <div class="mb-2">{{ user.username }}</div>
+            {% for field in comment_form %}
+              {{ field }}
+            {% endfor %}
+            <div class="text-end">
+              <button id="comment-submit" type="submit" class="border-0 bg-transparent text-body-tertiary">등록</button>
+            </div>
+          </div>
+        </form>
+      </section>
+  </main> 
 {% endblock content %}
 
 {% block javascript %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46fed7723052d8712b267e8a83ab2fa4&libraries=services"></script>
 <script src="{% static 'js/map.js' %}"></script>
+<script src="{% static 'js/comments.js' %}"></script>
 {% endblock javascript %}

@@ -1,18 +1,27 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Article, ArticleComment, ArticleImage,Tag
+from django.shortcuts import render, redirect
+from .models import Article, ArticleComment, ArticleImage
 from .forms import ArticleForm, ArticleCommentForm , ArticleImageForm
 from django.contrib.auth.decorators import login_required
-from datetime import date, datetime, timedelta
-from django.db.models import Q
-from django.contrib import messages
-
+from django.views.generic import ListView, TemplateView
+from django.db.models import Q, Count
 
 
 # Create your views here.
  
 
 def index(request):
-    articles = Article.objects.all().order_by('-pk')
+    articles = Article.objects.all()
+    if request.method == 'GET':
+        order = request.GET.get('order')
+        if order == "2":
+            articles = articles.annotate(like_count=Count('like_users')).order_by('-like_count', '-pk')
+        elif order == "3":
+            articles = articles.annotate(view_count=Count('views')).order_by('-view_count', '-pk')
+        else:
+            articles = articles.order_by('-pk')
+    else:
+        articles = articles.order_by('-pk')
+    
     context = {
         'articles': articles,
     }
@@ -24,10 +33,13 @@ def create(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         images = request.FILES.getlist('image')
+        tags = request.POST.get('tags').split(',')
         if form.is_valid():
             article = form.save(commit=False)
             article.user = request.user
             article.save()
+            for tag in tags:
+                article.tags.add(tag.strip())
             for i in images:
                 ArticleImage.objects.create(article=article, image=i)
             return redirect('articles:index')       
@@ -53,13 +65,15 @@ def detail(request, article_pk):
 
     comment_form = ArticleCommentForm()
     comments = article.articlecomment_set.all()
-    # tag_form = TagForm
+
+    tags = article.tags.all()
+
 
     context = {
         'article': article,
         'comment_form' : comment_form,
         'comments' : comments,
-        # 'tag_form' : tag_form,
+        'tags' : tags
     }
     return render(request, 'articles/detail.html', context)
 
@@ -168,31 +182,17 @@ def search(request):
     return render(request, 'articles/index.html', {'articles':search, 'app':'articles'})
 
 
+class TagCloudTV(TemplateView):
+    template_name = 'taggit/taggit_cloud.html'
 
-# @login_required
-# def tag_add(request, article_pk):
-#     article = get_object_or_404(Article, pk=article_pk)
-#     tag_form = TagForm(request.POST)
-#     if tag_form.is_valid():
-#         tag = tag_form.save(commit=False)
-#         # tag, created = Tag.objects.get_or_create(name=tag.tag_content)
-#         tag, created = Tag.objects.get_or_create(tag_content=tag.tag_content)
-#         article.tagging.add(tag)
-#         return redirect('articles:detail', article_pk)
-#     else:
-#         tag_form = TagForm()
-#     context = {
-#         'article' : article, 
-#         'tag_form' : tag_form
-#     }
-#     return render(request, 'articles/tag_add.html', context)
+class TaggedObjectLV(ListView):
+    template_name = 'taggit/taggit_article_list.html'
+    model = Article
 
-# @login_required
-# def hashtag(request, tag_pk):
-#     hashtag = get_object_or_404(Tag, pk=tag_pk)
-#     articles = hashtag.article_set.order_by('-pk')
-#     context = {
-#         'hashtag' : hashtag,
-#         'articles' : articles
-#     }
-#     return render(request, 'articles/hashtag.html', context)
+    def get_queryset(self):
+        return Article.objects.filter(tags__name=self.kwargs.get('tag'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tagname'] = self.kwargs['tag']
+        return context
