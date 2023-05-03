@@ -93,7 +93,7 @@
 }
 
 .content-container{
-  max-width: 80%;
+  max-width: 75%;
   margin-bottom: 2em;
 }
 
@@ -117,4 +117,8 @@
 
 .hidden {
   display: none;
+}
+
+.following-btn {
+  background-color: gray;
 }

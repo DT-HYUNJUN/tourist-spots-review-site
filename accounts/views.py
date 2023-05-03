@@ -5,6 +5,7 @@ from .forms import CustomPasswordChangeForm, CustomAuthenticationForm, CustomUse
 from django.contrib.auth import get_user_model
 from posts.models import Post
 from articles.models import Article
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -92,7 +93,7 @@ def profile(request, username):
     }
     return render(request, 'accounts/profile.html', context)
 
-
+@login_required
 def follow(request, user_pk):
     User = get_user_model()
     person = User.objects.get(pk=user_pk)
@@ -100,7 +101,12 @@ def follow(request, user_pk):
     if person != request.user:
         if request.user in person.followers.all():
             person.followers.remove(request.user)
+            is_followed = False
         else:
             person.followers.add(request.user)
+            is_followed = True
+        context ={
+            'is_followed': is_followed,
+        }
+        return JsonResponse(context)
     return redirect('accounts:profile', person.username)
- 

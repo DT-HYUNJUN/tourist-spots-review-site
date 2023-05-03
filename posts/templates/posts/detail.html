@@ -34,8 +34,8 @@
             <div>{{ post.content|linebreaksbr }}</div>
             </div>
           <div class="user-profile-container">
+            <a href="{% url 'accounts:profile' post.user %}">
             <div class="user-info d-flex">
-              {% comment %} <a  href="{% url 'accounts:profile' post.user %}"> {% endcomment %}
                 {% if post.user.profile_image %}
                 <img src="{{ post.user.profile_image }}" alt="사용자프로필이미지" />
                 {% else %}
@@ -45,11 +45,18 @@
                   <div class='username-text'>{{ post.user }}</div>
                   <div class='userMbit-text'>{{ post.user.mbti }}</div>
                 </div>
-              {% comment %} </a> {% endcomment %}
-            </div>
-            <div class="user-follow">
-              <button value="팔로우">팔로우</button>
-            </div>
+              </div>
+            </a> 
+
+            {% if request.user != post.user.username %}
+              <form id="follow-form" data-user-id="{{ post.user.pk }}">
+                {% if request.user in post.user.followers.all %}
+                <input type="submit" class="btn btn-success" value="팔로잉" />
+                {% else %}
+                <input type="submit" class="btn btn-success"  value="팔로워" />
+                {% endif %}
+              </form>
+            {% endif %}
           </div>
         </div>
         
@@ -135,6 +142,8 @@
 
 {% block javascript %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46fed7723052d8712b267e8a83ab2fa4&libraries=services"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/map.js' %}"></script>
 <script src="{% static 'js/comments.js' %}"></script>
+<script src="{% static 'js/follows.js' %}"></script>
 {% endblock javascript %}
