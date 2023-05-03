@@ -5,6 +5,7 @@ from .models import Post, PostComment
 from .forms import PostForm, PostChangeForm ,PostCommentForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import JsonResponse
 # import requests
 
 # Create your views here.

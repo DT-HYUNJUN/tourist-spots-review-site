@@ -3,11 +3,15 @@
   box-sizing: border-box;
 }
 
+.input[type="text"]:focus {
+  outline: 0 none;
+}
+
 input[type="date"]:not(.has-value):before{
   color: lightgray;
   content: attr(placeholder);
+  
 }
-
 
 .modal-body {
   padding: 0;
