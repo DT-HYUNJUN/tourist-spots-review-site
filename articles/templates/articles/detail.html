@@ -3,18 +3,36 @@
 {% block content %}
 
 <article class="main--article--container">
+  <p>title</p>
   {{article.title}}
+  <p>user</p>
   {{article.user}}
+  <p>content</p>
   {{article.content}}
   {% for image in article.articleimage_set.all %}
     <img src="{{image.image.url}}" alt="img">
   {% endfor %}
+  {% comment %} <p>tag</p>
+  {% for tag in article.tags.all %}
+    {{ tag }}
+  {% endfor %} {% endcomment %}
 
-  <form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>
+  <br>
+    <div>
+        <b>TAGS</b><br>
+        {% load taggit_templatetags2_tags %} <!--taggit_templatetag2_tags 모듈을 가져온다-->
+       {% get_tags_for_object article as "tags" %} <!-- ** -->
+        {% for tag in tags %}
+        <a href="{% url 'articles:tagged_object_list' tag.name %}">{{tag.name}}</a>
+        {% endfor %} 
+
+    </div>
+
+  <form action=" {% url 'articles:likes' article.pk %}" method='POST'>
     {% csrf_token %}
-    <input type="submit" value='bookmark'>
+    <input type="submit" value='likes'>
   </form>
-  <p> {{ article.bookmark_user.all|length }} </p>
+  <p> {{ article.like_users.all|length }} </p>
 
   <h3 class="mt-5">댓글
   {% if comments.all|length > 0 %}
@@ -26,6 +44,7 @@
     <input type="submit" value='bookmark'>
   </form>
   <p> {{ article.bookmark_user.all|length }} </p>
+
 
   <h3 class="mt-5">댓글
     {% if comments.all|length > 0 %}

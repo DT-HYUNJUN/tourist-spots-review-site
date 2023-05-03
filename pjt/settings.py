@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'imagekit',
+    'taggit.apps.TaggitAppConfig',
+    'taggit_templatetags2',
 
     # allauth
     'allauth',
@@ -160,3 +162,7 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'  # 로그인 후 리다이렉트 될 경로
 ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')  
+
+
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_LIMIT = 50

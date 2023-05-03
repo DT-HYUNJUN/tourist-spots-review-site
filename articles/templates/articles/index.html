@@ -23,9 +23,19 @@ h2 {
 {% endblock style %}
 {% block content %}
 <article class="main--article--container">
-  <div class="article--title--wrap">
-    <h2>Community</h2>
-    <a href="{% url 'articles:create' %}">글 생성</a>
+  <div>
+      <h2>Community</h2>
+    <div class='d-flex justify-content-between my-1'>
+      <form  method='GET' class='main--form--wrap'>
+        <select name='order' class="form-select me-2">
+          <option value="1">최신글</option>
+          <option value="2">인기글</option>
+          <option value="3">많이본 글</option>
+        </select>
+        <input type="submit" value='정렬' class="btn btn-secondary btn-sm">
+      </form>
+      <a href="{% url 'articles:create' %}">글 생성</a>
+    </div>
   </div>
   
   <table class="article--table table">
@@ -54,10 +64,9 @@ h2 {
     </form> {% endcomment %}
   {% endfor %}
   </tbody>
-  
-  
   </table>
 
+  <a href="{% url 'articles:tag_cloud' %}"><span class="btn btn-secondary btn-sm mb-3">TagCloud</span></a> 
 </article>
 
 
