@@ -53,7 +53,13 @@ h2 {
       <tr>
         <th scope="row">{{ article.pk }}</th>
         <td><a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a></td>
-        <td>{{ article.user }}</td>
+        <td><div class="profile--image--wrap">
+          {% if article.user.profile_image %}
+          <img src="{{ article.user.profile_image.url }}" alt="profile-image">
+          {% else %}
+          <i class="bi bi-person-circle"></i>
+          {% endif %}    
+        </div>{{ article.user }}</td>
         <td>{{ article.created_at }}</td>
         <td>{{ article.views.all|length }}</td>
       </tr>
