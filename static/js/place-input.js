@@ -1,6 +1,8 @@
 const place_input = document.getElementById('place_input')
 const place_field = document.getElementById('place-field')
 const region_field = document.getElementById('region-field')
+const modalButton = document.getElementById('modal-button')
+const centerButton = document.getElementById('current-location')
 
 const getAddress = (e) => {
   e.preventDefault()
@@ -62,8 +64,11 @@ const printAddress = (lst) => {
       const place = address.querySelector('#place')
       const region = place.textContent.split(' ')[0]
 
-      const mapModalHeader = document.querySelector('#my-modal p')
+      const mapModalHeader = document.querySelector('#modal-place')
+      const mapModalSpan = document.querySelector('#modal-address')
+
       mapModalHeader.textContent = address.querySelector('li div').firstChild.textContent
+      mapModalSpan.textContent =  `(${place.textContent})`
 
       place_field.value = place.textContent
       region_field.value = region
@@ -73,6 +78,7 @@ const printAddress = (lst) => {
       modalInstance.hide()
       
       const mapContainer = document.getElementById('map')
+      mapContainer.classList.add('rounded-3', 'shadow')
       const mapOption = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
         level: 3
@@ -89,9 +95,9 @@ const printAddress = (lst) => {
           map.setCenter(coords)
         }
       })
-      const modalButton = document.getElementById('modal-button')
-      modalButton.classList.remove('hidden')
+
       
+      modalButton.classList.remove('hidden')
     })
   })
 
@@ -106,14 +112,15 @@ const printAddress = (lst) => {
       }
       const map = new kakao.maps.Map(mapContainer, mapOption)
       const geocoder = new kakao.maps.services.Geocoder()
+
       geocoder.addressSearch(place, function(result, status) {
         if (status === kakao.maps.services.Status.OK) {
-          const coords = new kakao.maps.LatLng(result[0].y, result[0].x)
+          const coordsInput = new kakao.maps.LatLng(result[0].y, result[0].x)
           const marker = new kakao.maps.Marker({
             map: map,
-            position: coords
+            position: coordsInput
           })
-          map.setCenter(coords)
+          map.setCenter(coordsInput)
         }
       })
     })
@@ -127,4 +134,3 @@ modal.addEventListener('shown.bs.modal', function () {
 })
 
 place_input.addEventListener('keyup', getAddress);
-
