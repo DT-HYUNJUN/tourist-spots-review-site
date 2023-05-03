@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 class CustomUserUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = get_user_model()
-        fields = ('username', 'email', 'password1', 'password2',)
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',)
     username = forms.CharField(
         required=True,
         label='ID',
@@ -14,6 +14,26 @@ class CustomUserUserCreationForm(UserCreationForm):
           attrs = {
             'class' : 'form-control',
             'placeholder' : '영문 소문자 또는 영문 대문자, 숫자 조합 6~12 자리',
+          }
+        )
+    )
+    first_name = forms.CharField(
+        required=True,
+        label='FirstName',
+        widget= forms.TextInput(
+          attrs = {
+            'class' : 'form-control',
+            'placeholder' : '성을 입력하세요.',
+          } 
+        )
+    )
+    last_name = forms.CharField(
+        required=True,
+        label='LastName',
+        widget= forms.TextInput(
+          attrs = {
+            'class' : 'form-control',
+            'placeholder' : '이름을 입력하세요.',
           }
         )
     )
@@ -77,7 +97,27 @@ class Birthday(forms.DateInput):
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm):
         model = get_user_model()
-        fields = ('email', 'profile_image', 'mbti', 'birthday',)
+        fields = ('first_name', 'last_name', 'mbti', 'birthday', 'email', 'profile_image',)
+    first_name = forms.CharField(
+        required=True,
+        label='FirstName',
+        widget= forms.TextInput(
+          attrs = {
+            'class' : 'form-control',
+            'placeholder' : '성을 입력하세요.',
+          } 
+        )
+    )
+    last_name = forms.CharField(
+        required=True,
+        label='LastName',
+        widget= forms.TextInput(
+          attrs = {
+            'class' : 'form-control',
+            'placeholder' : '이름을 입력하세요.',
+          }
+        )
+    )
     email = forms.EmailField(
         required=True,
         label='Email',

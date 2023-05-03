@@ -119,6 +119,7 @@
   display: none;
 }
 
-.following-btn {
-  background-color: gray;
-}
+
+.map-detail {
+  width: 500px;
+  height: 400px;
