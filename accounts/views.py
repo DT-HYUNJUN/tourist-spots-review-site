@@ -56,10 +56,11 @@ def update(request):
         form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('posts:index')
+            return redirect('accounts:profile')
     else:
         form = CustomUserChangeForm(instance=request.user)
     return render(request, 'accounts/update.html', {'form' : form})
+
 
 
 @login_required
@@ -78,12 +79,15 @@ def change_password(request):
 def profile(request, username):
     User = get_user_model()
     person = User.objects.get(username=username)
-    post = Post.objects.order_by('-pk') 
-    article = Article.objects.order_by('-pk') 
+    posts = Post.objects.filter(user=person).order_by('-pk') 
+    articles = Article.objects.filter(user=person).order_by('-pk') 
+    
+    print(posts,articles)
+
     context = {
         'person' : person,
-        'post' : post,
-        'article' : article
+        'posts' : posts,
+        'articles' : articles,
     }
     return render(request, 'accounts/profile.html', context)
 

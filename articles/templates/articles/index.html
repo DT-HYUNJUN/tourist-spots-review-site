@@ -1,15 +1,66 @@
 {% extends "base.html" %}
-
+{% block style %}
+<style>
+h2 {
+  margin: 0;
+}
+.main--form--wrap {
+  display: flex;
+  justify-content: center;
+}
+.main--article--container {
+  {% comment %} padding: 70px 0; {% endcomment %}
+}
+.article--table {
+  text-align:center;
+}
+.article--title--wrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+</style>
+{% endblock style %}
 {% block content %}
-{% for article in articles %}
+<article class="main--article--container">
+  <div class="article--title--wrap">
+    <h2>Community</h2>
+    <a href="{% url 'articles:create' %}">글 생성</a>
+  </div>
+  
+  <table class="article--table table">
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">제목</th>
+        <th scope="col">글쓴이</th>
+        <th scope="col">작성시간</th>
+        <th scope="col">조회수</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+  {% for article in articles %}
+      <tr>
+        <th scope="row">{{ article.pk }}</th>
+        <td><a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a></td>
+        <td>{{ article.user }}</td>
+        <td>{{ article.created_at }}</td>
+        <td>{{ article.views.all|length }}</td>
+      </tr>
+  
+    {% comment %} <form id="myForm" action="{% url 'articles:detail' article.pk %}" method='POST'>
+      {% csrf_token %}
+      <a href="{% url 'articles:detail' article.pk %}" id="submitForm">{{ article.title }}</a> 
+    </form> {% endcomment %}
+  {% endfor %}
+  </tbody>
+  
+  
+  </table>
 
-  <form id="myForm" action="{% url 'articles:detail' article.pk %}" method='POST'>
-    {% csrf_token %}
-    <a href="{% url 'articles:detail' article.pk %}" id="submitForm">{{ article.title }}</a> 
-  </form>
+</article>
 
-  {{article.views.all|length}}
-{% endfor %}
+
 
 {% endblock content %}
 

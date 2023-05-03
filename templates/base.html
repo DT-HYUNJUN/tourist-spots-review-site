@@ -221,13 +221,22 @@
         }
       }
       {% comment %} main {% endcomment %}
-      .main--form--wrap {
-        margin: 2em 1em 2em 1em;
+      .main--container{
+        display: flex;
+        justify-content: center;
+
       }
+      .main--article--container{
+        
+      }
+
 
       .main-padding {
         padding-top: 180px;
       }
+
+      {% comment %} article {% endcomment %}
+
     </style>
     {% block style %}
     {% endblock style %}
@@ -330,7 +339,9 @@
       </div>
     </aside>
 
-    <main class="item main-padding">
+
+
+    <main class="item main--container main-padding">
     {% block content %}
     {% endblock content %}
     </main>

@@ -2,17 +2,13 @@
 {% load socialaccount %}
 {% block style %}
 <style>
+  .main--article--container{
+    flex-direction: column;
+    padding: 30px 0;
+  }
   .main--login {
     display: flex;
     justify-content: center;
-  }
-  .main--form--wrap {
-    width: 50%;
-  }
-  .main--article--container {
-    display: flex;
-    justify-content: center;
-    padding: 70px 0;
   }
   h2 {
     text-align: center;
@@ -23,7 +19,7 @@
 {% block content %}
 {% load static %}
   <article class="main--article--container">
-    <section class="main--form--wrap">
+    <section class="section--form--wrap">
       <div class="main--login">
         <img class="" src="{% static 'img/triptopper_c_logo_01.png' %}" alt="image">
       </div>
@@ -34,9 +30,12 @@
         <input type="submit" value="log in" class="btn btn-success">
       </form>
     </section>
-    <a href="{% provider_login_url 'kakao' method='oauth2' %}">
-      카카오톡 회원가입
-    </a>
+    <hr>
+    <section class="d-grid">
+      <a  type="button" class="btn btn-warning" href="{% provider_login_url 'kakao' method='oauth2' %}">
+        KakaoTalk Sign up
+      </a>
+    </section>
   </article>
 {% endblock content %}
 {% block javascript %}
