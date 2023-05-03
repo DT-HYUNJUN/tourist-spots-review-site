@@ -6,9 +6,9 @@
 {% endblock style %}
 
 {% block content %}
-  <div class="position-relative">
+  <div class="position-relative rounded-3 mt-3 shadow">
     <div id="map" class="map rounded-3"></div>
-    <button id="modal-button" type="button" class="position-absolute bottom-0 end-0 border-0 z-1 hidden rounded-3" data-bs-toggle="modal" data-bs-target="#mapModal">
+    <button id="modal-button" type="button" class="position-absolute bottom-0 end-0 z-1 hidden" data-bs-toggle="modal" data-bs-target="#mapModal">
       <i class="bi bi-arrows-angle-expand"></i>
     </button>
   </div>
@@ -17,22 +17,24 @@
     {% csrf_token %}
     <div class="input-group mb-3 mt-3">
       <span class="input-group-text" id="basic-addon1">여행 만족도</span>
-      <div class="form-control">
-        <div class="rate">
-          <input type="radio" id="star5" name="rating" value="5"/>
-          <label for="star5" title="text">5 stars</label>
-          <input type="radio" id="star4" name="rating" value="4"/>
-          <label for="star4" title="text">4 stars</label>
-          <input type="radio" id="star3" name="rating" value="3"/>
-          <label for="star3" title="text">3 stars</label>
-          <input type="radio" id="star2" name="rating" value="2"/>
-          <label for="star2" title="text">2 stars</label>
-          <input type="radio" id="star1" name="rating" value="1"/>
-          <label for="star1" title="text">1 star</label>
+      <div class="form-control pt-0">
+        <div id="rating" class="" data-rating="{{ post.rating }}">
+          <input id="rating-1" class="rate-input" type="radio" name="rating" value="1" hidden>
+          <label class="rate" for="rating-1">☆</label>
+          <input id="rating-2" class="rate-input" type="radio" name="rating" value="2" hidden>
+          <label class="rate" for="rating-2">☆</label>
+          <input id="rating-3" class="rate-input" type="radio" name="rating" value="3" hidden>
+          <label class="rate" for="rating-3">☆</label>
+          <input id="rating-4" class="rate-input" type="radio" name="rating" value="4" hidden>
+          <label class="rate" for="rating-4">☆</label>
+          <input id="rating-5" class="rate-input" type="radio" name="rating" value="5" hidden>
+          <label class="rate" for="rating-5">☆</label>
+          <span id="update" class="ms-3 hidden rate-input">
+            <i class="bi bi-arrow-clockwise"></i>
+          </span>
         </div>
       </div>
     </div>
-    
     
     {% for field in form %}
       <div class="input-group">
@@ -44,8 +46,8 @@
         {% elif field.name == 'rating' %}
         {% elif field.name == 'start_date' %}
           {% now "Y-m-d" as today %}
-          <input type="date" value="{{ post.start_date }}" name="start_date" class="form-control mb-3" placeholder="시작">
-          <input type="date" value="{{ post.end_date }}" name="end_date" class="form-control mb-3"placeholder="종료">
+          <input type="date" value="{{ post.start_date|date:'Y-m-d' }}" name="start_date" class="form-control mb-3" placeholder="시작">
+          <input type="date" value="{{ post.end_date|date:'Y-m-d' }}" name="end_date" class="form-control mb-3"placeholder="종료">
         {% elif field.name == 'image' %}
           {% if post.image %}
           <div class="input-group">
@@ -91,8 +93,18 @@
 
   <div id="my-modal" class="Modal">
     <div class="Modal-content rounded-3">
-      <span class="close">&times;</span>
-      <p></p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <span id="modal-place" class="fw-bold"></span>
+          <span id="modal-address"></span>
+        </div>
+        <div class="close">&times;</div>
+      </div>
+      <div id="modal-content" class="position-relative">
+        <button onclick="panTo()" class="position-absolute top-0 end-0 border-0 z-3 fs-3">
+          <i class="bi bi-geo-alt"></i>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -100,6 +112,8 @@
   
 {% block javascript %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46fed7723052d8712b267e8a83ab2fa4&libraries=services"></script>
-<script src="{% static 'js/place_input.js' %}"></script>
-<script src="{% static 'js/mapModal.js' %}"></script>
+{% comment %} <script src="{% static 'js/place-input.js' %}"></script> {% endcomment %}
+<script src="{% static 'js/map-modal.js' %}"></script>
+<script src="{% static 'js/map-update.js' %}"></script>
+<script src="{% static 'js/rating-update.js' %}"></script>
 {% endblock javascript %}

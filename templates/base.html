@@ -229,13 +229,20 @@
       .main--article--container{
         
       }
+
+
+      .main-padding {
+        padding-top: 180px;
+      }
+
       {% comment %} article {% endcomment %}
+
     </style>
     {% block style %}
     {% endblock style %}
   </head>
   <body>
-    <header class="item">
+    <header class="item  position-fixed fixed-top">
       <div class="header--sm--grid--wrap">
         <div class="header--wrap">
           <div class="header--left--wrap">
@@ -327,22 +334,27 @@
     </header>
 
     <aside class="aside--container">
-      <div class="aside--top--wrap">
+      <div class="aside--top--wrap z-5">
         <a href="#"><i class="bi bi-airplane-fill"></i></button></a>
       </div>
     </aside>
 
-    <main class="item main--container">
+
+
+    <main class="item main--container main-padding">
     {% block content %}
     {% endblock content %}
     </main>
 
     <footer class="item">
       <div>
-        <p>박현준</p>
-        <p>김민선</p>
-        <p>최지원</p>
-        <p>정미영</p>
+        <span>박현준</span>
+        <span>김민선</span>
+        <span>최지원</span>
+        <span>정미영</span>
+        <p>a</p>
+        <p>a</p>
+        <p>copyrightⓒ 2008 All rights reserved by XX</p>
       </div>
     </footer>
 

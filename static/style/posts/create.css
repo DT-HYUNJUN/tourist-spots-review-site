@@ -23,12 +23,16 @@ input[type="date"]:not(.has-value):before{
 
 #modal-button {
   font-size: 16px;
+  border-radius: 35% 0%;
+  padding: 0px 3px;
   background-color: rgba(128, 128, 128, 0.5);
   transition: font-size 0.15s linear;
 }
 
-#modal-button:hover, #modal-button:focus, #modal-button:active{
-  font-size: 24px;
+#modal-button:hover {
+  font-size: 20px;
+  border-radius: 24% 0%;
+  background-color: rgba(128, 128, 128, 0.7);
 }
 
 .hidden {
@@ -56,49 +60,11 @@ li:hover {
 }
 
 .rate {
-  float: left;
-  height: 3em;
-  line-height: 2.5em;
-  padding: 0 10px;
-}
-
-.rate:not(:checked) > input {
-  position:absolute;
-  top:-9999px;
-}
-
-.rate:not(:checked) > label {
-  float:right;
-  width:1em;
-  overflow:hidden;
-  white-space:nowrap;
-  cursor:pointer;
-  font-size:30px;
-  color:#ccc;
-}
-
-.rate:not(:checked) > label:before {  
-  content: '★ ';
-}
-
-.rate > input:checked ~ label {
+  font-size: 1.5rem;
   color: #ffc700;
+  cursor: pointer;
 }
 
-.rate:not(:checked) > label:hover,
-.rate:not(:checked) > label:hover ~ label {
-  color: #deb217;  
-}
-
-.rate > input:checked + label:hover,
-.rate > input:checked + label:hover ~ label,
-.rate > input:checked ~ label:hover,
-.rate > input:checked ~ label:hover ~ label,
-.rate > label:hover ~ input:checked ~ label {
-  color: #c59b08;
-}
-
-.star {
-  color: #ffc700;
-  font-size: 30px;
+.rate-input {
+  cursor: pointer;
 }
