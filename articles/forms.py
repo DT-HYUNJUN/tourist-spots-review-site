@@ -1,10 +1,5 @@
 from django import forms
-from .models import Article, ArticleComment, ArticleImage, Tag
-
-# class TagForm(forms.ModelForm):
-#     class Meta:
-#         model = Tag
-#         fields = ('tag_content',)
+from .models import Article, ArticleComment, ArticleImage
 
 
 class ArticleForm(forms.ModelForm):
@@ -22,10 +17,18 @@ class ArticleForm(forms.ModelForm):
             }
         )
     )
+    tags = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder' : '태그 사이에 쉼표를 넣어주세요.'
+            }
+        )
+    )
 
     class Meta:
         model = Article
-        fields = ('title', 'content', )
+        fields = ('title', 'content', 'tags')
     
 
 class ArticleImageForm(forms.ModelForm):

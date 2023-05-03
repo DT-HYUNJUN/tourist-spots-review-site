@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block style %}
+<style>
+    .tag-cloud{
+        width: 40%;
+        margin-left: 30px;
+        text-align: center;
+        padding: 5px;
+        border: 1px solid orange;
+        background-color: #ffc;
+    }
+    .tag-1 {font-size: 12px}
+    .tag-2 {font-size: 14px}
+    .tag-3 {font-size: 16px}
+    .tag-4 {font-size: 18px}
+    .tag-5 {font-size: 20px}
+    .tag-6 {font-size: 24px}
+</style>
+{% endblock style %}
+
+
+{% block content %}
+<article>
+    <h1>Article Tag Cloud</h1>
+
+    <div class="tag-cloud">
+        {% load taggit_templatetags2_tags %}
+        {% get_tagcloud as tags %} <!--모든 태그 추출해서 tags변수에 할당-->
+        {% for tag in tags %}
+        <span class="tag-{{tag.weight|floatformat:0}}"> <!-- style 관련-->
+            <a href="{% url 'articles:tagged_object_list' tag.name %}"> {{tag.name}}({{tag.num_times}})</a>
+        </span>
+        {% endfor %}
+    </div>
+</article>
+{% endblock content %}

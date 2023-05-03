@@ -9,6 +9,4 @@
 - base.html 생성 및 bootstrap 적용
 - LANGUAGE_CODE, TIME_ZONE 한국으로 설정
 
-
-- forms에 Tag를 가져와서 새로운 유효성 검사 진행
-- 소셜 로그인
+- 대댓글

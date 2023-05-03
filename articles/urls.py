@@ -15,7 +15,9 @@ urlpatterns = [
     path('<int:article_pk>/comments/<int:comment_pk>/likes/', views.comment_likes, name='comment_likes'),
     path('<int:article_pk>/comments/<int:comment_pk>/dislikes/', views.comment_dislikes, name='comment_dislikes'),
     path('<int:article_pk>/comments/<int:comment_pk>/delete/', views.comment_delete, name='comment_delete'),
-    # path('tagadd/<int:article_pk>', views.tag_add, name='tag_add'),
     path('search/', views.search, name='search'),
-
+    #  해당하는 게시글 목록을 볼 수 있는 url 
+    path('tag/', views.TagCloudTV.as_view(), name='tag_cloud'),
+    # 태그가 달린 객체들의 목록
+    path('tag/<str:tag>/', views.TaggedObjectLV.as_view(), name='tagged_object_list')
 ]

@@ -51,3 +51,5 @@ comments.forEach(comment => {
 //   xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
 //   xhr.send(formData);
 // });
+});
+
