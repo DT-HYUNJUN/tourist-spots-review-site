@@ -141,13 +141,18 @@ def comment_delete(request, post_pk, comment_pk):
 
 @login_required
 def post_likes(request, post_pk):
-    # 인덱스일 때와 디테일 때와 구분해서 redirect 분리
     post = Post.objects.get(pk=post_pk)
     if post.like_users.filter(pk=request.user.pk).exists():
         post.like_users.remove(request.user)
+        is_liked = False
     else:
         post.like_users.add(request.user)
-    return redirect('posts:detail', post_pk)
+        is_liked = True
+    context = {
+        'is_liked': is_liked,
+        'like_count': post.like_users.count(),
+    }
+    return JsonResponse(context)
 
 
 def new_posts(posts):
