@@ -31,3 +31,5 @@ class User(AbstractUser):
 
     birthday = models.DateField(null=True, blank=True)
     mbti = models.TextField(null=True, blank=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
