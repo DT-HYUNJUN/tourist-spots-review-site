@@ -1,0 +1,26 @@
+.comment-form {
+  outline: none;
+}
+
+.comment-form::placeholder {
+  color: lightgray;
+}
+
+.profile-img {
+  width: 10rem;
+  height: 10rem;
+}
+
+.profile-img-sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.map-detail {
+  width: 500px;
+  height: 400px;
+}

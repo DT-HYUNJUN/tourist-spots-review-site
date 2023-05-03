@@ -65,7 +65,9 @@ class PostCommentForm(forms.ModelForm):
     content = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control'
+                'class': 'border-0 w-100 comment-form' ,
+                'placeholder': '댓글을 남겨보세요',
+                'autocomplete': 'off',
             }
         )
     )
