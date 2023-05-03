@@ -12,9 +12,9 @@ class User(AbstractUser):
         return f'profiles/{instance.username}/{filename}'
     profile_image = ProcessedImageField(blank=True,
                                 upload_to = profile,
-                                processors= [ResizeToFill(90, 90)],
+                                processors= [ResizeToFill(300, 300)],
                                 format='JPEG',
-                                options={'quality' : 60},
+                                options={'quality' : 80},
                                 )
     def delete(self, *args, **kargs):
         if self.profile_image:

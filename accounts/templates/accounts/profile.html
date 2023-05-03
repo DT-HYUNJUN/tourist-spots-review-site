@@ -2,38 +2,105 @@
 
 {% block style %}
 <style>
-  .profile--user--wrap{
+  h1 {text-align: center; margin-bottom: 1rem;}
+  {% comment %} User profile Card {% endcomment %}
+  .profile--user--container {
+    max-width: 850px;
+    border: 1px solid #aaaaaa;
+    border-radius: 20px;
+    margin: auto;
+    padding: 2.5rem;
+    box-shadow: 2px 2px 15px 3px rgba(50, 50, 50, .1);
+  }
+  .profile--user--wrap {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
   }
-  .profile--image--wrap{
-      font-size: 200px;
-      background-color: #eeeeee;
+  .profile--image--wrap {
+    width: 50%;
+    font-size: 200px;
+    text-align: center;
+    background-color: #eeeeee;
+    margin-right: 2rem;
+    border-radius: 20px;
   }
+  .profile--image--wrap img {
+   width: 100%; 
+   border-radius: 20px;
+  }
+  .profile--info--wrap {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .profile--info--wrap li{
+    display: flex;
+    justify-content: space-between;
+  }
+  .profile--update--wrap {
+    margin-top: 1.5rem;
+  }
+  @media screen and (max-width: 850px) {
+    .profile--user--wrap {
+      display: block;
+    }
+  }
+  .profile--image--wrap {
+    width: 100%;
+  }
+  .profile--info--wrap {
+    width: 100%;
+    margin-top: 2rem;
+  }
+  {% comment %} Posts {% endcomment %}
+  .profile--posts--container{
+    margin: 3rem 0;
+  }
+  {% comment %} Articles : Community {% endcomment %}
 </style>
 {% endblock style %}
 
 {% block content %}
 <article>
-  <h1>{{ person }} 프로필페이지</h1>
+  <h1>{{ person }}님의 Profile</h1>
   <section class="profile--user--container">
     <div class="profile--user--wrap">
       <div class="profile--image--wrap">
-        {% if pserson.profile_image %}
-        <img src="{{ pserson.profile_image.url }}" alt="profile-image">
+        {% if person.profile_image %}
+        <img src="{{ person.profile_image.url }}" alt="profile-image">
         {% else %}
         <i class="bi bi-person-circle"></i>
         {% endif %}    
       </div>
-      <ul>
-        <li>{{ person.lastname }}</li>
-        <li>{{ person.email }}</li>
-        <li>{{ person.mbti }}</li>
-        <li>{{ person.birthday }}</li>
-        <li>{{ person.username }}</li>
-      </ul></div>
-    <div class="d-grid">
-      <a class="btn btn-success" type="button" href="{% url 'accounts:update'%}">profile 수정</a>
+      <div class="profile--info--wrap">
+        <ul class="profile--info">
+          <li>
+            <p>FIRST NAME</p>
+            <p>{{ person.first_name }}</p>
+          </li>
+          <li>
+            <p>LAST NAME</p>
+            <p>{{ person.last_name }}</p>
+          </li>
+          <li>
+            <p>MBTI</p>
+            <p>{{ person.mbti }}</p>
+            </li>
+          <li>
+            <p>BIRTHDAY</p>
+            <p>{{ person.birthday }}</p>
+            </li>
+          <li>
+            <p>E-MIL</p>
+            <p>{{ person.email }}</p>
+            </li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="d-grid profile--update--wrap">
+      <a class="btn btn-success " type="button" href="{% url 'accounts:update'%}">profile 수정</a>
     </div>
   </section>
   <section class="profile--posts--container">
