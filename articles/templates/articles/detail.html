@@ -3,53 +3,176 @@
 
 {% block style %}
 <style>
-  .main--article--container {
-    
+  a {
+    cursor: pointer;
   }
-  {% comment %} board {% endcomment %}
-  .board--user--date--wrap {
+  p {
+    margin: 0;
+  }
+  hr {
+    margin: 0;
+  }
+  .main--article--container {
+    max-width:;
+  }
+  .article--title--wrap {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
+    margin: 0 20px;
   }
-  .profile--image--wrap img {
+  .article--title {
+    border: 1px solid rgb(128, 128, 128);
+    border-radius: 10px 10px 0 0;
+    background-color: #28a745;
+    padding: 0.1rem 1rem;
+    margin: 0;
+  }
+  .article--list {
+    border: 1px solid rgb(128, 128, 128);
+    border-radius: 10px 10px 0 0;
+    background-color: #ffc107;
+    padding: 0.1rem 1rem;
+  }
+  {% comment %} board {% endcomment %}
+  .board--title--user--wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .board--profile--user--wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 0.5rem;
+    text-decoration: underline #28a745;
+  }
+  .board--profile--user--wrap:hover {
+    text-decoration: green wavy underline;
+
+  }
+  .board--mbti {
+    margin: 0 0.3rem;
+  }
+  .board--user{
+    margin-right: 5px;
+  }
+  .board--profile--image {
+    border: 1px solid gray;
+    border-radius: 10px 10px 0 0 ;
     width: 50px;
+  }
+  .board--profile--icon {
+    font-size: 50px;
   }
   .board--date--wrap {
     display: flex;
+    justify-content: flex-end;
+    margin: 0.5rem 0;
   }
-
-  .like--update--container{
-    display: flex;
-    justify-content: space-between;}
-  
-  .warning--icon {
-    color: #ffc107;
+  .board--content{
+    margin: 1rem 0;
   }
-  .danger--icon {
-    color: #dc3545;
+  .board--update--date{
+    font-size: 0.95em;
+    color: #6c757d;
   }
-
-  {% comment %} comment {% endcomment %}
-  .comment--card--wrap {
-    display:flex;
-    justify-content: space-between;
+  .board--image--card {
     border: 1px solid #cccccc;
     border-radius: 10px;
     box-shadow: 2px 2px 5px 2px rgba(204,204,204, .5);
-    padding: 1rem;
-    margin: 1rem 0;
+    margin: 1rem 0.2rem;
   }
+  .like--update--container{
+    display: flex;
+    justify-content: space-between;
+  }
+  .update--underline {
+    text-decoration: underline #007bff;
+  }
+  .update--underline:hover {
+    text-decoration: wavy underline #007bff;
+  }
+  .delete--underline {
+    text-decoration: underline #dc3545;
+  }
+  .delete--underline:hover {
+    text-decoration: wavy underline #dc3545;
+  }
+ 
+  {% comment %} comment {% endcomment %}
   .comment--title--wrap {
     display: flex;
+    margin-top: 1.5rem;
   }
-  .comment--delete--like--wrap {
+  .comment--card:hover {
+    box-shadow: 0px 0px 5px 3px rgba(40,167,69, .9);
+  }
+  .comment--profile--image{
+    width: 30px;
+    border: 1px solid gray;
+    border-radius: 10px 10px 0 0;
+  }
+  .comment--user:hover {
+    {% comment %} color: #28a745;
+     {% endcomment %}
+     text-decoration: green wavy underline;
+  }
+  .comment--user--delete--wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+  .comment--content {
+    margin: 1rem 0;
+  }
+  .comment--date--like--wrap {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
+  .comment--date{
+    font-size: 0.8rem;
+  }
+  .comment--create--form{
+    position: relative;
+  }
+  .comment--create:hover {
+    box-shadow: 0px 0px 3px 5px rgba(40,167,69, .9);
+  }
+  .comment--create--button {
+    position: absolute;
+    right: 2%;
+    bottom: 25%;
+    color: #aaaaaa;
+  }
+  .comment--create--button:hover {
+    color: #28a745;
+  }
   {% comment %} all {% endcomment %}
   .form--wrap--flex {
     display: flex;
+  }
+  .warning--color {
+    color: #ffc107;
+  }
+  .danger--color {
+    color: #dc3545;
+  }
+  .secondary--color {
+    color: #6c757d;
+  }
+  .secondary--color:hover {
+    color: #dc3545;
+  }
+  .margin--right{
+    margin-right: 1rem;
+  }
+  .card--style--wrap {
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(204,204,204, .5);
+    padding: 1rem;
+    margin-bottom: 1rem;
   }
 </style>
 {% endblock style %}
@@ -57,32 +180,42 @@
 
 {% block content %}
 <article class="main--article--container">
-  <section class="board--container">
+  <div class="article--title--wrap">
+    <h3 class="article--title">Community</h3>
+    <a class="article--list" href="{% url 'articles:index' %}">list</a>
+  </div>
+  <section class="board--container card--style--wrap">
     <div class="board--wrap">
-      <h3 class="board-title">{{ article.title }}</h3>
-      <hr>
-      <div class="board--user--date--wrap" >
-        <div class="profile-user--wrap">
-          <span class="profile--image--wrap">
-            {% if article.user.profile_image %}
-            <img src="{{ article.user.profile_image.url }}" alt="profile-image">
-            {% else %}
-            <i class="bi bi-person-circle"></i>
-            {% endif %}    
-          </span>
-          {{ article.user}}
-        </div>
-        <div class="board--date--wrap">
-          <p>{{ article.created_at }}</p>
-          <p>{{ article.updated_at }}</p>
-        </div>
+      
+      <div class="board--title--user--wrap" >
+        <h3 class="board-title">{{ article.title }}</h3>
+        <a href="{% url 'accounts:profile' article.user %}">
+          <div class="board--profile--user--wrap">
+            <div>
+              <p class="board--user">
+                <span>{{ article.user }}</span>
+                <i class="board--mbti">{{ article.user.mbti }}</i>
+              </p>
+            </div>
+            <div class="profile--image--wrap">
+              {% if article.user.profile_image %}
+              <img class="board--profile--image" src="{{ article.user.profile_image.url }}" alt="profile-image">
+              {% else %}
+              <img class="board--profile--image" src="{% static 'img/cat_01.png' %}" alt="profile">
+              {% endif %}
+            </div>
+          </div>
+        </a>
       </div>
       <hr>
-      <div>{{ article.content }}</div>
-      <hr>
+      <div class="board--date--wrap">
+        <p>{{ article.created_at }}</p>
+        <i class="board--update--date">({{ article.updated_at }})</i>
+      </div>
+      <div class="board--content">{{ article.content }}</div>
       <div>
         {% for image in article.articleimage_set.all %}
-        <img src="{{image.image.url}}" alt="img">
+          <img class="board--image--card" src="{{image.image.url}}" alt="img">
         {% endfor %}
       </div>
       <div>
@@ -94,58 +227,72 @@
       </div>
       <div class="like--update--container">
         <div class="view--bookmark--like--wrap form--wrap--flex">
-          <p>{{ article.views.all|length }}</p>
-          <div class="form--wrap--flex">
+          <p>
+            <i class="bi bi-eye-fill margin--right">
+            {{ article.views.all|length }}</i>
+          </p>
+          <div class="form--wrap--flex margin--right">
             <form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>
               {% csrf_token %}
-              <button type="submit"><i class="bi bi-star-fill warning--icon"></i></button>
+              <button type="submit"><i class="bi bi-star-fill warning--color"></i></button>
             </form>
             <span> {{ article.bookmark_user.all|length }} </span>
           </div>
           <div class="form--wrap--flex">
             <form action="{% url 'articles:likes' article.pk %}" method='POST'>
             {% csrf_token %}
-            <button type="submit"><i class="bi bi-heart-fill danger--icon"></i></button>
+            <button type="submit"><i class="bi bi-heart-fill danger--color"></i></button>
             </form>
             <span> {{ article.like_users.all|length }} </span>
           </div>
         </div>
         <div class="update--delete--wrap">
-          <a href="{% url 'articles:update' article.pk %}">수정</a>
-          <a onclick="return confirm('게시글을 삭제하시겠습니까?')" href="{% url 'articles:delete' article.pk %}">삭제</a>
+          <a class="margin--right update--underline" href="{% url 'articles:update' article.pk %}">Update</a>
+          <a class="delete--underline" onclick="return confirm('게시글을 삭제하시겠습니까?')" href="{% url 'articles:delete' article.pk %}">Delete</a>
         </div>
       </div>
     </div>
   </section>
-  <hr>
   <section class="comment--container">
     <div>
       <div class="comment--title--wrap">
         <h5>Comment</h5>
         <div>
           {% if comments.all|length > 0 %}
-          ({{ comments.all|length }})
+          ( {{ comments.all|length }}  )
           {% endif %}
         </div>
       </div>
       <div>
         {% for comment in comments %}
-        <div class="comment--card--wrap">
-          <div>
+        <div class="comment--card card--style--wrap">
+          <div class="comment--user--delete--wrap">
             <p>
-              <a href="{% url 'accounts:profile' comment.user.username %}" class="text-decoration-none text-dark">{{ comment.user }}</a>
+              <a href="{% url 'accounts:profile' comment.user.username %}" class="text-decoration-none text-dark">
+                <span class="comment--profile--image--wrap">
+                  {% if comment.user.profile_image %}
+                  <img class="comment--profile--image" src="{{ comment.user.profile_image.url }}" alt="profile-image">
+                  {% else %}
+                  <img src="{% static 'img/user_profile.png' %}" alt="profile">
+                  {% endif %}
+                </span>
+                <span class="comment--user">{{ comment.user }}</span>
+              </a>
             </p>
-            <p>{{ comment.content }}</p>
-            <p>{{ comment.created_string }}</p>
+            <div>
+              <i class="bi bi-x-lg secondary--color"></i>
+            </div>
           </div>
-          <div class="comment--delete--like--wrap">
-            <div><i class="bi bi-x-lg danger--icon"></i></div>
+          <hr>
+          <div class="comment--content">{{ comment.content }}</div>
+          <div class="comment--date--like--wrap">
             <div class="form--wrap--flex">
-              <div class="form--wrap--flex">
+              <div class="margin--right"><i class="comment--date">{{ comment.created_string }}</i></div>
+              <div class="form--wrap--flex margin--right">
                 <form action="{% url 'articles:comment_likes' article.pk comment.pk %}" method='POST'>
                   {% csrf_token %}
                   <button type="submit" {% if request.user in comment.dislike_user.all %} disabled {% endif %}>
-                    <i class="bi bi-hand-thumbs-up-fill warning--icon"></i>
+                    <i class="bi bi-hand-thumbs-up-fill warning--color"></i>
                   </button>
                 </form>
                 <p>{{ comment.like_users.all|length }}</p>
@@ -154,7 +301,7 @@
                 <form action="{% url 'articles:comment_dislikes' article.pk comment.pk %}" method='POST'>
                   {% csrf_token %}
                   <button type="submit" {% if request.user in comment.like_users.all %} disabled {% endif %} >
-                    <i class="bi bi-hand-thumbs-down-fill warning--icon"></i>
+                    <i class="bi bi-hand-thumbs-down-fill warning--color"></i>
                   </button>
                 </form>
                 <p>{{ comment.dislike_user.all|length }}</p>
@@ -167,9 +314,9 @@
       <div>
         <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
           {% csrf_token %}
-          <div class="">
+          <div class="comment--create--form">
             <p>{{ comment_form.content }}</p>
-            <button type="submit" class="btn btn-outline-warning">댓글 작성</button>
+            <button type="submit" class="comment--create--button">등록</button>
           </div>
         </form></div>
     </div>

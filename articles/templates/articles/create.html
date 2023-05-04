@@ -1,21 +1,62 @@
 {% extends "base.html" %}
 
+{% block style %}
+<style>
+  .main--article--container{
+    max-width: ;
+    margin: auto;
+  }
+  .card--style--wrap {
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(204,204,204, .5);
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  .article--title--wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 0 20px;
+  }
+  .article--title {
+    border: 1px solid rgb(128, 128, 128);
+    border-radius: 10px 10px 0 0;
+    background-color: #28a745;
+    padding: 0.1rem 1rem;
+    margin: 0;
+  }
+  .article--list {
+    border: 1px solid rgb(128, 128, 128);
+    border-radius: 10px 10px 0 0;
+    background-color: #ffc107;
+    padding: 0.1rem 1rem;
+  }
+
+</style>
+{% endblock style %}
+
 {% block content %}
-
 <article class="main--article--container">
-  <form action="{% url 'articles:create' %}" method="POST" enctype='multipart/form-data'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    {{ imageform.as_p }}
-    {% comment %} {% for field in form %}
-      {{field}} <br />
-    {% endfor %}
-    {% for form in imageform %}
-      {{form}}
-    {% endfor %} {% endcomment %}
-
-    <input type="submit" value="제출">
-  </form> 
+  <div class="article--title--wrap">
+    <h3 class="article--title">Community</h3>
+    <a class="article--list" href="{% url 'articles:index' %}">list</a>
+  </div>
+  <div class="card--style--wrap">
+    <form action="{% url 'articles:create' %}" method="POST" enctype='multipart/form-data'>
+      {% csrf_token %}
+      {{ form.as_p }}
+      {{ imageform.as_p }}
+      {% comment %} {% for field in form %}
+        {{field}} <br />
+      {% endfor %}
+      {% for form in imageform %}
+        {{form}}
+      {% endfor %} {% endcomment %}
+      <div class="d-grid">
+        <input class="btn btn-success " type="submit" value="등록"></div>
+    </form>
+  </div> 
 </article>
 
 {% endblock content %}
