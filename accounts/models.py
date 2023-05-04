@@ -12,9 +12,9 @@ class User(AbstractUser):
         return f'profiles/{instance.username}/{filename}'
     profile_image = ProcessedImageField(blank=True,
                                 upload_to = profile,
-                                processors= [ResizeToFill(90, 90)],
+                                processors= [ResizeToFill(300, 300)],
                                 format='JPEG',
-                                options={'quality' : 60},
+                                options={'quality' : 80},
                                 )
     def delete(self, *args, **kargs):
         if self.profile_image:
@@ -31,3 +31,5 @@ class User(AbstractUser):
 
     birthday = models.DateField(null=True, blank=True)
     mbti = models.TextField(null=True, blank=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)

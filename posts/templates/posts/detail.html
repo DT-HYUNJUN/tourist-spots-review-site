@@ -26,7 +26,15 @@
         </p>
         <p>
           <i class="bi bi-star-fill"><span class="mark-text">{{ post.rating }}</span></i>
-          <i class="bi bi-heart-fill"><span class="mark-text">{{ post.like_users.count }}</span></i>
+          <form class="like-form" data-post-id="{{ post.pk }}">
+            {% csrf_token %}
+            {% if request.user in post.like_users.all %}
+            <button type="submit" class="bi bi-heart-fill" id="like-{{ post.pk }}"></button>
+            {% else %}
+            <button type="submit" class="bi bi-heart" id="like-{{ post.pk }}"></button>
+            {% endif %}
+            <span id="like-count" class="mark-text">{{ post.like_users.all|length }}</span>
+          </form>
         </p>
       </article>
       <article>
@@ -35,8 +43,8 @@
             <div>{{ post.content|linebreaksbr }}</div>
             </div>
           <div class="user-profile-container">
+            <a href="{% url 'accounts:profile' post.user %}">
             <div class="user-info d-flex">
-              {% comment %} <a  href="{% url 'accounts:profile' post.user %}"> {% endcomment %}
                 {% if post.user.profile_image %}
                 <img src="{{ post.user.profile_image }}" alt="사용자프로필이미지" />
                 {% else %}
@@ -44,13 +52,22 @@
                 {% endif %}
                 <div class="ms-2">
                   <div class='username-text'>{{ post.user }}</div>
+                  {% if post.user.mbti %}
                   <div class='userMbit-text'>{{ post.user.mbti }}</div>
+                  {% endif %}
                 </div>
-              {% comment %} </a> {% endcomment %}
-            </div>
-            <div class="user-follow">
-              <button value="팔로우">팔로우</button>
-            </div>
+              </div>
+            </a> 
+
+            {% if request.user != post.user.username %}
+              <form id="follow-form" data-user-id="{{ post.user.pk }}">
+                {% if request.user in post.user.followers.all %}
+                <input type="submit" class="btn btn-success" value="팔로잉" />
+                {% else %}
+                <input type="submit" class="btn btn-success"  value="팔로워" />
+                {% endif %}
+              </form>
+            {% endif %}
           </div>
         </div>
         
@@ -199,79 +216,9 @@
 
 {% block javascript %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46fed7723052d8712b267e8a83ab2fa4&libraries=services"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/map.js' %}"></script>
 <script src="{% static 'js/comments.js' %}"></script>
-{% comment %} <script>
-  const commentForm = document.getElementById('comment-form')
-  commentForm.addEventListener('submit', (event) => {
-    event.preventDefault()
-    const postPk = {{ post.pk }}
-    const text = document.getElementById('id_content').value
-    const xhr = new XMLHttpRequest()
-    xhr.open('GET', `/posts/${postPk}/comment/`, true)
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        const comment = JSON.parse(xhr.responseText).comment
-        const commentList = document.getElementById('comment-list')
-        const commentItem = document.createElement('div')
-        commentItem.innerHTML = `
-          <p>${comment.text}</p>
-          <p>${comment.user}</p>
-          <p>${comment.created_at}</p>
-        `
-        commentList.appendChild(commentItem)
-        document.getElementById('id_text').value = ''
-      }
-    }
-    xhr.send(null)
-  })
-  // 
-  const addComment = () => {
-    const postPk = {{ post.pk }}  // 게시물 pk 가져오기
-    const commentForm2 = document.querySelector('#comment-form');
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;  // CSRF 토큰 가져오기
-    const formData = new FormData(commentForm2);  // 폼 데이터 가져오기
-  
-    // AJAX 요청 보내기
-    fetch(`/posts/${postPk}/comment/`, {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': csrftoken,
-      },
-      body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);  // 서버로부터 받은 데이터 출력
-  
-      // 댓글 목록 갱신
-      updateComments();
-    })
-    .catch(error => console.error(error));
-  };
-  
-  // 댓글 목록을 갱신하는 함수
-  const updateComments = () => {
-    const postPk = {{ post.pk }}  // 게시물 pk 가져오기
-  
-    // AJAX 요청 보내기
-    fetch(`/posts/${postPk}/comment/list/`)
-    .then(response => response.text())
-    .then(data => {
-      console.log(data);  // 서버로부터 받은 데이터 출력
-  
-      // 댓글 목록 업데이트
-      const commentList = document.querySelector('#comment-list');
-      commentList.innerHTML = data;
-    })
-    .catch(error => console.error(error));
-  };
-  
-  // 이벤트 리스너 등록
-  const commentForm2 = document.querySelector('#comment-form');
-  commentForm2.addEventListener('submit', event => {
-    event.preventDefault();
-    addComment();
-  });
-</script> {% endcomment %}
+<script src="{% static 'js/like.js' %}"></script>
+<script src="{% static 'js/follows.js' %}"></script>
 {% endblock javascript %}
