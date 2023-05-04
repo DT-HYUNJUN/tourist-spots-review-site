@@ -17,11 +17,15 @@ comments.forEach(comment => {
   })
 })
 
-commentField.addEventListener('input', () => {
+if (commentField.value.length === 0) {
+  commentCount.textContent = ''
+}
+
+commentField.addEventListener('input', (e) => {
   const count = commentField.value.length
-  commentCount.textContent = `${count} /  ${max}`
-  if (count > max) {
-    alert('댓글 초과')
+  commentCount.textContent = `${count} / ${max}`
+  if (count >= max) {
+    commentCount.textContent = `${max} / ${max}`
   }
 })
 

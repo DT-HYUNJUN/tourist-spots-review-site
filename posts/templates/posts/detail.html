@@ -53,14 +53,14 @@
                 <div class="ms-2">
                   <div class='username-text'>{{ post.user }}</div>
                   {% if post.user.mbti %}
-                  <div class='userMbit-text'>{{ post.user.mbti }}</div>
+                  <div class='userMbit-text'>{{ user_age_range }} {{ post.user.mbti }}</div>
                   {% endif %}
                 </div>
               </div>
             </a> 
 
             {% if request.user != post.user.username %}
-              <form id="follow-form" data-user-id="{{ post.user.pk }}">
+              <form class="text-center" id="follow-form" data-user-id="{{ post.user.pk }}">
                 {% if request.user in post.user.followers.all %}
                 <input type="submit" class="btn btn-success" value="팔로잉" />
                 {% else %}
@@ -84,14 +84,17 @@
     
     <div class ='content-info'>
       <span>{{ post.updated_at }}</span>
-      <span class="content-fun"><a href="{% url 'posts:update' post.pk %}">수정</a></span>
-      <span class="content-fun"><a onclick="return confirm('게시글을 삭제하시겠습니까?')" href="{% url 'posts:delete' post.pk %}">삭제</a></span>
+      {% if request.user == post.user %}
+        <span class="content-fun"><a href="{% url 'posts:update' post.pk %}">수정</a></span>
+        <span class="content-fun"><a onclick="return confirm('게시글을 삭제하시겠습니까?')" href="{% url 'posts:delete' post.pk %}">삭제</a></span>
+      {% endif %}
     </div>
       <hr class="partition-line">
     <section class="comments">
       <div class="border-bottom d-flex">
         <span class="mb-3">댓글 {{ comments|length }}</span>
       </div>
+      <!-- 댓글 리스트 -->
       <table id="comment-list" class="table">
         <tbody>
           {% for comment in comments %}
@@ -159,58 +162,6 @@
       </form>
     </section>
   </main>
-
-  <!-- 인접 게시물 -->
-  <section class="box">
-    <div id="container-posts">
-      {% for adj_post in posts %}
-      <div class="post-item">
-        <a href="{% url 'posts:detail' adj_post.pk %}" class="card{% if post.pk == adj_post.pk %} card-active{% endif %}">
-          {% if adj_post.image %}
-          <img src="{{ adj_post.image.url }}" alt="여행사진" class="card-img-top" />
-          {% else %}
-          <img
-            src="{% static 'img/noimage.jpg' %}"
-            alt="이미지없음"
-            class="card-img-top noimage-img"
-          />
-          {% endif %}
-          <form action="{% url 'posts:post_likes' adj_post.pk %}" method="POST">
-            {% csrf_token %}
-            {% if request.user in adj_post.like_posts.all %}
-            <input class='like-user' type="submit" value="🤍">
-            {% else %}
-            <input class='like-user' type="submit" value="❤">
-            {% endif %}
-          </form>
-
-
-          <div class="card-body">
-            <div class="card-user">
-              <p>
-                {% if adj_post.user.profile_image %}
-                <img
-                  class="user-profile"
-                  src="{{ post.user.profile_image }}"
-                  alt="사용자프로필이미지"
-                />
-                {% else %}
-                <img
-                class="user-profile"
-                src="{% static 'img/user_profile.png' %}"
-                alt="기본프로필이미지"
-                />
-              </p>
-                {% endif %}
-              <span class="username">{{adj_post.user.username}}</span>
-            </div>
-            <h6 class="card-title">{{ adj_post.title }}</h6>
-          </div>
-        </a>
-      </div>
-      {% endfor %}
-    </div>
-  </section>
 
 {% endblock content %}
 

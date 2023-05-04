@@ -1,203 +1,58 @@
 {% extends 'base.html' %} 
 {% load static %} 
 {% block style %}
-<style>
-  *{
-    box-sizing: border-box;
-  }
-
-  {% comment %} .box{
-    border: 1px solid black;
-  } {% endcomment %}
-
-  section {
-    margin-bottom: 1rem;
-  }
-
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  #container-posts{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr;
-    column-gap: 5px;
-    row-gap: 10px;
-    background-color: red;
-  }
-
-  @media all and (max-width:479px) {
-    #container-posts {
-      grid-template-columns: 1fr;
-      grid-template-rows: repeat(4, 1fr);
-      column-gap: 10px;
-      row-gap: 10px;
-      background-color : yellow;
-    }
-  }
-
-  .card-user{
-    display: flex;
-    flex-wrap: nowrap;
-  }
-
-  .username{
-    margin-left: 0.5em;
-  }
-  
-  .card-title {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .card {
-    height: auto;
-    border: 1px solid black;
-    box-shadow: 3px 3px 10px;
-    margin: auto;
-    margin-bottom: 30px;
-    transition: all 0.5s;
-    transition-delay: 0.4s;
-  }
-
-
-
-
-  .post-item img{
-    height: 200px;
-    object-fit: fill;
-    position: relative;
-  }
-
-  .like-user{
-    position: absolute;
-    top : 0;
-    right: 0;
-    background: none;
-    border: none;
-  }
-
-  .user-profile:not(.post.image){
-    width: 1.5em;
-    height: 1.5em;
-  }
-
-  .main-img {
-    width: 100%;
-    height: 10em;
-    object-fit: fill;
-  }
-
-  .noimage-img{
-    display: block;
-    margin: auto;
-    width: 80%;
-    object-fit: fill;
-  }
-
-  .viewed-order{
-    display: flex;
-  }
-
-  .viewed-order-buttons{
-    margin-left: auto;
-  }
-
-  .hidden {
-    display: none;
-  }
-</style>
 <link rel="stylesheet" href="{% static 'style/posts/index.css' %}">
 {% endblock style %} 
 
 {% block content %}
 
 <main>
-  <a href="{% url 'posts:region' '서울' %}" data-subject="서울">서울</a>
   <section class="box">
     <img src="{% static 'img/posts-main-img.jpg' %}" class="main-img" alt="triptopper베너이미지" />
   </section>
-  <section class='Box viewed-order'>
-    {% comment %} <div class="viewed-order-buttons">
-      <button type="button" class="btn btn-outline-dark" >최신순</button>
-      <button type="button" class="btn btn-outline-dark" >인기순</button>
-      <button type="button" class="btn btn-outline-dark" >댓글순</button>
-    </div> {% endcomment %}
-    <form method="GET">
-      <div class="d-flex justify-content-end align-items-center gap-1 mb-2">
-        <select name="select_sorting" id="select_sorting" class="p-1 rounded-1">
-          <option value="최신순" {% if select_sorting == '최신순' %}selected{% endif %}>최신순</option>
-          <option value="오래된순" {% if select_sorting == '오래된순' %}selected{% endif %}>오래된순</option>
-        </select>
-        <input type="submit" class="btn btn-secondary btn-sm" value="정렬">
+  <section class='Box viewed-order mb-0'>
+    <div class="d-flex justify-content-between w-100">
+      <div class="d-flex">
+        <div>
+          <button id="region-button" class="btn btn-secondary">지역<i id="arrow" class="bi bi-arrow-down-short"></i></button>
+          <a href="{% url 'posts:index' %}"><li class="btn bg-body-secondary">전체</li></a>
+        </div>
       </div>
-    </form>
-
-    <div class="d-flex">
-      <button id="region-button" class="btn btn-secondary region-button">지역 <span>></span></button>
-      <ul id="region-list" class="region-list">
-        <li class="btn btn-light"><a href="{% url 'posts:index' %}">전체</a></li>
-        <li class="btn btn-light"><a href="{% url 'posts:region' '서울' %}">서울</a></li>
-        <li class="btn btn-light">경기</li>
-        <li class="btn btn-light">충남</li>
-      </ul>
-    </div>
-
-  </section>
-  <section class="box">
-    <div id="container-posts">
-      {% for post in posts %}
-      <div class="post-item">
-        <a href="{% url 'posts:detail' post.pk %}" class="card">
-          {% if post.image %}
-          <img src="{{ post.image.url }}" alt="여행사진" class="card-img-top" />
-          {% else %}
-          <img
-            src="{% static 'img/noimage.jpg' %}"
-            alt="이미지없음"
-            class="card-img-top noimage-img"
-          />
-          {% endif %}
-          <form action="{% url 'posts:post_likes' post.pk %}" method="POST">
-            {% csrf_token %}
-            {% if request.user in post.like_posts.all %}
-            <input class='like-user' type="submit" value="🤍">
-            {% else %}
-            <input class='like-user' type="submit" value="❤">
-            {% endif %}
-          </form>
-
-
-          <div class="card-body">
-            <div class="card-user">
-              <p>
-                {% if post.user.profile_image %}
-                <img
-                  class="user-profile"
-                  src="{{ post.user.profile_image }}"
-                  alt="사용자프로필이미지"
-                />
-                {% else %}
-                <img
-                class="user-profile"
-                src="{% static 'img/user_profile.png' %}"
-                alt="기본프로필이미지"
-                />
-              </p>
-                {% endif %}
-              <span class="username">{{user}}</span>
-            </div>
-            <h6 class="card-title">{{ post.title }}</h6>
-          </div>
-        </a>
-      </div>
-      {% endfor %}
+      <form method="GET">
+        <div class="d-flex justify-content-end align-items-center gap-1 mb-2">
+          <select class="form-select" name="select_sorting" id="select_sorting" class="p-1 rounded-1">
+            <option value="최신순" {% if select_sorting == '최신순' %}selected{% endif %}>최신순</option>
+            <option value="오래된순" {% if select_sorting == '오래된순' %}selected{% endif %}>오래된순</option>
+            <option value="인기순" {% if select_sorting == '인기순' %}selected{% endif %}>인기순</option>
+            <option value="평점순" {% if select_sorting == '평점순' %}selected{% endif %}>평점순</option>
+          </select>
+          <input type="submit" class="btn btn-secondary" value="정렬">
+        </div>
+      </form>
     </div>
   </section>
+  <ul id="region-list" class="mb-3 hidden">
+    <div class="">
+      <a href="{% url 'posts:region' '서울' %}"><li class="btn bg-body-secondary">서울</li></a>
+      <a href="{% url 'posts:region' '인천' %}"><li class="btn bg-body-secondary">인천</li></a>
+      <a href="{% url 'posts:region' '경기' %}"><li class="btn bg-body-secondary">경기</li></a>
+      <a href="{% url 'posts:region' '강원' %}"><li class="btn bg-body-secondary">강원</li></a>
+      <a href="{% url 'posts:region' '충남' %}"><li class="btn bg-body-secondary">충남</li></a>
+      <a href="{% url 'posts:region' '세종' %}"><li class="btn bg-body-secondary">세종</li></a>
+      <a href="{% url 'posts:region' '대전' %}"><li class="btn bg-body-secondary">대전</li></a>
+      <a href="{% url 'posts:region' '충북' %}"><li class="btn bg-body-secondary">충북</li></a>
+      <a href="{% url 'posts:region' '전북' %}"><li class="btn bg-body-secondary">전북</li></a>
+      <a href="{% url 'posts:region' '전남' %}"><li class="btn bg-body-secondary">전남</li></a>
+      <a href="{% url 'posts:region' '광주' %}"><li class="btn bg-body-secondary">광주</li></a>
+      <a href="{% url 'posts:region' '경북' %}"><li class="btn bg-body-secondary">경북</li></a>
+      <a href="{% url 'posts:region' '경남' %}"><li class="btn bg-body-secondary">경남</li></a>
+      <a href="{% url 'posts:region' '대구' %}"><li class="btn bg-body-secondary">대구</li></a>
+      <a href="{% url 'posts:region' '울산' %}"><li class="btn bg-body-secondary">울산</li></a>
+      <a href="{% url 'posts:region' '부산' %}"><li class="btn bg-body-secondary">부산</li></a>
+      <a href="{% url 'posts:region' '제주특별자치도' %}"><li class="btn bg-body-secondary">제주</li></a>
+    </div>
+  </ul>
+  
 
   <ul class="pagination justify-content-center mt-5"> 
     {% comment %}
@@ -259,4 +114,5 @@
 
 {% block javascript %}
 <script src="{% static 'js/region.js' %}"></script>
+<script src="{% static 'js/new.js' %}"></script>
 {% endblock javascript %}
