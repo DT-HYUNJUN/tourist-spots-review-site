@@ -220,9 +220,13 @@
       <div>
         {% load taggit_templatetags2_tags %} 
         {% get_tags_for_object article as "tags" %}
-         {% for tag in tags %}
-         <a href="{% url 'articles:tagged_object_list' tag.name %}">{{tag.name}}</a>
-         {% endfor %}
+        {% if tags %}
+          {% for tag in tags %}
+            {% if tag.name %}
+            <a href="{% url 'articles:tagged_object_list' tag.name %}">{{tag.name}}</a>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
       </div>
       <div class="like--update--container">
         <div class="view--bookmark--like--wrap form--wrap--flex">
