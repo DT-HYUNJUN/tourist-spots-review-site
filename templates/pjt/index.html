@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block style %}
 <style>
   .box{
@@ -26,6 +27,7 @@
     }
   }
 </style>
+<link rel="stylesheet" href="{% static 'style/posts/posts.css' %}">
 {% endblock style %}
 {% block content %}
 <main>
@@ -53,12 +55,62 @@
         </button>
       </div>
     </section>
-    <section class="box">
+    {% comment %} <section class="box">
       <div id="container-posts">
         <div class="box post-item">post1</div>
         <div class="box post-item">post2</div>
         <div class="box post-item">post3</div>
         <div class="box post-item">post4</div>
+      </div>
+    </section> {% endcomment %}
+    <section class="box">
+      <div id="container-posts">
+        {% for post in posts %}
+        <div class="post-item">
+          <a href="{% url 'posts:detail' post.pk %}" class="card">
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="여행사진" class="card-img-top" />
+            {% else %}
+            <img
+              src="{% static 'img/noimage.jpg' %}"
+              alt="이미지없음"
+              class="card-img-top noimage-img"
+            />
+            {% endif %}
+            <form action="{% url 'posts:post_likes' post.pk %}" method="POST">
+              {% csrf_token %}
+              {% if request.user in post.like_posts.all %}
+              <input class='like-user' type="submit" value="🤍">
+              {% else %}
+              <input class='like-user' type="submit" value="❤">
+              {% endif %}
+            </form>
+  
+  
+            <div class="card-body">
+              <div class="card-user">
+                <p>
+                  {% if post.user.profile_image %}
+                  <img
+                    class="user-profile"
+                    src="{{ post.user.profile_image }}"
+                    alt="사용자프로필이미지"
+                  />
+                  {% else %}
+                  <img
+                  class="user-profile"
+                  src="{% static 'img/user_profile.png' %}"
+                  alt="기본프로필이미지"
+                  />
+                </p>
+                  {% endif %}
+                <span class="username">{{user}}</span>
+              </div>
+              <h6 class="card-title">{{ post.title }}</h6>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
       </div>
     </section>
     <section class="box">articles</section>

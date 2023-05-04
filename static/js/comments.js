@@ -1,4 +1,9 @@
 const comments = document.querySelectorAll('#comments')
+const commentSubmit = document.getElementById('comment-submit')
+const commentField = document.getElementById('comment-field')
+const commentCount = document.getElementById('comment-count')
+const commentArea = document.getElementById('comment-area')
+const max = commentField.dataset.maxLength
 
 comments.forEach(comment => {
   const deleteBtn = comment.querySelector('#comment_delete')
@@ -10,7 +15,23 @@ comments.forEach(comment => {
   comment.addEventListener('mouseout', () => {
     deleteBtn.classList.add('hidden')
   })
-});
+})
+
+commentField.addEventListener('input', () => {
+  const count = commentField.value.length
+  commentCount.textContent = `${count} /  ${max}`
+  if (count > max) {
+    alert('댓글 초과')
+  }
+})
+
+commentArea.addEventListener('click', () => {
+  commentField.focus()
+})
+
+function resize(obj) {
+  obj.style.height = ( obj.scrollHeight) + 'px';
+} 
 
 // const form = document.getElementById('comment-form')
 // const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
