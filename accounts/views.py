@@ -107,6 +107,10 @@ def follow(request, user_pk):
             is_followed = True
         context ={
             'is_followed': is_followed,
+            'followings_count' : person.following.count(),
+            'followers_count' : person.followers.count(),
         }
         return JsonResponse(context)
     return redirect('accounts:profile', person.username)
+
+

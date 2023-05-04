@@ -31,6 +31,9 @@ class ArticleForm(forms.ModelForm):
     
 
 class ArticleImageForm(forms.ModelForm):
+    class Meta:
+        model = ArticleImage
+        fields = ('image',)
     image = forms.ImageField(
         label='Image',
         required=False,
@@ -41,9 +44,28 @@ class ArticleImageForm(forms.ModelForm):
             }
         )
     )
+
+
+class DeleteArticleImageForm(forms.ModelForm):
+    delete_images = forms.ModelMultipleChoiceField(
+        queryset=ArticleImage.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = ArticleImage
-        fields = ('image',)
+        fields = []
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.pop('instance', None)
+        super().__init__(*args, **kwargs)
+        if instance:
+            self.fields['delete_images'].queryset = instance.articleimage_set.all()
+    
+    def save(self, commit=True):
+        for image in self.cleaned_data['delete_images']:
+            image.delete()
+
 
 
 class ArticleCommentForm(forms.ModelForm):

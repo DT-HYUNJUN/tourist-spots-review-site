@@ -12,7 +12,18 @@
 <form action="{% url 'articles:update' article.pk %}" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
+  {{ imageform.as_p }}
+  {% if article.articleimage_set.all %}
+  <p>등록된 사진</p>
+  {% for image in article.articleimage_set.all %}
+      <img src="{{ image.image.url }}" width="200" height="200">
+  {% endfor %} 
+  {{ delete_images_form.as_p}}
+  {% endif %}
+  {{ in_image }}
   <button type="submit">수정</button>
 </form>
+
+
 
 {% endblock content %}

@@ -23,7 +23,7 @@ class Post(models.Model):
     
 
     def post_image_path(instance, filename):
-        return f'posts/{instance.pk}/{filename}'
+        return f'posts/{instance.user}/{instance.title}/{filename}'
     image = models.ImageField(blank=True, upload_to=post_image_path)
     
     
@@ -31,7 +31,6 @@ class Post(models.Model):
         if self.image:
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
         super(Post, self).delete(*args, **kargs)
-
 
     def save(self, *args, **kwargs):
         if self.id:

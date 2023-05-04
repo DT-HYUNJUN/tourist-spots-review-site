@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block style %}
 <style>
   h1 {text-align: center; margin-bottom: 1rem;}
@@ -76,6 +76,10 @@
       <div class="profile--info--wrap">
         <ul class="profile--info">
           <li>
+            <p>ID</p>
+            <p>{{ person.username }}</p>
+          </li>
+          <li>
             <p>FIRST NAME</p>
             <p>{{ person.first_name }}</p>
           </li>
@@ -95,12 +99,30 @@
             <p>E-MIL</p>
             <p>{{ person.email }}</p>
             </li>
+          <li>
+            <p>Following </p>
+            <p id="followings-count">  {{person.following.all|length}} </p>
+            <p>Follower </p>
+            <p id="followers-count"> {{person.followers.all|length}}</p>
+            </li>
         </ul>
 
       </div>
     </div>
     <div class="d-grid profile--update--wrap">
       <a class="btn btn-success " type="button" href="{% url 'accounts:update'%}">profile 수정</a>
+    </div>
+    <div>
+      {% if request.user != person %}
+        <form id='follow-form' data-user-id="{{ person.pk }}">
+          {% csrf_token %}
+          {% if request.user in person.followers.all %}         
+            <input type="submit" value="Unfollow" class="btn btn-success"> 
+            {% else %}
+            <input type="submit" value="Follow" class="btn btn-success w-100 mt-3"> 
+          {% endif %}
+        </form>
+      {% endif %} 
     </div>
   </section>
   <section class="profile--posts--container">
@@ -152,8 +174,46 @@
         {% endfor %}
       </tbody>    
     </table>
-
+  </section>
+  <section class="profile--articles--container">
+    <h3>Bookmark</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">제목</th>
+          <th scope="col">글쓴이</th>
+          <th scope="col">작성시간</th>
+          <th scope="col">조회수</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% for article in person.bookmark_articles.all %}
+        <tr>
+          <th scope="row">{{ article.pk }}</th>
+          <td><a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a></td>
+          <td>{{ article.user }}</td>
+          <td>{{ article.created_at }}</td>
+          <td>{{ article.views.all|length }}</td>
+        </tr>
+        {% endfor %}
+        {% for post in person.bookmark_posts.all %}
+        <tr>
+          <th scope="row">{{ post.pk }}</th>
+          <td><a href="{% url 'posts:detail' post.pk %}">{{ post.title }}</a></td>
+          <td>{{ post.user }}</td>
+          <td>{{ post.created_at }}</td>
+          <td>{{ post.views.all|length }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>    
+    </table>
   </section>
 
 </article>
 {% endblock content %}
+
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'js/accounts-profile.js' %}"></script>
+{% endblock javascript %}

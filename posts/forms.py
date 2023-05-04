@@ -56,6 +56,14 @@ class PostChangeForm(forms.ModelForm):
     #     ),
     #     required=False
     # )
+    image = forms.ImageField(
+        widget=forms.ClearableFileInput(
+            attrs={
+                'class': 'form-control mb-3',
+            }
+        ),
+        required=False
+    )
     class Meta:
         model = Post
         fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date', 'rating', )
