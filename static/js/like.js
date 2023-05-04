@@ -11,14 +11,14 @@ forms.forEach((form) => {
       headers: { "X-CSRFToken": csrftokenLike},
     }).then((response) => {
       const isLiked = response.data.is_liked
-      const likeBtn = document.querySelector(`#like-${postId}`)
+      const likeBtn = form.querySelector(`#like-btn`)
       if (isLiked){
         likeBtn.className = 'bi bi-heart-fill'
       } else{
         likeBtn.className = 'bi bi-heart'
       }
 
-      const likeCountTag = document.querySelector('#like-count')
+      const likeCountTag = form.querySelector('#like-count')
       const likeCountData = response.data.like_count
       likeCountTag.textContent = likeCountData
     })
