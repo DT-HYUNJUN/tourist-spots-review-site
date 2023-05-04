@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block style %}
 <style>
   h1 {text-align: center; margin-bottom: 1rem;}
@@ -76,6 +76,10 @@
       <div class="profile--info--wrap">
         <ul class="profile--info">
           <li>
+            <p>ID</p>
+            <p>{{ person.username }}</p>
+          </li>
+          <li>
             <p>FIRST NAME</p>
             <p>{{ person.first_name }}</p>
           </li>
@@ -101,6 +105,21 @@
     </div>
     <div class="d-grid profile--update--wrap">
       <a class="btn btn-success " type="button" href="{% url 'accounts:update'%}">profile 수정</a>
+    </div>
+    <div>
+      팔로잉 : <span id="followings-count"> {{person.following.all|length}}</span>
+      팔로워 : <span id="followers-count"> {{person.followers.all|length}}</span>
+
+      {% if request.user != person %}
+        <form id='follow-form' data-user-id="{{ person.pk }}">
+          {% csrf_token %}
+          {% if request.user in person.followers.all %}
+            <input type="submit" value="언팔로우">          
+            {% else %}
+            <input type="submit" value="팔로우">          
+          {% endif %}
+        </form>
+      {% endif %} 
     </div>
   </section>
   <section class="profile--posts--container">
@@ -157,3 +176,8 @@
 
 </article>
 {% endblock content %}
+
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'js/accounts-profile.js' %}"></script>
+{% endblock javascript %}
