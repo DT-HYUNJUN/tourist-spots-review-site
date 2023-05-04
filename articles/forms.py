@@ -75,8 +75,10 @@ class ArticleCommentForm(forms.ModelForm):
     content = forms.CharField(
         widget = forms.TextInput(
             attrs= {
-                'class' : 'form-control',
-                'placeholder' : '댓글을 입력해주세요'
+                'class' : 'comment--create',
+                'style' : 
+                    'width: 100%; outline: 1px solid #cccccc; border:1px solid #ffffff; border-radius:5px; padding:1rem;', 
+                'placeholder' : '댓글을 입력해주세요!'
             }
         )
     )
