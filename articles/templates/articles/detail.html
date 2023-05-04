@@ -246,6 +246,7 @@
             <span id='bookmark-count'> {{article.bookmark_user.all|length}} </span>       
           </div>
 
+
           <div class="form--wrap--flex">
             <form class='like_forms' data-article-id="{{ article.pk }}">
               {% csrf_token %}
