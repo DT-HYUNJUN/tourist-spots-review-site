@@ -1,4 +1,5 @@
-from datetime import timezone
+from datetime import timezone, datetime
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
 from .models import Post, PostComment
@@ -14,14 +15,15 @@ from django.http import JsonResponse
 
 def index(request):
     posts = Post.objects.all().order_by('-pk')
+    new_posts(posts)
     select_sorting = request.GET.get('select_sorting')
+    posts = sorting(posts, select_sorting)
     page = request.GET.get('page', '1')
     per_page = 4
     paginator = Paginator(posts, per_page)
     last_page = paginator.num_pages
     page_obj = paginator.get_page(page)
-    posts = sorting(posts, select_sorting)
-    new_posts(posts)
+    
     context = {
         'last_page': last_page,
         'posts': page_obj,
@@ -30,6 +32,19 @@ def index(request):
         'select_sorting': select_sorting,
     }
     return render(request, 'posts/index.html', context)
+
+
+def sorting(queryset, select_sorting):
+    if select_sorting == '최신순':
+        return queryset.order_by('-pk')
+    elif select_sorting == '오래된순':
+        return queryset.order_by('pk')
+    elif select_sorting == '인기순':
+        return queryset.order_by('-rating')
+    elif select_sorting == '평점순':
+        return Post.objects.annotate(num_likes=Count('like_users')).order_by('-num_likes')
+    else:
+        return queryset
 
 
 def search(request):
@@ -58,13 +73,6 @@ def region(request, region_name):
     return render(request, 'posts/index.html', context)
 
 
-def sorting(queryset, select_sorting):
-    if select_sorting == '최신순':
-        return queryset.order_by('-pk')
-    elif select_sorting == '오래된순':
-        return queryset.order_by('pk')
-    else:
-        return queryset
 
 
 @login_required
@@ -92,13 +100,30 @@ def detail(request, post_pk):
     posts = list(prev_posts) + [post] + list(next_posts)
     comment_form = PostCommentForm()
     comments = post.postcomment_set.all()
+    user_age_range = age_range(post)
     context = {
+        'user_age_range': user_age_range,
         'posts': posts,
         'comment_form': comment_form,
         'post': post,
         'comments': comments,
     }
     return render(request, 'posts/detail.html', context)
+
+
+def age_range(post):
+    result = ''
+    if post.user.birthday:
+        birthday = str(post.user.birthday)
+        birthday = int(birthday.split('-')[0])
+        year = datetime.now().year
+        age = year - birthday
+        print(age)
+        result = f'{(age//10*10)}대'
+    else:
+        result = ''
+    return result
+        
 
 
 @login_required
@@ -114,12 +139,16 @@ def update(request, post_pk):
     post = Post.objects.get(pk=post_pk)
     if request.user == post.user:
         if request.method == 'POST':
-            form = PostChangeForm(request.POST, request.FILES, instance=post)
+            form = PostForm(request.POST, request.FILES, instance=post)
             if form.is_valid():
+                print('valid')
                 form.save()
+                print('save')
                 return redirect('posts:detail', post_pk)
         else:
-            form = PostChangeForm(instance=post)
+            form = PostForm(instance=post)
+    else:
+        return redirect('posts:detail', post.pk)
     context = {
         'form': form,
         'post': post,
@@ -168,7 +197,7 @@ def new_posts(posts):
     now = timezone.now()
     for post in posts:
         time_diff = now - post.created_at
-        if time_diff < timezone.timedelta(hours=1):
+        if time_diff < timezone.timedelta(days=1):
             post.is_new = True
         else:
             post.is_new = False
