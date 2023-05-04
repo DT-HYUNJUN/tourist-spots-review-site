@@ -232,17 +232,6 @@
             {{ article.views.all|length }}</i>
           </p>
           <div class="form--wrap--flex margin--right">
-            <form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>
-              {% csrf_token %}
-              <button type="submit"><i class="bi bi-star-fill warning--color"></i></button>
-
-
-
-
-
-
-          <i class="bi bi-eye-fill"></i><p>{{ article.views.all|length }}</p>
-          <div class="form--wrap--flex">  
             <form class='bookmark_forms'  data-article-id="{{ article.pk }}">
               {% csrf_token %}
               {% comment %}
@@ -253,30 +242,11 @@
               {% endif %}
               {% endcomment %}
               <button type="submit" id='bookmark-{{article.pk}}>'<i class="bi bi-star-fill warning--icon"></i></button>
-
-
-
-
-
             </form>
             <span id='bookmark-count'> {{article.bookmark_user.all|length}} </span>       
           </div>
+
           <div class="form--wrap--flex">
-
-
-
-
-
-
-            <form action="{% url 'articles:likes' article.pk %}" method='POST'>
-            {% csrf_token %}
-            <button type="submit"><i class="bi bi-heart-fill danger--color"></i></button>
-
-
-
-
-
-
             <form class='like_forms' data-article-id="{{ article.pk }}">
               {% csrf_token %}
               {% comment %}
@@ -287,12 +257,6 @@
               {% endif %}
               {% endcomment %}
               <button type="submit"  id='like-{{ article.pk }}'><i class="bi bi-heart-fill danger--icon"></i></button>
-
-
-
-
-
-
             </form>
             <span id='likes-count'> {{ article.like_users.all|length }} </span>          
           </div>
@@ -338,34 +302,12 @@
           <div class="comment--content">{{ comment.content }}</div>
           <div class="comment--date--like--wrap">
             <div class="form--wrap--flex">
-
-
-
-
-
               <div class="margin--right"><i class="comment--date">{{ comment.created_string }}</i></div>
-              <div class="form--wrap--flex margin--right">
-                <form action="{% url 'articles:comment_likes' article.pk comment.pk %}" method='POST'>
-                  {% csrf_token %}
-                  <button type="submit" {% if request.user in comment.dislike_user.all %} disabled {% endif %}>
-                    <i class="bi bi-hand-thumbs-up-fill warning--color"></i>
-
-
-
-
-
-
-              <div class="form--wrap--flex">       
+              <div class="form--wrap--flex margin--right">       
                 <form class="comment_like_forms" id="like-form-{{comment.pk}}" data-article-id="{{article.pk}}" data-comment-id="{{comment.pk}}">
                   {% csrf_token %}
                   <button type="submit" id='like-{{ comment.pk }}' {% if request.user in comment.dislike_user.all %} disabled {% endif %}>
                     <i class="bi bi-hand-thumbs-up-fill warning--icon"></i>
-
-
-
-
-
-
                   </button>
                 </form>
                 <p id="r_likes_count_{{comment.pk}}"> {{comment.like_users.all|length}} </p>        
@@ -373,25 +315,8 @@
               <div class="form--wrap--flex">
                 <form class="comment_dislike_forms" id="dislike-form-{{comment.pk}}" data-article-id="{{article.pk}}" data-comment-id="{{comment.pk}}">
                   {% csrf_token %}
-
-
-
-
-
-
-                  <button type="submit" {% if request.user in comment.like_users.all %} disabled {% endif %} >
-                    <i class="bi bi-hand-thumbs-down-fill warning--color"></i>
-
-
-
-
                     <button type="submit" id='dislike-{{ comment.pk }}' {% if request.user in comment.like_users.all %} disabled {% endif %} >
                     <i class="bi bi-hand-thumbs-down-fill warning--icon"></i>
-
-
-
-
-
                   </button>
                 </form>
                 <p id="dislikes_count_{{comment.pk}}"> {{ comment.dislike_user.all|length }} </p>
