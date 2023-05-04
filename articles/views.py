@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Article, ArticleComment, ArticleImage
-from .forms import ArticleForm, ArticleCommentForm , ArticleImageForm
+from .forms import ArticleForm, ArticleCommentForm , ArticleImageForm, DeleteArticleImageForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, TemplateView
 from django.db.models import Q, Count
@@ -87,22 +87,77 @@ def delete(request, article_pk):
     return redirect('articles:index')
 
 
+# @login_required
+# def update(request, article_pk):
+#     article = Article.objects.get(pk=article_pk)
+#     if request.user == article.user:
+#         if request.method == 'POST':
+#             form = ArticleForm(request.POST, instance=article)
+#             images = request.FILES.getlist('image')
+#             delete_images_form = DeleteArticleImageForm(request.POST)
+#             imageform = ArticleImageForm(request.POST, request.FILES, instance=article)
+#             if form.is_valid() and delete_images_form.is_valid(): 
+#                 form.save()
+#                 article.tags.clear()
+#                 tags = request.POST.get('tags').split(',')
+#                 for tag in tags:
+#                     article.tags.add(tag.strip())
+#                 for i in images:
+#                     ArticleImage.objects.create(article=article, image=i)
+#                 # for delete_image in delete_images_form.cleaned_data['delete_images']:
+#                 #     delete_image.delete()
+#                 delete_images_form.save()
+#                 return redirect('articles:detail', article.pk)
+            
+#         else:
+#             initial_tags = ', '.join(article.tags.all().values_list('name', flat=True))
+#             form = ArticleForm(instance=article, initial={'tags': initial_tags})
+#             imageform = ArticleImageForm(instance=article)
+#             delete_images_form = DeleteArticleImageForm(instance=article)
+
+#     context = {
+#         'form': form,
+#         'article': article,
+#         'imageform': imageform,
+#         'delete_images_form': delete_images_form
+#     }
+#     return render(request, 'articles/update.html', context)
+
+
 @login_required
 def update(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.user == article.user:
         if request.method == 'POST':
-            form = ArticleForm(request.POST, request.FILES, instance=article)
-            if form.is_valid(): 
+            form = ArticleForm(request.POST, instance=article)
+            images = request.FILES.getlist('image')
+            delete_images_form = DeleteArticleImageForm(request.POST)
+            imageform = ArticleImageForm(request.POST, request.FILES, instance=article)
+            if form.is_valid() and delete_images_form.is_valid(): 
                 form.save()
-                return redirect('articles:detail', article_pk)
+                article.tags.clear()
+                tags = request.POST.get('tags').split(',')
+                for tag in tags:
+                    article.tags.add(tag.strip())
+                for i in images:
+                    ArticleImage.objects.create(article=article, image=i)
+                delete_images_form.save()
+                return redirect('articles:detail', article.pk)
+            
         else:
-            form = ArticleForm(instance=article)
+            initial_tags = ', '.join(article.tags.all().values_list('name', flat=True))
+            form = ArticleForm(instance=article, initial={'tags': initial_tags})
+            imageform = ArticleImageForm(instance=article)
+            delete_images_form = DeleteArticleImageForm(instance=article)
+
     context = {
         'form': form,
         'article': article,
+        'imageform': imageform,
+        'delete_images_form': delete_images_form
     }
     return render(request, 'articles/update.html', context)
+
 
 
 @login_required
