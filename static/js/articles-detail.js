@@ -13,11 +13,11 @@ forms.forEach(form => {
       .then((response) => {
         const isLiked = response.data.is_liked
         const likeBnt = document.querySelector(`#like-${articleId}`)
-        if (isLiked === true) {
-          likeBnt.value = '좋아요 취소'
-        } else {
-          likeBnt.value = '좋아요'
-        }
+        // if (isLiked === true) {
+        //   likeBnt.value = '좋아요 취소'
+        // } else {
+        //   likeBnt.value = '좋아요'
+        // }
         const likesCountData = response.data.likes_count
         const likesCountTag = document.querySelector(`#likes-count`)
         likesCountTag.textContent = likesCountData
@@ -40,11 +40,11 @@ bookmark_forms.forEach(form => {
       .then((response) => {
         const isbookmarked = response.data.isbookmarked
         const bookmarkBnt = document.querySelector(`#bookmark-${articleId}`)
-        if (isbookmarked === true) {
-          bookmarkBnt.value = 'bookmark 취소'
-        } else {
-          bookmarkBnt.value = 'bookmark'
-        }
+        // if (isbookmarked === true) {
+        //   bookmarkBnt.value = 'bookmark 취소'
+        // } else {
+        //   bookmarkBnt.value = 'bookmark'
+        // }
         const bookmarkCountData = response.data.bookmark_count
         const bookmarkCountTag = document.querySelector(`#bookmark-count`)
         bookmarkCountTag.textContent = bookmarkCountData

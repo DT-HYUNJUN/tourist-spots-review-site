@@ -93,7 +93,7 @@
       </div>
       <div class="like--update--container">
         <div class="view--bookmark--like--wrap form--wrap--flex">
-          <p>{{ article.views.all|length }}</p>
+          <i class="bi bi-eye-fill"></i><p>{{ article.views.all|length }}</p>
           <div class="form--wrap--flex">  
             <form class='bookmark_forms'  data-article-id="{{ article.pk }}">
               {% csrf_token %}
@@ -104,7 +104,7 @@
                 <button type="submit"><i class="bi bi-star-fill warning--icon"></i></button>
               {% endif %}
               {% endcomment %}
-              <button type="submit" id='bookmark-{{article.pk}}><i class="bi bi-star-fill warning--icon"></i></button>
+              <button type="submit" id='bookmark-{{article.pk}}>'<i class="bi bi-star-fill warning--icon"></i></button>
             </form>
             <span id='bookmark-count'> {{article.bookmark_user.all|length}} </span>       
           </div>
