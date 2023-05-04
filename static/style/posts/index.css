@@ -188,20 +188,3 @@ a {
   font-size: 16px;
   border: none;
 }
-
-
-.region-list {
-  display: none;
-  position: absolute;
-  z-index: 1;
-}
-
-
-.region-list li {
-  display: block;
-}
-
-
-.region-button:hover .region-list {
-  display: block;
-} */

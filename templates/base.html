@@ -331,7 +331,7 @@
           <div class="header--right--wrap">
             {% if user.is_authenticated %}
             <div class="header--login--wrap">
-              <a class="header--login" href="{% url 'accounts:profile' user.username%}">profile</a>
+              <a class="header--login" href="{% url 'accounts:profile' user.username%}">{{user}}님의 profile</a>
               <form action="{% url 'accounts:logout' %}" method="POST">
                 {% csrf_token %}
                 <input class="btn btn-outline-danger" type="submit" value="log out">

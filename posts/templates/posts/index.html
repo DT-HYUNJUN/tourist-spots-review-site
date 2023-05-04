@@ -7,6 +7,7 @@
 {% block content %}
 
 <main>
+
   <section>
     <img src="{% static 'img/posts-main-img.jpg' %}" class="main-img" alt="triptopper베너이미지" />
   </section>
@@ -81,8 +82,54 @@
         </a>
       </div>
       {% endfor %}
+
+  <section>
+    <img src="{% static 'img/posts-main-img.jpg' %}" class="main-img" alt="triptopper베너이미지" />
+  </section>
+  <section class='viewed-order mb-0'>
+    <div class="d-flex justify-content-between w-100">
+      <div class="d-flex">
+        <div>
+          <button id="region-button" class="btn btn-secondary">지역<i id="arrow" class="bi bi-arrow-down-short"></i></button>
+          <a href="{% url 'posts:index' %}"><li class="btn bg-body-secondary">전체</li></a>
+        </div>
+      </div>
+      <form method="GET">
+        <div class="d-flex justify-content-end align-items-center gap-1 mb-2">
+          <select class="form-select" name="select_sorting" id="select_sorting" class="p-1 rounded-1">
+            <option value="최신순" {% if select_sorting == '최신순' %}selected{% endif %}>최신순</option>
+            <option value="오래된순" {% if select_sorting == '오래된순' %}selected{% endif %}>오래된순</option>
+            <option value="인기순" {% if select_sorting == '인기순' %}selected{% endif %}>인기순</option>
+            <option value="평점순" {% if select_sorting == '평점순' %}selected{% endif %}>평점순</option>
+          </select>
+          <input type="submit" class="btn btn-secondary" value="정렬">
+        </div>
+      </form>
     </div>
   </section>
+  <ul id="region-list" class="mb-3 hidden">
+    <div class="">
+      <a href="{% url 'posts:region' '서울' %}"><li class="btn bg-body-secondary">서울</li></a>
+      <a href="{% url 'posts:region' '인천' %}"><li class="btn bg-body-secondary">인천</li></a>
+      <a href="{% url 'posts:region' '경기' %}"><li class="btn bg-body-secondary">경기</li></a>
+      <a href="{% url 'posts:region' '강원' %}"><li class="btn bg-body-secondary">강원</li></a>
+      <a href="{% url 'posts:region' '충남' %}"><li class="btn bg-body-secondary">충남</li></a>
+      <a href="{% url 'posts:region' '세종' %}"><li class="btn bg-body-secondary">세종</li></a>
+      <a href="{% url 'posts:region' '대전' %}"><li class="btn bg-body-secondary">대전</li></a>
+      <a href="{% url 'posts:region' '충북' %}"><li class="btn bg-body-secondary">충북</li></a>
+      <a href="{% url 'posts:region' '전북' %}"><li class="btn bg-body-secondary">전북</li></a>
+      <a href="{% url 'posts:region' '전남' %}"><li class="btn bg-body-secondary">전남</li></a>
+      <a href="{% url 'posts:region' '광주' %}"><li class="btn bg-body-secondary">광주</li></a>
+      <a href="{% url 'posts:region' '경북' %}"><li class="btn bg-body-secondary">경북</li></a>
+      <a href="{% url 'posts:region' '경남' %}"><li class="btn bg-body-secondary">경남</li></a>
+      <a href="{% url 'posts:region' '대구' %}"><li class="btn bg-body-secondary">대구</li></a>
+      <a href="{% url 'posts:region' '울산' %}"><li class="btn bg-body-secondary">울산</li></a>
+      <a href="{% url 'posts:region' '부산' %}"><li class="btn bg-body-secondary">부산</li></a>
+      <a href="{% url 'posts:region' '제주특별자치도' %}"><li class="btn bg-body-secondary">제주</li></a>
+
+    </div>
+  </ul>
+  
 
   <ul class="pagination justify-content-center mt-5"> 
     {% comment %}
@@ -146,4 +193,5 @@
 <script src="{% static 'js/region.js' %}"></script>
 <script src="{% static 'js/like.js' %}"></script>
 <script src="{% static 'js/card-bottom-info.js' %}"></script>
+<script src="{% static 'js/new.js' %}"></script>
 {% endblock javascript %}
