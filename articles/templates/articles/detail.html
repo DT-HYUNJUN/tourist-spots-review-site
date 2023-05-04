@@ -268,13 +268,6 @@
 
 
 
-            <form action="{% url 'articles:likes' article.pk %}" method='POST'>
-            {% csrf_token %}
-            <button type="submit"><i class="bi bi-heart-fill danger--color"></i></button>
-
-
-
-
 
 
             <form class='like_forms' data-article-id="{{ article.pk }}">
