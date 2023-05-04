@@ -1,37 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block style %}
+<link rel="stylesheet" href="{% static 'style/articles/create.css' %}">
+
 <style>
-  .main--article--container{
-    max-width: ;
-    margin: auto;
-  }
-  .card--style--wrap {
-    border: 1px solid #cccccc;
-    border-radius: 10px;
-    box-shadow: 2px 2px 5px 2px rgba(204,204,204, .5);
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-  .article--title--wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin: 0 20px;
-  }
-  .article--title {
-    border: 1px solid rgb(128, 128, 128);
-    border-radius: 10px 10px 0 0;
-    background-color: #28a745;
-    padding: 0.1rem 1rem;
-    margin: 0;
-  }
-  .article--list {
-    border: 1px solid rgb(128, 128, 128);
-    border-radius: 10px 10px 0 0;
-    background-color: #ffc107;
-    padding: 0.1rem 1rem;
-  }
 
 </style>
 {% endblock style %}
