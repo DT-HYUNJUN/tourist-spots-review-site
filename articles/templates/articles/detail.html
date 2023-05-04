@@ -20,30 +20,39 @@
   <br>
     <div>
         <b>TAGS</b><br>
-        {% load taggit_templatetags2_tags %} <!--taggit_templatetag2_tags 모듈을 가져온다-->
-       {% get_tags_for_object article as "tags" %} <!-- ** -->
+        {% load taggit_templatetags2_tags %} 
+       {% get_tags_for_object article as "tags" %}
         {% for tag in tags %}
         <a href="{% url 'articles:tagged_object_list' tag.name %}">{{tag.name}}</a>
         {% endfor %} 
 
     </div>
 
-  <form action=" {% url 'articles:likes' article.pk %}" method='POST'>
+  <form class='like_forms' data-article-id="{{ article.pk }}">
     {% csrf_token %}
-    <input type="submit" value='likes'>
+    {% if request.user in article.like_users.all %}
+    <input type="submit" value='싫어요' id='like-{{ article.pk }}'>
+    {% else %}
+    <input type="submit" value='좋아요' id='like-{{ article.pk }}'>
+    {% endif %}
   </form>
-  <p> {{ article.like_users.all|length }} </p>
 
-  <h3 class="mt-5">댓글
-  {% if comments.all|length > 0 %}
-    ({{ comments.all|length }})
-  {% endif %}
+  <p id='likes-count'> {{ article.like_users.all|length }} </p>
 
-  <form action=" {% url 'articles:bookmark' article.pk %}" method='POST'>
+  <h4 class="mt-5">댓글 ({{ comments.all|length }})</h4>
+    
+  
+
+  <form class='bookmark_forms'  data-article-id="{{ article.pk }}">
     {% csrf_token %}
-    <input type="submit" value='bookmark'>
+    {% if request.user in article.bookmark_user.all %}
+      <input type="submit" value='bookmark 취소' id='bookmark-{{article.pk}}'>
+    {% else %}
+      <input type="submit" value='bookmark' id='bookmark-{{article.pk}}'>
+    {% endif %}
   </form>
-  <p> {{ article.bookmark_user.all|length }} </p>
+  <p id='bookmark-count'> {{article.bookmark_user.all|length}} </p>
+
 
 
   <h3 class="mt-5">댓글
@@ -51,15 +60,22 @@
       ({{ comments.all|length }})
     {% endif %}
     </h3>
-    <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
+    <form action="{% url 'articles:comment_create' article.pk %}" method="POST" id='comment_form'>
     {% csrf_token %}
     <div class="input-group mb-3">
       {{ comment_form.content }}
-      <button type="submit" class="btn btn-outline-warning">댓글 작성</button>
+      <button id="comment-submit" type="submit" class="btn btn-outline-warning">댓글 작성</button>
     </div>
     </form>
+    {% comment %} <form class="comment-form" id="comment_form">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+      {{ comment_form.content }}
+      <button id="comment-submit" type="submit" class="btn btn-outline-warning">댓글 작성</button>
+    </div>
+    </form> {% endcomment %}
 
-  <table class="table">
+  <table class="table" id='comment_list'>
     {% for comment in comments %}
       <tbody>
         <tr class="border-bottom border-top border-dark-subtle">
@@ -67,26 +83,32 @@
           <td style="width: 65%;">{{ comment.content }}</td>
           <td style="width: 25%;" class="text-secondary comment-time">{{ comment.created_string }}</td>
           <td>
-            <form action="{% url 'articles:comment_likes' article.pk comment.pk %}" method='POST'>
+
+            <form class="comment_like_forms" id="like-form-{{comment.pk}}" data-article-id="{{article.pk}}" data-comment-id="{{comment.pk}}">
               {% csrf_token %}
-              <input type="submit" value='추천'
+              <input type="submit" value='공감' id='like-{{ comment.pk }}'
               {% if request.user in comment.dislike_user.all %} disabled {% endif %}>
             </form>
-            {{ comment.like_users.all|length }}
+            <p id="r_likes_count_{{comment.pk}}"> {{comment.like_users.all|length}} </p>
 
-            <form action="{% url 'articles:comment_dislikes' article.pk comment.pk %}" method='POST'>
+
+            <form class="comment_dislike_forms" id="dislike-form-{{comment.pk}}" data-article-id="{{article.pk}}" data-comment-id="{{comment.pk}}">
               {% csrf_token %}
-              <input type="submit" value='비추천'
+              <input type="submit" value='비공감' id='dislike-{{ comment.pk }}'
               {% if request.user in comment.like_users.all %} disabled {% endif %}>
+            </form>
+            <p id="dislikes_count_{{comment.pk}}"> {{ comment.dislike_user.all|length }} </p>
 
             </form>
-            {{ comment.dislike_user.all|length }}
+            
           </td>
         </tr>
       </tbody>
     {% endfor %}
 
   </table>
+
+
 
   {% comment %} <form action="{% url 'articles:tag_add' article.pk %}">
     {% csrf_token %}
@@ -96,3 +118,9 @@
 </article>
 {% endblock content %}
 
+
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="{% static 'js/articles-detail.js' %}"></script>
+  </script>
+{% endblock javascript %}
