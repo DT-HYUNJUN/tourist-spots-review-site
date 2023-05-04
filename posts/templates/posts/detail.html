@@ -3,6 +3,7 @@
 {% load static %}
 {% block style %}
 <link rel="stylesheet" href="{% static 'style/posts/detail.css' %}">
+<link rel="stylesheet" href="{% static 'style/posts/index.css' %}">
 {% endblock style %}
 
 {% block content %}
@@ -19,21 +20,21 @@
       <header class="title-text mb-2">{{ post.title }}</header>
       <article class="d-flex text-nowrap">
         <p class="duration">
-          <i class="bi bi-clock-history mark-text">{{ post.start_date }} ~ {{ post.end_date }}</i>
+          <i class="bi bi-clock-history detail-mark-text">{{ post.start_date }} ~ {{ post.end_date }}</i>
         </p>
-        <p class="place">
-          <i class="bi bi-geo-alt mark-text">{{ post.region }}</i>
+        <p class="detail-place">
+          <i class="bi bi-geo-alt detail-mark-text">{{ post.region }}</i>
         </p>
         <p>
-          <i class="bi bi-star-fill"><span class="mark-text">{{ post.rating }}</span></i>
+          <i class="bi bi-star-fill"><span class="detail-mark-text">{{ post.rating }}</span></i>
           <form class="like-form" data-post-id="{{ post.pk }}">
             {% csrf_token %}
             {% if request.user in post.like_users.all %}
-            <button type="submit" class="bi bi-heart-fill" id="like-{{ post.pk }}"></button>
+            <button type="submit" class="bi bi-heart-fill" id="like-btn"></button>
             {% else %}
-            <button type="submit" class="bi bi-heart" id="like-{{ post.pk }}"></button>
+            <button type="submit" class="bi bi-heart" id="like-btn"></button>
             {% endif %}
-            <span id="like-count" class="mark-text">{{ post.like_users.all|length }}</span>
+            <span id="like-count" class="detail-mark-tex">{{ post.like_users.all|length }}</span>
           </form>
         </p>
       </article>
@@ -163,6 +164,73 @@
     </section>
   </main>
 
+  <!-- 인접 게시물 -->
+  <section>
+    <div id="container-posts">
+      {% for post in posts %}
+      <div class="post-item">
+        <a href="{% url 'posts:detail' post.pk %}" class="card">
+          <div class="position-relative">
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="여행사진" class="card-img-top" />
+            {% else %}
+            <img
+            src="{% static 'img/noimage.jpg' %}"
+            alt="이미지없음"
+            class="card-img-top"
+            />
+            {% endif %}
+            <div class="d-flex card-bottom-info card-bottom-hidden">
+              <i class="bi bi-star-fill"><span class="mark-text">{{ post.rating }}</span>
+              </i>
+              <i class="bi bi-chat-dots-fill"><span class="mark-text">{{ post.postcomment_set.count }}</span></i>
+            </div>
+            <div class="card-top-info-container">
+              <div class="d-flex justify-content-between card-top-info mx-1">
+                <p class="place px-1">
+                  <i class="bi bi-geo-alt">{{ post.region }}</i>
+                </p>
+                <form class="like-form" data-post-id="{{ post.pk }}">
+                  {% csrf_token %}
+                  {% if request.user in post.like_users.all %}
+                  <button type="submit" class="bi bi-heart-fill" id="like-btn"></button>
+                  {% else %}
+                  <button type="submit" class="bi bi-heart" id="like-btn"></button>
+                  {% endif %}
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="card-user">
+              <p>
+                {% if post.user.profile_image %}
+                <img
+                  class="user-profile"
+                  src="{{ post.user.profile_image }}"
+                  alt="사용자프로필이미지"
+                />
+                {% else %}
+                <img
+                class="user-profile"
+                src="{% static 'img/user_profile.png' %}"
+                alt="기본프로필이미지"
+                />
+              </p>
+                {% endif %}
+              <span class="username">{{post.user}}</span>
+            </div>
+            <h6 class="card-title">{{ post.title }}</h6>
+            <div class="post-date text-truncate">
+              {{ post.created_string }}
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
 {% endblock content %}
 
 {% block javascript %}
@@ -172,4 +240,5 @@
 <script src="{% static 'js/comments.js' %}"></script>
 <script src="{% static 'js/like.js' %}"></script>
 <script src="{% static 'js/follows.js' %}"></script>
+<script src="{% static 'js/card-bottom-info.js' %}"></script>
 {% endblock javascript %}

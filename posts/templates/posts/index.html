@@ -7,10 +7,11 @@
 {% block content %}
 
 <main>
-  <section class="box">
+
+  <section>
     <img src="{% static 'img/posts-main-img.jpg' %}" class="main-img" alt="triptopper베너이미지" />
   </section>
-  <section class='Box viewed-order mb-0'>
+  <section class='viewed-order mb-0'>
     <div class="d-flex justify-content-between w-100">
       <div class="d-flex">
         <div>
@@ -50,8 +51,82 @@
       <a href="{% url 'posts:region' '울산' %}"><li class="btn bg-body-secondary">울산</li></a>
       <a href="{% url 'posts:region' '부산' %}"><li class="btn bg-body-secondary">부산</li></a>
       <a href="{% url 'posts:region' '제주특별자치도' %}"><li class="btn bg-body-secondary">제주</li></a>
+
     </div>
   </ul>
+
+  </section>
+  <div class="new-post">
+    <a class="new-post-text btn bg-success-subtle" href="{% url 'posts:create' %}">
+      <i class="bi bi-plus-square">여행 나누기</i></a>
+  </div>
+  <section>
+    <div id="container-posts">
+      {% for post in posts %}
+      <div class="post-item">
+        <a href="{% url 'posts:detail' post.pk %}" class="card">
+          <div class="position-relative">
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="여행사진" class="card-img-top" />
+            {% else %}
+            <img
+            src="{% static 'img/noimage.jpg' %}"
+            alt="이미지없음"
+            class="card-img-top"
+            />
+            {% endif %}
+            <div class="d-flex card-bottom-info card-bottom-hidden">
+              <i class="bi bi-star-fill"><span class="mark-text">{{ post.rating }}</span>
+              </i>
+              <i class="bi bi-chat-dots-fill"><span class="mark-text">{{ post.postcomment_set.count }}</span></i>
+            </div>
+            <div class="card-top-info-container">
+              <div class="d-flex justify-content-between card-top-info mx-1">
+                <p class="place px-1">
+                  <i class="bi bi-geo-alt">{{ post.region }}</i>
+                </p>
+                <form class="like-form" data-post-id="{{ post.pk }}">
+                  {% csrf_token %}
+                  {% if request.user in post.like_users.all %}
+                  <button type="submit" class="bi bi-heart-fill" id="like-btn"></button>
+                  {% else %}
+                  <button type="submit" class="bi bi-heart" id="like-btn"></button>
+                  {% endif %}
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="card-user">
+              <p>
+                {% if post.user.profile_image %}
+                <img
+                  class="user-profile"
+                  src="{{ post.user.profile_image }}"
+                  alt="사용자프로필이미지"
+                />
+                {% else %}
+                <img
+                class="user-profile"
+                src="{% static 'img/user_profile.png' %}"
+                alt="기본프로필이미지"
+                />
+              </p>
+                {% endif %}
+              <span class="username">{{post.user}}</span>
+            </div>
+            <h6 class="card-title">{{ post.title }}</h6>
+            <div class="post-date text-truncate">
+              {{ post.created_string }}
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+
+
+
   
 
   <ul class="pagination justify-content-center mt-5"> 
@@ -114,5 +189,7 @@
 
 {% block javascript %}
 <script src="{% static 'js/region.js' %}"></script>
+<script src="{% static 'js/like.js' %}"></script>
+<script src="{% static 'js/card-bottom-info.js' %}"></script>
 <script src="{% static 'js/new.js' %}"></script>
 {% endblock javascript %}
