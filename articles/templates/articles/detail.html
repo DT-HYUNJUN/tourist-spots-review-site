@@ -1,120 +1,200 @@
 {% extends "base.html" %}
 {% load static %}
-{% block content %}
-
-<article class="main--article--container">
-  <p>title</p>
-  {{article.title}}
-  <p>user</p>
-  {{article.user}}
-  <p>content</p>
-  {{article.content}}
-  {% for image in article.articleimage_set.all %}
-    <img src="{{image.image.url}}" alt="img">
-  {% endfor %}
-  {% comment %} <p>tag</p>
-  {% for tag in article.tags.all %}
-    {{ tag }}
-  {% endfor %} {% endcomment %}
-
-  <br>
-    <div>
-        <b>TAGS</b><br>
-        {% load taggit_templatetags2_tags %} 
-       {% get_tags_for_object article as "tags" %}
-        {% for tag in tags %}
-        <a href="{% url 'articles:tagged_object_list' tag.name %}">{{tag.name}}</a>
-        {% endfor %} 
-
-    </div>
-
-  <form class='like_forms' data-article-id="{{ article.pk }}">
-    {% csrf_token %}
-    {% if request.user in article.like_users.all %}
-    <input type="submit" value='싫어요' id='like-{{ article.pk }}'>
-    {% else %}
-    <input type="submit" value='좋아요' id='like-{{ article.pk }}'>
-    {% endif %}
-  </form>
-
-  <p id='likes-count'> {{ article.like_users.all|length }} </p>
-
-  <h4 class="mt-5">댓글 ({{ comments.all|length }})</h4>
+{% block style %}
+<style>
+  .main--article--container {
     
+  }
+  {% comment %} board {% endcomment %}
+  .board--user--date--wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+  .profile--image--wrap img {
+    width: 50px;
+  }
+  .board--date--wrap {
+    display: flex;
+  }
+
+  .like--update--container{
+    display: flex;
+    justify-content: space-between;}
   
+  .warning--icon {
+    color: #ffc107;
+  }
+  .danger--icon {
+    color: #dc3545;
+  }
 
-  <form class='bookmark_forms'  data-article-id="{{ article.pk }}">
-    {% csrf_token %}
-    {% if request.user in article.bookmark_user.all %}
-      <input type="submit" value='bookmark 취소' id='bookmark-{{article.pk}}'>
-    {% else %}
-      <input type="submit" value='bookmark' id='bookmark-{{article.pk}}'>
-    {% endif %}
-  </form>
-  <p id='bookmark-count'> {{article.bookmark_user.all|length}} </p>
+  {% comment %} comment {% endcomment %}
+  .comment--card--wrap {
+    display:flex;
+    justify-content: space-between;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 2px rgba(204,204,204, .5);
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  .comment--title--wrap {
+    display: flex;
+  }
+  .comment--delete--like--wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  {% comment %} all {% endcomment %}
+  .form--wrap--flex {
+    display: flex;
+  }
+</style>
+{% endblock style %}
 
 
-
-  <h3 class="mt-5">댓글
-    {% if comments.all|length > 0 %}
-      ({{ comments.all|length }})
-    {% endif %}
-    </h3>
-    <form action="{% url 'articles:comment_create' article.pk %}" method="POST" id='comment_form'>
-    {% csrf_token %}
-    <div class="input-group mb-3">
-      {{ comment_form.content }}
-      <button id="comment-submit" type="submit" class="btn btn-outline-warning">댓글 작성</button>
-    </div>
-    </form>
-    {% comment %} <form class="comment-form" id="comment_form">
-    {% csrf_token %}
-    <div class="input-group mb-3">
-      {{ comment_form.content }}
-      <button id="comment-submit" type="submit" class="btn btn-outline-warning">댓글 작성</button>
-    </div>
-    </form> {% endcomment %}
-
-  <table class="table" id='comment_list'>
-    {% for comment in comments %}
-      <tbody>
-        <tr class="border-bottom border-top border-dark-subtle">
-          <td style="width: 20%;" class="table-active"><a href="{% url 'accounts:profile' comment.user.username %}" class="text-decoration-none text-dark">{{ comment.user }}</a></td>
-          <td style="width: 65%;">{{ comment.content }}</td>
-          <td style="width: 25%;" class="text-secondary comment-time">{{ comment.created_string }}</td>
-          <td>
-
-            <form class="comment_like_forms" id="like-form-{{comment.pk}}" data-article-id="{{article.pk}}" data-comment-id="{{comment.pk}}">
+{% block content %}
+<article class="main--article--container">
+  <section class="board--container">
+    <div class="board--wrap">
+      <h3 class="board-title">{{ article.title }}</h3>
+      <hr>
+      <div class="board--user--date--wrap" >
+        <div class="profile-user--wrap">
+          <span class="profile--image--wrap">
+            {% if article.user.profile_image %}
+            <img src="{{ article.user.profile_image.url }}" alt="profile-image">
+            {% else %}
+            <i class="bi bi-person-circle"></i>
+            {% endif %}    
+          </span>
+          {{ article.user}}
+        </div>
+        <div class="board--date--wrap">
+          <p>{{ article.created_at }}</p>
+          <p>{{ article.updated_at }}</p>
+        </div>
+      </div>
+      <hr>
+      <div>{{ article.content }}</div>
+      <hr>
+      <div>
+        {% for image in article.articleimage_set.all %}
+        <img src="{{image.image.url}}" alt="img">
+        {% endfor %}
+      </div>
+      <div>
+        {% load taggit_templatetags2_tags %} 
+        {% get_tags_for_object article as "tags" %}
+         {% for tag in tags %}
+         <a href="{% url 'articles:tagged_object_list' tag.name %}">{{tag.name}}</a>
+         {% endfor %}
+      </div>
+      <div class="like--update--container">
+        <div class="view--bookmark--like--wrap form--wrap--flex">
+          <p>{{ article.views.all|length }}</p>
+          <div class="form--wrap--flex">  
+            <form class='bookmark_forms'  data-article-id="{{ article.pk }}">
               {% csrf_token %}
-              <input type="submit" value='공감' id='like-{{ comment.pk }}'
-              {% if request.user in comment.dislike_user.all %} disabled {% endif %}>
+              {% comment %}
+              {% if request.user in article.bookmark_user.all %}
+                <input type="submit" value='bookmark 취소' id='bookmark-{{article.pk}}'>
+              {% else %}
+                <button type="submit"><i class="bi bi-star-fill warning--icon"></i></button>
+              {% endif %}
+              {% endcomment %}
+              <button type="submit" id='bookmark-{{article.pk}}><i class="bi bi-star-fill warning--icon"></i></button>
             </form>
-            <p id="r_likes_count_{{comment.pk}}"> {{comment.like_users.all|length}} </p>
-
-
-            <form class="comment_dislike_forms" id="dislike-form-{{comment.pk}}" data-article-id="{{article.pk}}" data-comment-id="{{comment.pk}}">
+            <span id='bookmark-count'> {{article.bookmark_user.all|length}} </span>       
+          </div>
+          <div class="form--wrap--flex">
+            <form class='like_forms' data-article-id="{{ article.pk }}">
               {% csrf_token %}
-              <input type="submit" value='비공감' id='dislike-{{ comment.pk }}'
-              {% if request.user in comment.like_users.all %} disabled {% endif %}>
+              {% comment %}
+              {% if request.user in article.like_users.all %}
+              <input type="submit" value='싫어요' id='like-{{ article.pk }}'>
+              {% else %}
+              <input type="submit" value='좋아요' id='like-{{ article.pk }}'>
+              {% endif %}
+              {% endcomment %}
+              <button type="submit"  id='like-{{ article.pk }}'><i class="bi bi-heart-fill danger--icon"></i></button>
             </form>
-            <p id="dislikes_count_{{comment.pk}}"> {{ comment.dislike_user.all|length }} </p>
-
-            </form>
-            
-          </td>
-        </tr>
-      </tbody>
-    {% endfor %}
-
-  </table>
-
-
-
-  {% comment %} <form action="{% url 'articles:tag_add' article.pk %}">
-    {% csrf_token %}
-    {{tag_form.as_p}}
-    <input type="submit">
-  </form> {% endcomment %}
+            <span id='likes-count'> {{ article.like_users.all|length }} </span>          
+          </div>
+        </div>
+        <div class="update--delete--wrap">
+          <a href="{% url 'articles:update' article.pk %}">수정</a>
+          <a onclick="return confirm('게시글을 삭제하시겠습니까?')" href="{% url 'articles:delete' article.pk %}">삭제</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr>
+  <section class="comment--container">
+    <div>
+      <div class="comment--title--wrap">
+        <h5>Comment</h5>
+        <div>
+          {% if comments.all|length > 0 %}
+          ({{ comments.all|length }})
+          {% endif %}
+        </div>
+      </div>
+      <div>
+        {% for comment in comments %}
+        <div class="comment--card--wrap">
+          <div>
+            <p>
+              <a href="{% url 'accounts:profile' comment.user.username %}" class="text-decoration-none text-dark">{{ comment.user }}</a>
+            </p>
+            <p>{{ comment.content }}</p>
+            <p>{{ comment.created_string }}</p>
+          </div>
+          <div class="comment--delete--like--wrap">
+            <div><i class="bi bi-x-lg danger--icon"></i></div>
+            <div class="form--wrap--flex">
+              <div class="form--wrap--flex">       
+                <form class="comment_like_forms" id="like-form-{{comment.pk}}" data-article-id="{{article.pk}}" data-comment-id="{{comment.pk}}">
+                  {% csrf_token %}
+                  <button type="submit" id='like-{{ comment.pk }}' {% if request.user in comment.dislike_user.all %} disabled {% endif %}>
+                    <i class="bi bi-hand-thumbs-up-fill warning--icon"></i>
+                  </button>
+                </form>
+                <p id="r_likes_count_{{comment.pk}}"> {{comment.like_users.all|length}} </p>        
+              </div>
+              <div class="form--wrap--flex">
+                <form class="comment_dislike_forms" id="dislike-form-{{comment.pk}}" data-article-id="{{article.pk}}" data-comment-id="{{comment.pk}}">
+                  {% csrf_token %}
+                    <button type="submit" id='dislike-{{ comment.pk }}' {% if request.user in comment.like_users.all %} disabled {% endif %} >
+                    <i class="bi bi-hand-thumbs-down-fill warning--icon"></i>
+                  </button>
+                </form>
+                <p id="dislikes_count_{{comment.pk}}"> {{ comment.dislike_user.all|length }} </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div>
+        <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
+          {% csrf_token %}
+          <div class="">
+            <p>{{ comment_form.content }}</p>
+            <button type="submit" class="btn btn-outline-warning">댓글 작성</button>
+          </div>
+        </form>
+        {% comment %} <form class="comment-form" id="comment_form">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          {{ comment_form.content }}
+          <button id="comment-submit" type="submit" class="btn btn-outline-warning">댓글 작성</button>
+        </div>
+        </form> {% endcomment %}
+        </div>
+    </div>
+  </section>
 </article>
 {% endblock content %}
 
