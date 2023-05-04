@@ -61,15 +61,22 @@ class PostChangeForm(forms.ModelForm):
         fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date', 'rating', )
 
 
+comment_max = 100
 class PostCommentForm(forms.ModelForm):
     content = forms.CharField(
-        widget=forms.TextInput(
+        max_length=comment_max,
+        widget=forms.Textarea(
             attrs={
+                'id': 'comment-field',
                 'class': 'border-0 w-100 comment-form' ,
                 'placeholder': '댓글을 남겨보세요',
                 'autocomplete': 'off',
+                'data-max-length': comment_max,
+                'onkeydown': 'resize(this)',
+                'onkeyup': 'resize(this)',
+                'rows': 1,
             }
-        )
+        ),
     )
     class Meta:
         model = PostComment

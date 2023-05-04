@@ -1,10 +1,11 @@
 from datetime import timezone
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
 from .models import Post, PostComment
 from .forms import PostForm, PostChangeForm ,PostCommentForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.core.paginator import Paginator
 from django.http import JsonResponse
 # import requests
 
@@ -14,10 +15,16 @@ from django.http import JsonResponse
 def index(request):
     posts = Post.objects.all().order_by('-pk')
     select_sorting = request.GET.get('select_sorting')
+    page = request.GET.get('page', '1')
+    per_page = 4
+    paginator = Paginator(posts, per_page)
+    last_page = paginator.num_pages
+    page_obj = paginator.get_page(page)
     posts = sorting(posts, select_sorting)
     new_posts(posts)
     context = {
-        'posts': posts,
+        'last_page': last_page,
+        'posts': page_obj,
         'region_name': '모든 지역',
         'app': posts,
         'select_sorting': select_sorting,
@@ -42,9 +49,7 @@ def region(request, region_name):
     posts = Post.objects.all().filter(region=region_name).order_by('-pk')
     select_sorting = request.GET.get('select_sorting')
     posts = sorting(posts, select_sorting)
-
     new_posts(posts)
-
     context = {
         'posts': posts,
         'region_name': region_name,
@@ -82,9 +87,13 @@ def create(request):
 
 def detail(request, post_pk):
     post = Post.objects.get(pk=post_pk)
+    prev_posts = Post.objects.filter(pk__lt=post_pk).order_by('-pk')[:2]
+    next_posts = Post.objects.filter(pk__gt=post_pk).order_by('pk')[:2]
+    posts = list(prev_posts) + [post] + list(next_posts)
     comment_form = PostCommentForm()
     comments = post.postcomment_set.all()
     context = {
+        'posts': posts,
         'comment_form': comment_form,
         'post': post,
         'comments': comments,
@@ -165,6 +174,7 @@ def new_posts(posts):
             post.is_new = False
 
 
+@login_required
 def comment_likes(request, post_pk, comment_pk):
     comment = PostComment.objects.get(pk=comment_pk)
     if comment.like_users.filter(pk=request.user.pk).exists():
@@ -173,3 +183,28 @@ def comment_likes(request, post_pk, comment_pk):
         comment.like_users.add(request.user)
     return redirect('posts:detail', post_pk)
 
+
+def create_comment(post, text, user):
+    comment = PostComment(post=post, text=text, user=user)
+    comment.save()
+    return comment
+
+
+from django.http import JsonResponse
+
+def create_comment_ajax(request):
+    if request.method == 'GET':
+        post_pk = request.GET.get('post_pk')
+        text = request.GET.get('content')
+        user = request.user
+        post = get_object_or_404(Post, pk=post_pk)
+        comment = create_comment(post, text, user)
+        context = {
+            'comment': {
+                'id': comment.id,
+                'content': comment.content,
+                'user': comment.user.username,
+                'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            }
+        }
+        return JsonResponse(context)

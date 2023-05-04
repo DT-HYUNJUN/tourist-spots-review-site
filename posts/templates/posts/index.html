@@ -107,7 +107,11 @@
     margin-left: auto;
   }
 
+  .hidden {
+    display: none;
+  }
 </style>
+<link rel="stylesheet" href="{% static 'style/posts/index.css' %}">
 {% endblock style %} 
 
 {% block content %}
@@ -132,6 +136,17 @@
         <input type="submit" class="btn btn-secondary btn-sm" value="정렬">
       </div>
     </form>
+
+    <div class="d-flex">
+      <button id="region-button" class="btn btn-secondary region-button">지역 <span>></span></button>
+      <ul id="region-list" class="region-list">
+        <li class="btn btn-light"><a href="{% url 'posts:index' %}">전체</a></li>
+        <li class="btn btn-light"><a href="{% url 'posts:region' '서울' %}">서울</a></li>
+        <li class="btn btn-light">경기</li>
+        <li class="btn btn-light">충남</li>
+      </ul>
+    </div>
+
   </section>
   <section class="box">
     <div id="container-posts">
@@ -142,7 +157,7 @@
           <img src="{{ post.image.url }}" alt="여행사진" class="card-img-top" />
           {% else %}
           <img
-            src="{% static 'img/noimage.svg' %}"
+            src="{% static 'img/noimage.jpg' %}"
             alt="이미지없음"
             class="card-img-top noimage-img"
           />
@@ -181,9 +196,67 @@
         </a>
       </div>
       {% endfor %}
-
     </div>
   </section>
+
+  <ul class="pagination justify-content-center mt-5"> 
+    {% comment %}
+        이전 페이지 버튼
+        이전 페이지가 존재할 경우 이전 페이지 버튼 활성화
+    {% endcomment %}
+    {% if posts.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1">처음으로</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ posts.previous_page_number }}">이전</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+      </li>
+    {% endif %}
+    {% comment %}
+        페이지 번호 리스트 생성 반본북
+    {% endcomment %}
+    {% for page_number in posts.paginator.page_range %}
+      {% comment %}
+        페이지 번호가 무한히 생성되는 것을 막는 조건문
+        현재 페이지에서 +- 5 까지 생성
+      {% endcomment %}
+      {% if page_number >= posts.number|add:-5 and page_number <= posts.number|add:5 %}
+        {% if page_number == posts.number %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    {% comment %}
+        다음 페이지 버튼
+        다음 페이지가 존재할 경우 다음 페이지 버튼 활성화
+    {% endcomment %}
+    {% if posts.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ posts.next_page_number }}">다음</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ last_page }}">마지막으로</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+      </li>
+    {% endif %}
+  </ul>
 </main>
 
 {% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'js/region.js' %}"></script>
+{% endblock javascript %}
