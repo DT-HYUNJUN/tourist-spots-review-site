@@ -23,7 +23,6 @@ def index(request):
     paginator = Paginator(posts, per_page)
     last_page = paginator.num_pages
     page_obj = paginator.get_page(page)
-    
     context = {
         'last_page': last_page,
         'posts': page_obj,

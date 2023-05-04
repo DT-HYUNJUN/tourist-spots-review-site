@@ -2,6 +2,7 @@
   box-sizing: border-box;
 }
 
+
 section {
   margin-bottom: 1rem;
 }
@@ -11,24 +12,46 @@ a {
   color: inherit;
 }
 
+/* 기본  */
 #container-posts{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
   column-gap: 5px;
   row-gap: 10px;
-  background-color: red;
 }
 
-@media all and (max-width:479px) {
+/* 576px 이상 768이하 => 부트스트랩 sm */
+@media all and (max-width: 768px){
   #container-posts {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: 1fr;
     column-gap: 10px;
     row-gap: 10px;
-    background-color : yellow;
   }
 }
+
+/* 768px 이상 1024이하 => 부트스트랩 md */
+@media all and (min-width:768px) and (max-width:1024px) {
+  #container-posts {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+}
+
+/* 1025px 이상 => 부트스트랩 lg */
+@media all and (min-width:1025px) {
+  #container-posts {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+}
+
+
 
 .card-user{
   display: flex;
@@ -46,28 +69,78 @@ a {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .card {
-  height: auto;
-  border: 1px solid black;
-  box-shadow: 3px 3px 10px;
+  height: 20em;
+  border: 1px solid lightgrey;
+  box-shadow: 2px 2px 5px;
   margin: auto;
   margin-bottom: 30px;
   transition: all 0.5s;
   transition-delay: 0.4s;
 }
 
-.post-item img{
+.card-img-top{
   height: 200px;
   object-fit: fill;
-  position: relative;
 }
 
-.like-user{
+.card-top-info-container{
   position: absolute;
   top : 0;
-  right: 0;
   background: none;
   border: none;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.363);
+}
+
+.card-top-info{
+  align-items: center;
+  
+}
+
+
+.card-bottom-info{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  
+  background: none;
+  border: none;
+  justify-content: flex-end;
+  background-color: rgba(0, 0, 0, 0.363);
+}
+
+.card-bottom-hidden{
+  visibility: hidden
+}
+
+.place{
+  background-color: green;
+  border-radius: 1em;
+  font-size: 0.8em;
+  color: white;
+  margin-bottom: 0;
+}
+
+.bi-star-fill{
+  color: gold;
+}
+
+.bi-chat-dots-fill{
+  color: white;
+}
+
+.mark-text{
+  font-weight: 500;
+  color: white;
+  margin-right: 0.5em;
+}
+
+.post-date{
+  font-size: 0.8em;
+  color: grey;
+  text-align: right;
 }
 
 .user-profile:not(.post.image){
@@ -81,13 +154,6 @@ a {
   object-fit: fill;
 }
 
-.noimage-img{
-  display: block;
-  margin: auto;
-  width: 80%;
-  object-fit: fill;
-}
-
 .viewed-order{
   display: flex;
 }
@@ -98,4 +164,27 @@ a {
 
 .hidden {
   display: none;
+}
+
+
+.new-post{
+  text-align:right;
+  margin-bottom: 1em;
+}
+
+
+.bi-heart-fill{
+  color: red;
+}
+
+.bi-heart{
+  color: white;
+}
+
+/* .region-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
 }
