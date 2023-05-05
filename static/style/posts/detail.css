@@ -152,10 +152,6 @@ textarea {
   box-sizing: border-box;
 }
 
-.box{
-  border: 1px solid black;
-}
-
 section {
   margin-bottom: 1rem;
 }
@@ -165,24 +161,6 @@ a {
   color: inherit;
 }
 
-#container-posts{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 1fr;
-  column-gap: 5px;
-  row-gap: 10px;
-  background-color: red;
-}
-
-@media all and (max-width:479px) {
-  #container-posts {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 1fr);
-    column-gap: 10px;
-    row-gap: 10px;
-    background-color : yellow;
-  }
-}
 
 .card-user{
   display: flex;
@@ -200,20 +178,20 @@ a {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .card {
-  height: auto;
-  border: 1px solid black;
-  box-shadow: 3px 3px 10px;
+  height: 20em;
+  border: 1px solid lightgrey;
+  box-shadow: 2px 2px 5px;
   margin: auto;
   margin-bottom: 30px;
   transition: all 0.5s;
   transition-delay: 0.4s;
 }
 
-.post-item img{
+.card-img-top{
   height: 200px;
   object-fit: fill;
-  position: relative;
 }
 
 .like-user{

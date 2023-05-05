@@ -59,7 +59,7 @@
         </div>
       </ul>
       <div class="ms-auto">
-        <a class="btn bg-success-subtle" href="{% url 'posts:create' %}">
+        <a class="btn bg-success new-posts" href="{% url 'posts:create' %}">
           <i class="bi bi-plus-square">여행 나누기</i>
         </a>
       </div>
@@ -71,15 +71,17 @@
       <div class="post-item">
         <a href="{% url 'posts:detail' post.pk %}" class="card">
           <div class="position-relative">
-            {% if post.image %}
-            <img src="{{ post.image.url }}" alt="여행사진" class="card-img-top" />
-            {% else %}
+            {% for image in post.postimage_set.all %}
+              {% if forloop.first %}
+                <img src="{{image.image.url}}" class="card-img-top" alt="img">
+              {% endif %}
+            {% empty %}
             <img
             src="{% static 'img/noimage.jpg' %}"
             alt="이미지없음"
             class="card-img-top"
             />
-            {% endif %}
+            {% endfor %}
             <div class="d-flex card-bottom-info card-bottom-hidden">
               <i class="bi bi-star-fill"><span class="mark-text">{{ post.rating }}</span>
               </i>

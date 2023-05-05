@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, PostComment
+from .models import Post, PostComment, PostImage
 
 
 class PostForm(forms.ModelForm):
@@ -19,14 +19,14 @@ class PostForm(forms.ModelForm):
             }
         )
     )
-    image = forms.ImageField(
-        widget=forms.ClearableFileInput(
-            attrs={
-                'class': 'form-control mb-3',
-            }
-        ),
-        required=False
-    )
+    # image = forms.ImageField(
+    #     widget=forms.ClearableFileInput(
+    #         attrs={
+    #             'class': 'form-control mb-3',
+    #         }
+    #     ),
+    #     required=False
+    # )
     place_id = forms.CharField(
         widget=forms.TimeInput(
             attrs={
@@ -44,9 +44,55 @@ class PostForm(forms.ModelForm):
             }
         )
     )
+    tags = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder' : '태그 사이에 쉼표를 넣어주세요.'
+            }
+        )
+    )
     class Meta:
         model = Post
-        fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date', 'place_id', 'place_keyword',)
+        fields = ('title', 'place', 'region', 'content', 'start_date', 'end_date', 'place_id', 'place_keyword', 'tags',)
+
+
+class PostImageForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('image',)
+    image = forms.ImageField(
+        label='Image',
+        required=False,
+        widget=forms.ClearableFileInput(
+            attrs={
+            'multiple': True,
+            'class': 'form-control'
+            }
+        )
+    )
+
+
+class DeletePostImageForm(forms.ModelForm):
+    delete_images = forms.ModelMultipleChoiceField(
+        queryset=PostImage.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
+
+    class Meta:
+        model = PostImage
+        fields = []
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.pop('instance', None)
+        super().__init__(*args, **kwargs)
+        if instance:
+            self.fields['delete_images'].queryset = instance.postimage_set.all()
+    
+    def save(self, commit=True):
+        for image in self.cleaned_data['delete_images']:
+            image.delete()
 
 class PostChangeForm(forms.ModelForm):
     title = forms.CharField(

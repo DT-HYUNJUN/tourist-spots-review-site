@@ -48,7 +48,7 @@
         {% endfor %}
       </div>
       <div class="tag--box--wrap">
-        {% load taggit_templatetags2_tags %} 
+        {% load taggit_templatetags2_tags %}
         {% get_tags_for_object article as "tags" %}
         {% if tags %}
           {% for tag in tags %}
