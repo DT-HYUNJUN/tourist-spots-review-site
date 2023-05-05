@@ -10,28 +10,25 @@
 {% block content %}
   <main>
     <!--이미지-->
-    {% for image in post.postimage_set.all %}
+    {% comment %} {% for image in post.postimage_set.all %}
       <img src="{{image.image.url}}" alt="img">
-    {% endfor %}
+    {% endfor %} {% endcomment %}
     <!--태그-->
-    <div class="tag--box--wrap">
-      {% load taggit_templatetags2_tags %}
-      {% get_tags_for_object post as "tags" %}
-      {% if tags %}
-        {% for tag in tags %}
-          {% if tag.name %}
-          <a class="tag--box" href="{% url 'posts:tagged_object_list' tag.name %}">{{tag.name}}</a>
-          {% endif %}
-        {% endfor %}
-      {% endif %}
-    </div>
+    
     <section class="post-content">
       <div class="mb-5">
-        {% if post.image %}
+        {% for image in post.postimage_set.all %}
+          {% if forloop.first %}
+            <img src="{{image.image.url}}" class="post-img" alt="img">
+          {% endif %}
+        {% empty %}
+          <img src="{% static 'img/noimage.jpg' %}" alt="이미지없음" class="post-img"/>
+        {% endfor %}
+        {% comment %} {% if post.image %}
         <img src="{{ post.image.url }}" class="post-img" alt="여행이미지">
         {% else %}
         <img src="{% static 'img/noimage.jpg' %}" class="post-img" alt="이미지없음">
-        {% endif %}
+        {% endif %} {% endcomment %}
       </div>
 
       <header class="title-text mb-2">{{ post.title }}</header>
@@ -59,7 +56,27 @@
         <div class="flex-container">
           <div class="content-container">
             <div>{{ post.content|linebreaksbr }}</div>
+            <button type="button" class="border-0 bg-transparent mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              {% for image in post.postimage_set.all %}
+              {% if forloop.counter <= 4 %}
+                <img src="{{ image.image.url }}" class="multi-image" alt="img">
+              {% endif %}
+            {% endfor %}
+            </button>
+            <span>...</span>
+
+            <div class="tag--box--wrap mt-3">
+              {% load taggit_templatetags2_tags %}
+              {% get_tags_for_object post as "tags" %}
+              {% if tags %}
+                {% for tag in tags %}
+                  {% if tag.name %}
+                  <a class="tag--box" href="{% url 'posts:tagged_object_list' tag.name %}">{{tag.name}}</a>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
             </div>
+          </div>
           <div class="user-profile-container">
             <a href="{% url 'accounts:profile' post.user %}">
             <div class="user-info d-flex">
@@ -272,6 +289,24 @@
         <button onclick="panTo()" class="position-absolute z-3 fs-3 bg-white rounded-circle pin shadow-lg">
           <i class="bi bi-geo-alt-fill"></i>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ post.title }}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row gy-4">
+            {% for image in post.postimage_set.all %}
+              <img src="{{ image.image.url }}" class="col-3" alt="img">
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
   </div>

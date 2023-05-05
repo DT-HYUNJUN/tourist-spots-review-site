@@ -55,7 +55,7 @@ class PostImage(models.Model):
            
     image = ProcessedImageField(blank=True,
                                 upload_to = post_image_path,
-                                processors= [ResizeToFill(200, 200)],
+                                # processors= [ResizeToFill(200, 200)],
                                 format='JPEG',
                                 options={'quality' : 90},
                                 null = True,
