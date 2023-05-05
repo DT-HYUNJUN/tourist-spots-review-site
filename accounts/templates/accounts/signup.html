@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load socialaccount %}
 {% block header %}
 <link rel="stylesheet" href="{% static 'style/accounts/signup.css' %}">
 <link rel="stylesheet" href="{% static 'style/accounts/common.css' %}">
@@ -21,7 +21,7 @@
       </section>
       <hr>
       <section class="d-grid">
-        <a  type="button" class="btn btn-warning" href="#">
+        <a  type="button" class="btn btn-warning" href="{% provider_login_url 'kakao' method='oauth2' %}">
           KakaoTalk Sign up
         </a>
       </section>
