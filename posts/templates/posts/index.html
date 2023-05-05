@@ -24,15 +24,14 @@
           <select class="form-select" name="select_sorting" id="select_sorting" class="p-1 rounded-1">
             <option value="최신순" {% if select_sorting == '최신순' %}selected{% endif %}>최신순</option>
             <option value="오래된순" {% if select_sorting == '오래된순' %}selected{% endif %}>오래된순</option>
-            <option value="인기순" {% if select_sorting == '인기순' %}selected{% endif %}>인기순</option>
-            <option value="평점순" {% if select_sorting == '평점순' %}selected{% endif %}>평점순</option>
+            <option value="좋아요순" {% if select_sorting == '좋아요순' %}selected{% endif %}>좋아요순</option>
+            <option value="별점순" {% if select_sorting == '별점순' %}selected{% endif %}>별점순</option>
           </select>
           <input type="submit" class="btn btn-secondary" value="정렬">
         </div>
       </form>
     </div>
   </section>
-  
 
   </section>
   <div class="new-post">
@@ -89,7 +88,7 @@
             </div>
             <div class="card-top-info-container">
               <div class="d-flex justify-content-between card-top-info mx-1">
-                <p class="place px-1">
+                <p class="place ps-1 pe-2">
                   <i class="bi bi-geo-alt">{{ post.region }}</i>
                 </p>
                 <form class="like-form" data-post-id="{{ post.pk }}">
@@ -125,6 +124,9 @@
             </div>
             <h6 class="card-title">{{ post.title }}</h6>
             <div class="post-date text-truncate">
+              {% if post.is_new %}
+              <span class="new">new</span>
+              {% endif %}
               {{ post.created_string }}
             </div>
           </div>
