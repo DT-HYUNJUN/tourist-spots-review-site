@@ -8,6 +8,8 @@ p {
 hr {
   margin: 0;
 }
+
+/* atticle layout & title style */
 .main--article--container {
   max-width: 850px;
   margin: auto;
@@ -40,25 +42,23 @@ hr {
   background-color: #ffcf3d;
 }
 
-
-
+/* index & taggit table style */
 .article--table {
-    text-align:center;
-  }
-  .article--title--wrap{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-  
-  
-  .profile--image {
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 25px;
-  }
+  text-align:center;
+}
+.article--title--wrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.profile--image {
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 25px;
+}
 
 
+/* all card style */
 .card--style--wrap {
   border: 1px solid #cccccc;
   border-radius: 10px;
@@ -69,6 +69,8 @@ hr {
 .card--style--wrap:hover {
   box-shadow: 5px 5px 0px 0px rgba(40,167,69, .2);
 }
+
+/* taggit style */
 .tag--box {
   border: 1px solid #cccccc;
   border-radius: 5px;
@@ -76,6 +78,7 @@ hr {
   padding: 0.2rem 0.5rem;
   margin-bottom: 0.2rem;
 }
+
 /* color */
 .warning--color {
   color: #ffc107;
@@ -91,4 +94,37 @@ hr {
 }
 .secondary--color:hover {
   color: #dc3545;
+}
+
+/* underline */
+.success--underline{
+  text-decoration: underline #28a745;
+}
+.success--underline:hover {
+  text-decoration: green wavy underline;
+}
+.primary--underline {
+  text-decoration: underline #007bff;
+}
+.primary--underline:hover {
+  text-decoration: wavy underline #007bff;
+}
+.danger--underline {
+  text-decoration: underline #dc3545;
+}
+.danger--underline:hover {
+  text-decoration: wavy underline #dc3545;
+}
+
+/* shadow */
+.comment--card:hover {
+  box-shadow: 5px 5px 0px 0px rgba(40,167,69, .2);
+}
+.comment--create:hover {
+  box-shadow: 5px 5px 0px 0px rgba(40,167,69, .2);
+}
+
+/* flex */
+.form--wrap--flex {
+  display: flex;
 }

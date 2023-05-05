@@ -30,11 +30,6 @@
     justify-content: space-between;
     align-items: flex-end;
     padding: 0 0.5rem;
-    text-decoration: underline #28a745;
-  }
-  .board--profile--user--wrap:hover {
-    text-decoration: green wavy underline;
-
   }
   .board--mbti {
     margin: 0 0.3rem;
@@ -72,18 +67,6 @@
     display: flex;
     justify-content: space-between;
   }
-  .update--underline {
-    text-decoration: underline #007bff;
-  }
-  .update--underline:hover {
-    text-decoration: wavy underline #007bff;
-  }
-  .delete--underline {
-    text-decoration: underline #dc3545;
-  }
-  .delete--underline:hover {
-    text-decoration: wavy underline #dc3545;
-  }
   .tag--box--wrap {
     margin-bottom: 1rem;
   }
@@ -92,16 +75,10 @@
     display: flex;
     margin-top: 1.5rem;
   }
-  .comment--card:hover {
-    box-shadow: 5px 5px 0px 0px rgba(40,167,69, .2);
-  }
   .comment--profile--image{
     width: 30px;
     border: 1px solid gray;
     border-radius: 10px 10px 0 0;
-  }
-  .comment--user:hover {
-    text-decoration: green wavy underline;
   }
   .comment--user--delete--wrap {
     display: flex;
@@ -121,9 +98,6 @@
   .comment--create--form{
     position: relative;
   }
-  .comment--create:hover {
-    box-shadow: 5px 5px 0px 0px rgba(40,167,69, .2);
-  }
   .comment--create--button {
     position: absolute;
     right: 2%;
@@ -135,9 +109,7 @@
   }
 
   /* all */
-  .form--wrap--flex {
-    display: flex;
-  }
+
   .margin--right{
     margin-right: 1rem;
   }
