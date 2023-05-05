@@ -19,7 +19,7 @@
       <div class="board--title--user--wrap" >
         <h3 class="board-title">{{ article.title }}</h3>
         <a href="{% url 'accounts:profile' article.user %}">
-          <div class="board--profile--user--wrap">
+          <div class="success--underline">
             <div>
               <p class="board--user">
                 <span>{{ article.user }}</span>
@@ -97,9 +97,8 @@
         </div>
         {% if request.user == article.user %}
         <div class="update--delete--wrap">
-          <a class="margin--right update--underline" href="{% url 'articles:update' article.pk %}">Update</a>
-          <a class="delete--underline" onclick="return confirm('게시글을 삭제하시겠습니까?')" href="{% url 'articles:delete' article.pk %}">Delete</a>
-
+          <a class="margin--right primary--underline" href="{% url 'articles:update' article.pk %}">Update</a>
+          <a class="danger--underline" onclick="return confirm('게시글을 삭제하시겠습니까?')" href="{% url 'articles:delete' article.pk %}">Delete</a>
         </div>
         {% endif %}
       </div>
@@ -117,7 +116,7 @@
       </div>
       <div>
         {% for comment in comments %}
-        <div class="comment--card card--style--wrap">
+        <div class="card--style--wrap card--style--wrap">
           <div class="comment--user--delete--wrap">
             <p>
               <a href="{% url 'accounts:profile' comment.user.username %}" class="text-decoration-none text-dark">
@@ -128,7 +127,7 @@
                   <img class="comment--profile--image" src="{% static 'img/user_profile.png' %}" alt="profile">
                   {% endif %}
                 </span>
-                <span class="comment--user">{{ comment.user }}</span>
+                <span class="success--underline">{{ comment.user }}</span>
               </a>
             </p>
             <div>
@@ -192,7 +191,7 @@
           <button id="comment-submit" type="submit" class="btn btn-outline-warning">댓글 작성</button>
         </div>
         </form> {% endcomment %}
-        </div>
+      </div>
     </div>
   </section>
 </article>
