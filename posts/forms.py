@@ -27,9 +27,26 @@ class PostForm(forms.ModelForm):
         ),
         required=False
     )
+    place_id = forms.CharField(
+        widget=forms.TimeInput(
+            attrs={
+                'id': 'place-id',
+                'class': 'hidden',
+            }
+        )
+    )
+    
+    place_keyword = forms.CharField(
+        widget=forms.TimeInput(
+            attrs={
+                'id': 'place-keyword',
+                'class': 'hidden',
+            }
+        )
+    )
     class Meta:
         model = Post
-        fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date',)
+        fields = ('title', 'place', 'region', 'content', 'image', 'start_date', 'end_date', 'place_id', 'place_keyword',)
 
 class PostChangeForm(forms.ModelForm):
     title = forms.CharField(

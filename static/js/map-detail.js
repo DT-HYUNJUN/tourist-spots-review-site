@@ -1,4 +1,3 @@
-const place_field2 = document.getElementById('place-field')
 const modalContent = document.querySelector('#modal-content')
 // 모달 버튼 요소를 가져옵니다.
 const modalButton2 = document.getElementById("modal-button");
@@ -37,7 +36,8 @@ modalButton2.addEventListener("click", function() {
   maps.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPLEFT);
   
   const geocoderModal = new kakao.maps.services.Geocoder()
-  geocoderModal.addressSearch(place_field2.value, function(result, status) {
+  
+  geocoderModal.addressSearch(place, function(result, status) {
     if (status === kakao.maps.services.Status.OK) {
       coordsModal = new kakao.maps.LatLng(result[0].y, result[0].x)
       const markerModal = new kakao.maps.Marker({

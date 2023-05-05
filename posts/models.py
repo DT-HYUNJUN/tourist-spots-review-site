@@ -17,6 +17,8 @@ class Post(models.Model):
     is_new = models.BooleanField(default=False)
     place = models.CharField(max_length=100, default='Unknown')
     region = models.CharField(max_length=50, default='Unknown')
+    place_id = models.CharField(max_length=100, default='18577297')
+    place_keyword = models.CharField(max_length=100, default='카카오 스페이스닷원')
     start_date = models.DateField(default='2023-05-01')
     end_date = models.DateField(default='2023-05-07')
     rating = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)])
