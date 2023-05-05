@@ -21,7 +21,7 @@ a {
   grid-template-rows: 1fr;
   column-gap: 5px;
   row-gap: 10px;
-  background-color: red;
+  /* background-color: red; */
 }
 
 @media all and (max-width:479px) {

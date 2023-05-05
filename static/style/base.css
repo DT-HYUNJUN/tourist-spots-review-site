@@ -18,7 +18,7 @@ header.item {
 }
 main.item {
   grid-area: main;
-  {% comment %} height: 1000px; {% endcomment %}
+  /* {% comment %} height: 1000px; {% endcomment %} */
 }
 
 footer.item {
@@ -26,7 +26,7 @@ footer.item {
   background-color: #f0f0f0;
 }
 
-{% comment %}  header {% endcomment %}
+/* {% comment %}  header {% endcomment %} */
 .header--wrap{
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -104,12 +104,12 @@ footer.item {
     flex-direction: column;
     align-items: center;
     margin-bottom: 0;
-    height: 100%;%
-    {% comment %} justify-content: center;  {% endcomment %}
+    height: 100%;
+    /* {% comment %} justify-content: center;  {% endcomment %} */
     
   }
-  .header--left--wrap {
-  }
+  /* .header--left--wrap {
+  } */
   .nav--wrap{
     display: flex;
     justify-content: center;
@@ -128,7 +128,7 @@ footer.item {
 
 @media all and (max-width:850px) {
   .header--wrap {
-    heigth: 100px;
+    height: 100px;
   }
   .header--right--wrap {
     display:none;
@@ -160,7 +160,7 @@ footer.item {
     width: 50px;
   }
 }
-{% comment %} aside {% endcomment %}
+/* {% comment %} aside {% endcomment %} */
 .aside--container {
   position: fixed;
   bottom: 2rem;
@@ -194,7 +194,7 @@ footer.item {
 
   }
 }
-{% comment %} main {% endcomment %}
+/* {% comment %} main {% endcomment %} */
 .main-padding {
   padding: 180px 0 50px 0;
 }
@@ -210,8 +210,8 @@ footer.item {
     padding-top: 135px;
   }
 }
-{% comment %} article {% endcomment %}
-{% comment %} footer {% endcomment %}
+/* {% comment %} article {% endcomment %}
+{% comment %} footer {% endcomment %} */
 .footer--container{
   padding: 2rem 0;
 }
