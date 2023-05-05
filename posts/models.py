@@ -1,4 +1,8 @@
 import math
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
+from taggit.managers import TaggableManager
+from django.urls import reverse
 from django.db import models
 from django.conf import settings
 from datetime import datetime, timedelta
@@ -22,31 +26,14 @@ class Post(models.Model):
     start_date = models.DateField(default='2023-05-01')
     end_date = models.DateField(default='2023-05-07')
     rating = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    tags = TaggableManager(blank=True)
     
-
-    def post_image_path(instance, filename):
-        return f'posts/{instance.user}/{instance.title}/{filename}'
-    image = models.ImageField(blank=True, upload_to=post_image_path)
+    def get_absolute_url(self):
+        return reverse('posts:detail', args=[int(self.id)])
     
-    
-    def delete(self, *args, **kargs):
-        if self.image:
-            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
-        super(Post, self).delete(*args, **kargs)
-
-    def save(self, *args, **kwargs):
-        if self.id:
-            old_review = Post.objects.get(id=self.id)
-            if self.image != old_review.image:
-                if old_review.image:
-                    os.remove(os.path.join(settings.MEDIA_ROOT, old_review.image.name))
-        super(Post, self).save(*args, **kwargs)
-
-
     @property
     def created_string(self):
         time = datetime.now(tz=timezone.utc) - self.created_at
-
         if time < timedelta(minutes=1):
             return '방금 전'
         elif time < timedelta(hours=1):
@@ -58,6 +45,28 @@ class Post(models.Model):
             return str(time.days) + '일 전'
         else:
             return self.strftime('%Y-%m-%d')
+
+
+class PostImage(models.Model):
+    post = models.ForeignKey(Post, null=True, blank=True, on_delete=models.CASCADE)
+    
+    def post_image_path(instance, filename):
+        return f'posts/{instance.post.pk}/{filename}'
+           
+    image = ProcessedImageField(blank=True,
+                                upload_to = post_image_path,
+                                processors= [ResizeToFill(200, 200)],
+                                format='JPEG',
+                                options={'quality' : 90},
+                                null = True,
+                                )
+    def delete(self, *args, **kargs):
+        if self.image:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.name))
+            dir_path = os.path.dirname(os.path.join(settings.MEDIA_ROOT, self.image.name))
+            if not os.listdir(dir_path):
+                os.rmdir(dir_path)
+        super(PostImage, self).delete(*args, **kargs)
 
 
 class PostComment(models.Model):
