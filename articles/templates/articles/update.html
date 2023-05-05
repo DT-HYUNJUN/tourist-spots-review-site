@@ -1,29 +1,36 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block style %}
+{% block header %}
 <link rel="stylesheet" href="{% static 'style/articles/update.css' %}">
-<style>
-</style>
-{% endblock style %}
+<link rel="stylesheet" href="{% static 'style/articles/common.css' %}">
+{% endblock header %}
 
 
 {% block content %}
-<form action="{% url 'articles:update' article.pk %}" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {{ imageform.as_p }}
-  {% if article.articleimage_set.all %}
-  <p>등록된 사진</p>
-  {% for image in article.articleimage_set.all %}
-      <img src="{{ image.image.url }}" width="200" height="200">
-  {% endfor %} 
-  {{ delete_images_form.as_p}}
-  {% endif %}
-  {{ in_image }}
-  <button type="submit">수정</button>
-</form>
-
+<article class="main--article--container">
+  <div class="article--title--wrap">
+    <h3 class="article--title">
+      <a href="{% url 'articles:index' %}">Community</a>
+    </h3>
+    <a class="article--list" href="{% url 'articles:tag_cloud' %}">Tag Cloud</a> 
+  </div>
+  <section class="card--style--wrap">
+    <form action="{% url 'articles:update' article.pk %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      {{ imageform.as_p }}
+      {% if article.articleimage_set.all %}
+      <p>등록된 사진</p>
+      {% for image in article.articleimage_set.all %}
+          <img src="{{ image.image.url }}" width="200" height="200">
+      {% endfor %} 
+      {{ delete_images_form.as_p}}
+      {% endif %}
+      {{ in_image }}
+      <button type="submit">수정</button>
+    </form></section>
+</article>
 
 
 {% endblock content %}

@@ -9,12 +9,10 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/tenten_favicon_01.png' %}">
     <link rel="stylesheet" href="{% static 'style/common.css' %}">
     <link rel="stylesheet" href="{% static 'style/base.css' %}">
-    <title>TenTen</title>
-
-    <style>
-    </style>
-    {% block style %}
-    {% endblock style %}
+    {% block header %}{% endblock header %}
+    <title>10.TenTen(TripTopper)</title>
+    
+    {% block style %}{% endblock style %}
   </head>
   <body>
     <header class="item  position-fixed fixed-top">
