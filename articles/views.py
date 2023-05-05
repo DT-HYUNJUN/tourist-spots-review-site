@@ -133,7 +133,6 @@ def update(request, article_pk):
             images = request.FILES.getlist('image')
             delete_images_form = DeleteArticleImageForm(request.POST)
             imageform = ArticleImageForm(request.POST, request.FILES, instance=article)
-            print('valid')
             if form.is_valid(): 
                 form.save()
                 article.tags.clear()
@@ -145,7 +144,8 @@ def update(request, article_pk):
                 if delete_images_form.is_valid():
                     delete_images_form.save()
                 return redirect('articles:detail', article.pk)
-            
+            else:
+                print(form.errors)
         else:
             initial_tags = ', '.join(article.tags.all().values_list('name', flat=True))
             form = ArticleForm(instance=article, initial={'tags': initial_tags})
