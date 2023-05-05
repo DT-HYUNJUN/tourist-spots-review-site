@@ -11,13 +11,12 @@
 {% block content %}
 <article>
     <h1>Article Tag Cloud</h1>
-
     <div class="tag-cloud">
         {% load taggit_templatetags2_tags %}
-        {% get_tagcloud as tags %} <!--모든 태그 추출해서 tags변수에 할당-->
+        {% get_tagcloud as tags %} 
         {% for tag in tags %}
-        <span class="tag-{{tag.weight|floatformat:0}}"> <!-- style 관련-->
-            {% if tag.name %}
+        <span class="tag-{{tag.weight|floatformat:0}}">
+            {% if tag.name and tag.num_times %}
                 <a href="{% url 'articles:tagged_object_list' tag.name %}">{{ tag.name }}({{ tag.num_times }})</a>
             {% endif %}
         </span>

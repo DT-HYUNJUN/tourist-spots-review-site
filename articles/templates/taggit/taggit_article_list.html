@@ -2,12 +2,12 @@
 
 {% block content %}
 <article>
-    <h1>As for tag - {{ tagname }}</h1>
+    <h1>As for tag - {{ tagname }} </h1>
     
     <br>
-    {% for article in object_list %} <!-- object_list 객체는 TaggedObjectLV 클래스형 뷰에서 넘겨주는 컨텍스트 변수로서 Post 리스트가 담겨있음-->
+    {% for article in object_list %}
         <h2><a href='{{ article.get_absolute_url }}'>{{ article.title }}</a></h2>
-        {{tag.num_times}}
+        
     {% endfor %}
 </article>
 {% endblock content  %}
