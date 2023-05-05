@@ -48,7 +48,7 @@
           {% now "Y-m-d" as today %}
           <input type="date" value="{{ post.start_date|date:'Y-m-d' }}" name="start_date" class="form-control mb-3" placeholder="시작">
           <input type="date" value="{{ post.end_date|date:'Y-m-d' }}" name="end_date" class="form-control mb-3"placeholder="종료">
-        {% elif field.name == 'image' %}
+        {% comment %} {% elif field.name == 'image' %}
           {% if post.image %}
           <div class="input-group">
             <span class="input-group-text mb-3">현재 파일</span>
@@ -61,12 +61,20 @@
             </div>
           </div>
           {% endif %}
-          <input type="file" name="image" class="form-control rounded-2 mb-3" accept="image/*" id="id_image">
+          <input type="file" name="image" class="form-control rounded-2 mb-3" accept="image/*" id="id_image"> {% endcomment %}
         {% else %}
           {{ field }}
         {% endif %}
       </div>
     {% endfor %}
+    {{ imageform.as_p }}
+    {% if post.postimage_set.all %}
+      <p>등록된 사진</p>
+    {% for image in post.postimage_set.all %}
+      <img src="{{ image.image.url }}" width="200" height="200">
+    {% endfor %} 
+      {{ delete_images_form.as_p}}
+    {% endif %}
     <div class="d-flex gap-3">
       <button class="btn btn-secondary flex-grow-1">취소</button>
       <button class="btn btn-success flex-grow-1">수정 완료</button>

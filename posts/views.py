@@ -1,9 +1,10 @@
 from datetime import timezone, datetime
+from django.views.generic import ListView, TemplateView
 from django.db.models import Count
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
-from .models import Post, PostComment
-from .forms import PostForm, PostChangeForm ,PostCommentForm
+from .models import Post, PostComment, PostImage
+from .forms import PostForm ,PostCommentForm, PostImageForm, DeletePostImageForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -74,6 +75,7 @@ def region(request, region_name):
 
 
 
+"""
 @login_required
 def create(request):
     if request.method == 'POST':
@@ -81,7 +83,7 @@ def create(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
-            post.rating = int(request.POST.get('rating', 0))
+            
             form.save()
             return redirect('posts:detail', post.pk)
     else:
@@ -90,10 +92,39 @@ def create(request):
         'form': form,
     }
     return render(request, 'posts/create.html', context)
+"""
 
+@login_required
+def create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        images = request.FILES.getlist('image')
+        tags = request.POST.get('tags').split(',')
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.rating = int(request.POST.get('rating', 0))
+            post.user = request.user
+            post.save()
+            for tag in tags:
+                post.tags.add(tag.strip())
+            for i in images:
+                PostImage.objects.create(post=post, image=i)
+            return redirect('posts:index')
+        else:
+            print(form.errors)
+    else:
+        form = PostForm()
+        imageform = PostImageForm()
+    context = {
+        'form': form,
+        'imageform' : imageform
+    }
+    return render(request, 'posts/create.html', context)
 
 def detail(request, post_pk):
     post = Post.objects.get(pk=post_pk)
+    tags = post.tags.all()
+    print(tags)
     prev_posts = Post.objects.filter(pk__lt=post_pk).order_by('-pk')[:2]
     next_posts = Post.objects.filter(pk__gt=post_pk).order_by('pk')[:2]
     posts = list(prev_posts) + [post] + list(next_posts)
@@ -101,6 +132,7 @@ def detail(request, post_pk):
     comments = post.postcomment_set.all()
     user_age_range = age_range(post)
     context = {
+        'tags': tags,
         'user_age_range': user_age_range,
         'posts': posts,
         'comment_form': comment_form,
@@ -133,6 +165,7 @@ def delete(request, post_pk):
     return redirect('posts:index')
 
 
+"""
 @login_required
 def update(request, post_pk):
     post = Post.objects.get(pk=post_pk)
@@ -140,9 +173,7 @@ def update(request, post_pk):
         if request.method == 'POST':
             form = PostForm(request.POST, request.FILES, instance=post)
             if form.is_valid():
-                print('valid')
                 form.save()
-                print('save')
                 return redirect('posts:detail', post_pk)
         else:
             form = PostForm(instance=post)
@@ -151,6 +182,42 @@ def update(request, post_pk):
     context = {
         'form': form,
         'post': post,
+    }
+    return render(request, 'posts/update.html', context)
+"""
+
+@login_required
+def update(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
+    if request.user == post.user:
+        if request.method == 'POST':
+            form = PostForm(request.POST, instance=post)
+            images = request.FILES.getlist('image')
+            delete_images_form = DeletePostImageForm(request.POST)
+            imageform = PostImageForm(request.POST, request.FILES, instance=post)
+            if form.is_valid(): 
+                form.save()
+                post.tags.clear()
+                tags = request.POST.get('tags').split(',')
+                for tag in tags:
+                    post.tags.add(tag.strip())
+                for i in images:
+                    PostImage.objects.create(post=post, image=i)
+                if delete_images_form.is_valid():
+                    delete_images_form.save()
+                return redirect('posts:detail', post.pk)
+            
+        else:
+            initial_tags = ', '.join(post.tags.all().values_list('name', flat=True))
+            form = PostForm(instance=post, initial={'tags': initial_tags})
+            imageform = PostImageForm(instance=post)
+            delete_images_form = DeletePostImageForm(instance=post)
+
+    context = {
+        'form': form,
+        'post': post,
+        'imageform': imageform,
+        'delete_images_form': delete_images_form
     }
     return render(request, 'posts/update.html', context)
 
@@ -236,3 +303,19 @@ def create_comment_ajax(request):
             }
         }
         return JsonResponse(context)
+
+
+class TagCloudTV(TemplateView):
+    template_name = 'taggit/taggit_cloud.html'
+
+class TaggedObjectLV(ListView):
+    template_name = 'taggit/taggit_post_list.html'
+    model = Post
+
+    def get_queryset(self):
+        return Post.objects.filter(tags__name=self.kwargs.get('tag'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tagname'] = self.kwargs['tag']
+        return context

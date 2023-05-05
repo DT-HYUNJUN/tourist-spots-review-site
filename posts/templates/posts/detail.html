@@ -9,6 +9,22 @@
 
 {% block content %}
   <main>
+    <!--이미지-->
+    {% for image in post.postimage_set.all %}
+      <img src="{{image.image.url}}" alt="img">
+    {% endfor %}
+    <!--태그-->
+    <div class="tag--box--wrap">
+      {% load taggit_templatetags2_tags %}
+      {% get_tags_for_object post as "tags" %}
+      {% if tags %}
+        {% for tag in tags %}
+          {% if tag.name %}
+          <a class="tag--box" href="{% url 'posts:tagged_object_list' tag.name %}">{{tag.name}}</a>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
     <section class="post-content">
       <div class="mb-5">
         {% if post.image %}
