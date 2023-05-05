@@ -32,8 +32,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'port-0-triptopper-f69b2mlhaa9b38.sel4.cloudtype.app',
-    'localhost',
-    '127.0.0.1',
 ]
 
 
