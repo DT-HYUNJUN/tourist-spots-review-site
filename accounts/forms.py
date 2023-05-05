@@ -2,11 +2,14 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
 
+class Birthday(forms.DateInput):
+    input_type = 'date'
+
 
 class CustomUserUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = get_user_model()
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',)
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'birthday', 'email', 'profile_image',)
     username = forms.CharField(
         required=True,
         label='ID',
@@ -64,6 +67,36 @@ class CustomUserUserCreationForm(UserCreationForm):
           attrs = {
             'class' : 'form-control',
             'placeholder' : '영문, 숫자, 특수문자(~!@#$%^&*) 조합 8~15 자리',
+          }
+        )
+    )
+    profile_image = forms.ImageField(
+        required=False,
+        label='Profile_image',
+        widget= forms.ClearableFileInput(
+          attrs = {
+            'class' : 'form-control',
+          }
+        )
+    )
+    mbti = forms.CharField(
+        required=False,
+        label='mbti',
+        widget= forms.TextInput(
+          attrs = {
+            'class' : 'form-control',
+            'placeholder' : 'mbti',
+          }
+        )
+    )
+    birthday = forms.DateField(
+        required=False,
+        label='Birthday',
+        input_formats=['%Y-%m-%d'],
+        widget= Birthday(
+          attrs = {
+            'class' : 'form-control',
+            'placeholder' : '생년월일',
           }
         )
     )
@@ -153,7 +186,7 @@ class CustomUserChangeForm(UserChangeForm):
     )
     birthday = forms.DateField(
         required=False,
-        label='Profile_image',
+        label='Birthday',
         input_formats=['%Y-%m-%d'],
         widget= Birthday(
           attrs = {

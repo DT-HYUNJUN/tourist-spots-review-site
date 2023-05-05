@@ -33,7 +33,7 @@ def signup(request):
     if request.user.is_authenticated:
         return redirect('posts:index')
     if request.method == 'POST':
-      form = CustomUserUserCreationForm(request.POST)
+      form = CustomUserUserCreationForm(request.POST, request.FILES)
       if form.is_valid():
           user = form.save()
           user.backend = 'django.contrib.auth.backends.ModelBackend'
