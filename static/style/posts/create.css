@@ -48,7 +48,7 @@ li:hover {
 }
 
 .map-select {
-  height: 400px;
+  height: 600px;
 }
 
 .map {
@@ -56,11 +56,11 @@ li:hover {
 }
 
 .map-modal-wrap {
-  height: 300px;
+  height: 400px;
 }
 
 #map-modal {
-  height: 300px;
+  height: 400px;
 }
 
 .rate {
@@ -71,4 +71,11 @@ li:hover {
 
 .rate-input {
   cursor: pointer;
+}
+
+.pin {
+  width: 1.5em;
+  height: 1.5em;
+  top: 3px;
+  right: 3px;
 }

@@ -124,17 +124,31 @@
                   {% if comment.user.profile_image %}
                   <img class="comment--profile--image" src="{{ comment.user.profile_image.url }}" alt="profile-image">
                   {% else %}
-                  <img src="{% static 'img/user_profile.png' %}" alt="profile">
+                  <img class="comment--profile--image" src="{% static 'img/user_profile.png' %}" alt="profile">
                   {% endif %}
                 </span>
                 <span class="success--underline">{{ comment.user }}</span>
               </a>
             </p>
             <div>
-              <i class="bi bi-x-lg secondary--color"></i>
+              {% if comment.user == request.user %}
+              <form action="{% url 'articles:comment_delete' article.pk comment.pk %}" method='POST'>
+                {% csrf_token %}
+                <button type='submit'>
+                  <i class="bi bi-x-lg secondary--color"></i>
+                </button>
+              </form> 
+              {% comment %} <input type="button" value="수정" onclick="replyUpdate({{comment.pk}})" class="tdReplyUpdate{{comment.pk}}">
+              <input type="button" value="삭제" onclick="replyDelete({{comment.pk}})" class="tdReplyDelete{{comment.pk}}">
+              <input type="button" value="진짜 수정" onclick="replySubmit({{comment.pk}})" class="tdReplySubmit{{comment.pk}}" style="display:none">
+              <input type="button" value="취소" onclick="replyUpdateCancel({{comment.pk}})" class="tdReplyUpdateCancel{{comment.pk}}" style="display:none"> {% endcomment %}
+
+              {% endif %}
             </div>
           </div>
           <hr>
+          {% comment %} <div><input type="text" class="replyContent{{ comment.id }}" value="{{ comment.content }}" style = 
+            'width: 100%; outline: 1px solid #cccccc; border:1px solid #ffffff; border-radius:5px; padding:1rem;' readonly ></div> {% endcomment %}
           <div class="comment--content">{{ comment.content }}</div>
           <div class="comment--date--like--wrap">
             <div class="form--wrap--flex">
@@ -188,4 +202,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/articles-detail.js' %}"></script>
+
+
 {% endblock javascript %}
