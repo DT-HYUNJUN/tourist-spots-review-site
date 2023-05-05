@@ -3,6 +3,7 @@
 {% load static %}
 {% block style %}
 <link rel="stylesheet" href="{% static 'style/posts/index.css' %}">
+<link rel="stylesheet" href="{% static 'style/posts/modal.css' %}">
 <link rel="stylesheet" href="{% static 'style/posts/detail.css' %}">
 {% endblock style %}
 
@@ -75,11 +76,21 @@
         <hr class="partition-line">
         <div class="position-relative map-detail">
           <div id="map" class="map-detail" data-place="{{ post.place }}"></div>
-          <button onclick="panToDetail()" class="position-absolute z-3 fs-3 bg-white rounded-circle pin shadow-lg">
+          <button onclick="panToDetail()" class="position-absolute z-1 fs-3 bg-white rounded-circle pin shadow-lg">
             <i class="bi bi-pin-map-fill"></i>
           </button>
+          <button id="modal-button" type="button" class="position-absolute bottom-0 end-0 border-0 z-1" data-bs-toggle="modal" data-bs-target="#mapModal">
+            <i class="bi bi-arrows-angle-expand"></i>
+          </button>
         </div>
-        <p class="post-place-text">{{ post.place }}</p>
+        <div class="map-description d-flex justify-content-between">
+          <span class="post-place-text">{{ post.place }}</span>
+          <a class="post-place-text" href="https://map.kakao.com/link/to/{{ post.place_id }}" target="_blank">
+            <span class="material-symbols-outlined">
+              assistant_navigation
+            </span>
+          </a>
+        </div>
       </article>
     </section>
     
@@ -231,12 +242,30 @@
       {% endfor %}
     </div>
   </section>
+
+  <div id="my-modal" class="Modal">
+    <div class="Modal-content rounded-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <span id="modal-place" class="fw-bold">{{ post.place_keyword }}</span>
+          <span id="modal-address">{{ post.place }}</span>
+        </div>
+        <div class="close">&times;</div>
+      </div>
+      <div id="modal-content" class="position-relative">
+        <button onclick="panTo()" class="position-absolute z-3 fs-3 bg-white rounded-circle pin shadow-lg">
+          <i class="bi bi-geo-alt-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
 
 {% block javascript %}
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46fed7723052d8712b267e8a83ab2fa4&libraries=services"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/map.js' %}"></script>
+<script src="{% static 'js/map-detail.js' %}"></script>
 <script src="{% static 'js/comments.js' %}"></script>
 <script src="{% static 'js/like.js' %}"></script>
 <script src="{% static 'js/follows.js' %}"></script>

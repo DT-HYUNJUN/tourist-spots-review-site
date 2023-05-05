@@ -32,33 +32,38 @@
       </form>
     </div>
   </section>
-  <ul id="region-list" class="mb-3 hidden">
-    <div class="">
-      <a href="{% url 'posts:region' '서울' %}"><li class="btn bg-body-secondary">서울</li></a>
-      <a href="{% url 'posts:region' '인천' %}"><li class="btn bg-body-secondary">인천</li></a>
-      <a href="{% url 'posts:region' '경기' %}"><li class="btn bg-body-secondary">경기</li></a>
-      <a href="{% url 'posts:region' '강원' %}"><li class="btn bg-body-secondary">강원</li></a>
-      <a href="{% url 'posts:region' '충남' %}"><li class="btn bg-body-secondary">충남</li></a>
-      <a href="{% url 'posts:region' '세종' %}"><li class="btn bg-body-secondary">세종</li></a>
-      <a href="{% url 'posts:region' '대전' %}"><li class="btn bg-body-secondary">대전</li></a>
-      <a href="{% url 'posts:region' '충북' %}"><li class="btn bg-body-secondary">충북</li></a>
-      <a href="{% url 'posts:region' '전북' %}"><li class="btn bg-body-secondary">전북</li></a>
-      <a href="{% url 'posts:region' '전남' %}"><li class="btn bg-body-secondary">전남</li></a>
-      <a href="{% url 'posts:region' '광주' %}"><li class="btn bg-body-secondary">광주</li></a>
-      <a href="{% url 'posts:region' '경북' %}"><li class="btn bg-body-secondary">경북</li></a>
-      <a href="{% url 'posts:region' '경남' %}"><li class="btn bg-body-secondary">경남</li></a>
-      <a href="{% url 'posts:region' '대구' %}"><li class="btn bg-body-secondary">대구</li></a>
-      <a href="{% url 'posts:region' '울산' %}"><li class="btn bg-body-secondary">울산</li></a>
-      <a href="{% url 'posts:region' '부산' %}"><li class="btn bg-body-secondary">부산</li></a>
-      <a href="{% url 'posts:region' '제주특별자치도' %}"><li class="btn bg-body-secondary">제주</li></a>
-
-    </div>
-  </ul>
+  
 
   </section>
   <div class="new-post">
-    <a class="new-post-text btn bg-success" href="{% url 'posts:create' %}">
-      <i class="bi bi-plus-square">여행 나누기</i></a>
+    <div class="d-flex align-itmes-center">
+      <ul id="region-list" class="text-start hidden">
+        <div class="">
+          <a href="{% url 'posts:region' '서울' %}"><li class="btn bg-body-secondary">서울</li></a>
+          <a href="{% url 'posts:region' '인천' %}"><li class="btn bg-body-secondary">인천</li></a>
+          <a href="{% url 'posts:region' '경기' %}"><li class="btn bg-body-secondary">경기</li></a>
+          <a href="{% url 'posts:region' '강원' %}"><li class="btn bg-body-secondary">강원</li></a>
+          <a href="{% url 'posts:region' '충남' %}"><li class="btn bg-body-secondary">충남</li></a>
+          <a href="{% url 'posts:region' '세종' %}"><li class="btn bg-body-secondary">세종</li></a>
+          <a href="{% url 'posts:region' '대전' %}"><li class="btn bg-body-secondary">대전</li></a>
+          <a href="{% url 'posts:region' '충북' %}"><li class="btn bg-body-secondary">충북</li></a>
+          <a href="{% url 'posts:region' '전북' %}"><li class="btn bg-body-secondary">전북</li></a>
+          <a href="{% url 'posts:region' '전남' %}"><li class="btn bg-body-secondary">전남</li></a>
+          <a href="{% url 'posts:region' '광주' %}"><li class="btn bg-body-secondary">광주</li></a>
+          <a href="{% url 'posts:region' '경북' %}"><li class="btn bg-body-secondary">경북</li></a>
+          <a href="{% url 'posts:region' '경남' %}"><li class="btn bg-body-secondary">경남</li></a>
+          <a href="{% url 'posts:region' '대구' %}"><li class="btn bg-body-secondary">대구</li></a>
+          <a href="{% url 'posts:region' '울산' %}"><li class="btn bg-body-secondary">울산</li></a>
+          <a href="{% url 'posts:region' '부산' %}"><li class="btn bg-body-secondary">부산</li></a>
+          <a href="{% url 'posts:region' '제주특별자치도' %}"><li class="btn bg-body-secondary">제주</li></a>
+        </div>
+      </ul>
+      <div class="ms-auto">
+        <a class="btn bg-success-subtle" href="{% url 'posts:create' %}">
+          <i class="bi bi-plus-square">여행 나누기</i>
+        </a>
+      </div>
+  </div>
   </div>
   <section>
     <div id="container-posts">

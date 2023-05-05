@@ -1,5 +1,7 @@
 const place_input = document.getElementById('place_input')
 const place_field = document.getElementById('place-field')
+const placeId = document.getElementById('place-id')
+const placeKeyword = document.getElementById('place-keyword')
 const region_field = document.getElementById('region-field')
 const modalButton = document.getElementById('modal-button')
 const centerButton = document.getElementById('current-location')
@@ -22,6 +24,7 @@ const getAddress = (e) => {
         lst.push({
           'place_name': places[i].place_name,
           'address_name': places[i].address_name,
+          'place_id': places[i].id,
         })
       }
       printAddress(lst)
@@ -51,8 +54,20 @@ const printAddress = (lst) => {
     divTag2.classList.add('fw-bold')
     divTag2.setAttribute('id', 'place')
     divTag2.textContent = element['address_name']
+    
+    const spanTag1 = document.createElement('span')
+    spanTag1.classList.add('hidden')
+    spanTag1.setAttribute('id', 'place_id_value')
+    spanTag1.textContent = element['place_id']
+
+    const spanTag2 = document.createElement('span')
+    spanTag2.classList.add('hidden')
+    spanTag2.setAttribute('id', 'place_keyword_value')
+    spanTag2.textContent = element['place_name']
 
     divTag1.appendChild(divTag2)
+    divTag1.appendChild(spanTag1)
+    divTag1.appendChild(spanTag2)
     liTag.appendChild(divTag1)
     addressList.appendChild(liTag)
   }
@@ -63,6 +78,9 @@ const printAddress = (lst) => {
     address.addEventListener('click', (e) => {
       const place = address.querySelector('#place')
       const region = place.textContent.split(' ')[0]
+      
+      const id = address.querySelector('#place_id_value')
+      const keyword = address.querySelector('#place_keyword_value')
 
       const mapModalHeader = document.querySelector('#modal-place')
       const mapModalSpan = document.querySelector('#modal-address')
@@ -72,6 +90,8 @@ const printAddress = (lst) => {
 
       place_field.value = place.textContent
       region_field.value = region
+      placeId.value = id.textContent
+      placeKeyword.value = keyword.textContent
       
       const modal = document.querySelector('#addressList')
       const modalInstance = bootstrap.Modal.getInstance(modal)

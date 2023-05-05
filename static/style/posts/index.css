@@ -168,7 +168,6 @@ a {
 
 
 .new-post{
-  text-align:right;
   margin-bottom: 1em;
 }
 
@@ -182,6 +181,11 @@ a {
 
 .bi-heart{
   color: white;
+}
+
+
+#region-list.fade-in {
+  animation: fadeIn 0.5s;
 }
 
 .pagination > li > a
@@ -212,10 +216,12 @@ a {
     background-color: gray !Important;
     border: solid 1px gray;
 }
-/* .region-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

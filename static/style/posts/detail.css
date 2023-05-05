@@ -257,3 +257,35 @@ a {
 .card-active {
   background-color: rgba(128, 128, 128, 0.7);
 }
+
+.map-select {
+  height: 600px;
+}
+
+.map {
+  height: 100px;
+}
+
+.map-modal-wrap {
+  height: 400px;
+}
+
+#map-modal {
+  height: 400px;
+}
+
+#modal-button {
+  font-size: 16px;
+  padding: 0px 3px;
+  background-color: rgba(128, 128, 128, 0.5);
+  transition: font-size 0.15s linear;
+}
+
+#modal-button:hover {
+  font-size: 20px;
+  background-color: rgba(128, 128, 128, 0.7);
+}
+
+.map-description{
+  width: 30em;
+}
