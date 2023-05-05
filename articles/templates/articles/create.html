@@ -1,19 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block style %}
+{% block header %}
 <link rel="stylesheet" href="{% static 'style/articles/create.css' %}">
-
-<style>
-
-</style>
-{% endblock style %}
+{% endblock header %}
 
 {% block content %}
 <article class="main--article--container">
   <div class="article--title--wrap">
-    <h3 class="article--title">Community</h3>
-    <a class="article--list" href="{% url 'articles:index' %}">list</a>
+    <h3 class="article--title">
+      <a href="{% url 'articles:index' %}">Community</a>
+    </h3>
+    <a class="article--list" href="{% url 'articles:tag_cloud' %}">Tag Cloud</a> 
   </div>
   <div class="card--style--wrap">
     <form action="{% url 'articles:create' %}" method="POST" enctype='multipart/form-data'>

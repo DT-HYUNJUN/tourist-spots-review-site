@@ -1,0 +1,11 @@
+
+.card--style--wrap {
+    min-height: 370px;
+  }
+.tag--list--title--wrap {
+    text-align: center;
+    margin: 1.5rem;
+}
+.tag--box {
+    background-color: #eeeeee;
+}
