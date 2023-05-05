@@ -75,7 +75,7 @@ def change_password(request):
             return redirect('posts:index')
     else:
         form = CustomPasswordChangeForm(request.user)
-    return render(request, 'accounts/change_password.html', {'form':form})
+    return render(request, 'accounts/password.html', {'form':form})
 
 
 def profile(request, username):

@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block style %}
+{% block header %}
 <link rel="stylesheet" href="{% static 'style/articles/index.css' %}">
-<style>
-</style>
-{% endblock style %}
+<link rel="stylesheet" href="{% static 'style/articles/common.css' %}">
+{% endblock header %}
+
 {% block content %}
 <article class="main--article--container">
   <div class="article--title--wrap">
-    <h3 class="article--title">Community</h3>
-    <a class="article--list" href="{% url 'articles:index' %}">list</a>
+    <h3 class="article--title">
+      <a href="{% url 'articles:index' %}">Community</a>
+    </h3>
+    <a class="article--list" href="{% url 'articles:tag_cloud' %}">Tag Cloud</a> 
   </div>
   <div class="card--style--wrap">
     <div class='d-flex justify-content-between my-1'>
@@ -45,13 +47,17 @@
               {{ article.title }}({{ article.articlecomment_set.all|length }})
             </a>
           </td>
-          <td><span class="profile--image--wrap">
+          <td>
+            <a href="{% url 'accounts:profile' article.user %}">
+            <span class="profile--image--wrap">
             {% if article.user.profile_image %}
             <img class="profile--image" src="{{ article.user.profile_image.url }}" alt="profile-image">
             {% else %}
             <img class="profile--image" src="{% static 'img/cat_01.png' %}" alt="profile">
             {% endif %}    
-          </span>{{ article.user }}</td>
+            </span>
+            {{ article.user }}</a>
+          </td>
           <td>{{ article.created_at }}</td>
           <td>{{ article.views.all|length }}</td>
         </tr>
@@ -64,7 +70,7 @@
     </tbody>
     </table>
 
-    <a href="{% url 'articles:tag_cloud' %}"><span class="btn btn-secondary btn-sm mb-3">TagCloud</span></a> 
+    
   </div>
 </article>
 

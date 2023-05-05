@@ -1,26 +1,32 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block style %}
+{% block header %}
 <link rel="stylesheet" href="{% static 'style/taggit/cloud.css' %}">
-<style>
-</style>
-{% endblock style %}
+<link rel="stylesheet" href="{% static 'style/articles/common.css' %}">
+{% endblock header %}
 
 
 {% block content %}
-<article>
-    <h1>Article Tag Cloud</h1>
+<article class="main--article--container">
+  <div class="article--title--wrap">
+      <h3 class="article--title">
+      <a href="{% url 'articles:index' %}">Community</a>
+      </h3>
+      <a class="article--list" href="{% url 'articles:tag_cloud' %}">Tag Cloud</a> 
+  </div>
+  <section class="card--style--wrap">
     <div class="tag-cloud">
-        {% load taggit_templatetags2_tags %}
-        {% get_tagcloud as tags %} 
-        {% for tag in tags %}
-        <span class="tag-{{tag.weight|floatformat:0}}">
-            {% if tag.name and tag.num_times %}
-                <a href="{% url 'articles:tagged_object_list' tag.name %}">{{ tag.name }}({{ tag.num_times }})</a>
-            {% endif %}
-        </span>
-        {% endfor %}
+      {% load taggit_templatetags2_tags %}
+      {% get_tagcloud as tags %} <!--모든 태그 추출해서 tags변수에 할당-->
+      {% for tag in tags %}
+      <span class="tag--box tag-{{tag.weight|floatformat:0}}"> <!-- style 관련-->
+        {% if tag.name  and tag.num_times %}
+          <a href="{% url 'articles:tagged_object_list' tag.name %}">{{ tag.name }}({{ tag.num_times }})</a>
+        {% endif %}
+      </span>
+      {% endfor %}
     </div>
+  </section>
 </article>
 {% endblock content %}

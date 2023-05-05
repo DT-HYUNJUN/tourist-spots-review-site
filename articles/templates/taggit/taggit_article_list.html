@@ -1,13 +1,54 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'style/taggit/article_list.css' %}">
+<link rel="stylesheet" href="{% static 'style/articles/common.css' %}">
+{% endblock header %}
 
 {% block content %}
-<article>
-    <h1>As for tag - {{ tagname }} </h1>
-    
-    <br>
-    {% for article in object_list %}
-        <h2><a href='{{ article.get_absolute_url }}'>{{ article.title }}</a></h2>
-        
-    {% endfor %}
+
+<article class="main--article--container">
+  <div class="article--title--wrap">
+      <h3 class="article--title">
+      <a href="{% url 'articles:index' %}">Community</a>
+      </h3>
+      <a class="article--list" href="{% url 'articles:tag_cloud' %}">Tag Cloud</a> 
+  </div>
+  <section class="card--style--wrap">
+    <h1 class="tag--list--title--wrap">As for tag <span class="tag--box">{{ tagname }}</span></h1>
+    <table class="article--table table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">제목</th>
+          <th scope="col">글쓴이</th>
+          <th scope="col">작성시간</th>
+          <th scope="col">조회수</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+      {% for article in object_list %} 
+          <tr>
+            <th scope="row">{{ article.pk }}</th>
+            <td>
+              <a href="{{ article.get_absolute_url }}">
+                {{ article.title }}({{ article.articlecomment_set.all|length }})
+              </a>
+            </td>
+            <td><span class="profile--image--wrap">
+              {% if article.user.profile_image %}
+              <img class="profile--image" src="{{ article.user.profile_image.url }}" alt="profile-image">
+              {% else %}
+              <img class="profile--image" src="{% static 'img/cat_01.png' %}" alt="profile">
+              {% endif %}    
+            </span>{{ article.user }}</td>
+            <td>{{ article.created_at }}</td>
+            <td>{{ article.views.all|length }}</td>
+          </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
 </article>
 {% endblock content  %}

@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block style %}
+
+{% block header %}
 <link rel="stylesheet" href="{% static 'style/accounts/profile.css' %}">
-<style>
-</style>
-{% endblock style %}
+<link rel="stylesheet" href="{% static 'style/articles/common.css' %}">
+{% endblock header %}
 
 {% block content %}
-<article>
+<article class="main--article--container">
   <h1>{{ person }}님의 Profile</h1>
   <section class="profile--user--container">
     <div class="profile--user--wrap">
@@ -40,17 +40,17 @@
           <li>
             <p>BIRTHDAY</p>
             <p>{{ person.birthday }}</p>
-            </li>
+          </li>
           <li>
             <p>E-MIL</p>
             <p>{{ person.email }}</p>
-            </li>
+          </li>
           <li>
             <p>Following </p>
             <p id="followings-count">  {{person.following.all|length}} </p>
             <p>Follower </p>
             <p id="followers-count"> {{person.followers.all|length}}</p>
-            </li>
+          </li>
         </ul>
 
       </div>
