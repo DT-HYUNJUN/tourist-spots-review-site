@@ -2,9 +2,9 @@
 
 {% load static %}
 {% block style %}
-<link rel="stylesheet" href="{% static 'style/posts/detail.css' %}">
 <link rel="stylesheet" href="{% static 'style/posts/index.css' %}">
 <link rel="stylesheet" href="{% static 'style/posts/modal.css' %}">
+<link rel="stylesheet" href="{% static 'style/posts/detail.css' %}">
 {% endblock style %}
 
 {% block content %}
@@ -31,9 +31,9 @@
           <form class="like-form" data-post-id="{{ post.pk }}">
             {% csrf_token %}
             {% if request.user in post.like_users.all %}
-            <button type="submit" class="bi bi-heart-fill" id="like-btn"></button>
+            <button type="submit" class="bi bi-heart-fill heart-fill-detail" id="like-btn"></button>
             {% else %}
-            <button type="submit" class="bi bi-heart" id="like-btn"></button>
+            <button type="submit" class="bi bi-heart heart-detail" id="like-btn"></button>
             {% endif %}
             <span id="like-count" class="detail-mark-tex">{{ post.like_users.all|length }}</span>
           </form>

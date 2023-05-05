@@ -13,8 +13,12 @@
   color: gold;
 }
 
-.bi-heart-fill{
+.heart-fill-detail{
   color: red;
+}
+
+.heart-detail{
+  color: black;
 }
 
 .post-content-text{

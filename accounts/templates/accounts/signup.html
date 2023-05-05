@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block style %}
+{% block header %}
 <link rel="stylesheet" href="{% static 'style/accounts/signup.css' %}">
-
-<style>
-</style>
-{% endblock style %}
+<link rel="stylesheet" href="{% static 'style/accounts/common.css' %}">
+{% endblock header %}
 
 {% block content %}
-{% load static %}
     <article class="main--article--container">
       <section class="section--form--wrap">
         <div class="main--login">

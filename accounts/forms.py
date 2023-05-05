@@ -95,6 +95,10 @@ class Birthday(forms.DateInput):
     input_type = 'date'
 
 class CustomUserChangeForm(UserChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password'].help_text = ''
+        
     class Meta(UserChangeForm):
         model = get_user_model()
         fields = ('first_name', 'last_name', 'mbti', 'birthday', 'email', 'profile_image',)
