@@ -7,7 +7,7 @@ forms.forEach((form) => {
     const postId = e.target.dataset.postId
     axios({
       method: 'post',
-      url: `http://127.0.0.1:8000/posts/${postId}/likes/`,
+      url: `https://port-0-triptopper-f69b2mlhaa9b38.sel4.cloudtype.app/posts/${postId}/likes/`,
       headers: { "X-CSRFToken": csrftokenLike},
     }).then((response) => {
       const isLiked = response.data.is_liked

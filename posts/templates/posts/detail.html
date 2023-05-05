@@ -57,13 +57,16 @@
           <div class="content-container">
             <div>{{ post.content|linebreaksbr }}</div>
             <button type="button" class="border-0 bg-transparent mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              {% for image in post.postimage_set.all %}
-              {% if forloop.counter <= 4 %}
-                <img src="{{ image.image.url }}" class="multi-image" alt="img">
+              {% if post.postimage_set.all %}
+                {% for image in post.postimage_set.all %}
+                  {% if forloop.counter <= 4 %}
+                    <img src="{{ image.image.url }}" class="multi-image" alt="img">
+                  {% endif %}
+                {% endfor %}
+                  <span>...</span>
+              {% else %}
               {% endif %}
-            {% endfor %}
-            </button>
-            <span>...</span>
+          </button>
 
             <div class="tag--box--wrap mt-3">
               {% load taggit_templatetags2_tags %}

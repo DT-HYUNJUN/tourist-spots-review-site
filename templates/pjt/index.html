@@ -1,32 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
-{% comment %} <style>
-  .box{
-    box-sizing: border-box;
-    border: 1px solid black;
-    margin: 1px 1px 1px 1px
+<style>
+  .carousel-item{
+    height: 13em;
   }
-
-  #container-posts{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows; 1fr;
-    column-gap: 20px;
-    row-gap: 20px;
-    background-color: red;
-  }
-
-  @media all and (max-width:479px) {
-    #container-posts {
-      grid-template-columns: 1fr;
-      grid-template-rows: repeat(4, 1fr);
-      column-gap: 10px;
-      row-gap: 10px;
-      background-color : yellow;
-    }
-  }
-</style> {% endcomment %}
+</style> 
 <link rel="stylesheet" href="{% static 'style/posts/index.css' %}">
 <link rel="stylesheet" href="{% static 'style/articles/index.css' %}">
 <link rel="stylesheet" href="{% static 'style/articles/common.css' %}">
@@ -34,19 +13,19 @@
 {% endblock style %}
 {% block content %}
 <main>
-  <div class="article box">
+  <div class="article">
     <!--베너-->
-    <section class="box">
+    <section class>
       <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="{% static 'img/banner01.png' %}" class="d-block w-100" alt="광고배너1">
+            <img src="{% static 'img/banner01.png' %}" class="d-block w-100 h-100" alt="광고배너1">
           </div>
           <div class="carousel-item">
-            <img src="{% static 'img/banner02.png' %}" class="d-block w-100" alt="광고배너2">
+            <img src="{% static 'img/banner02.png' %}" class="d-block w-100 h-100" alt="광고배너2">
           </div>
           <div class="carousel-item">
-            <img src="{% static 'img/banner03.png' %}" class="d-block w-100" alt="광고배너3">
+            <img src="{% static 'img/banner03.png' %}" class="d-block w-100 h-100" alt="광고배너3">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
