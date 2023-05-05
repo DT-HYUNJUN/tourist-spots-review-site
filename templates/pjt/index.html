@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
-<style>
+{% comment %} <style>
   .box{
     box-sizing: border-box;
     border: 1px solid black;
@@ -26,12 +26,16 @@
       background-color : yellow;
     }
   }
-</style>
-<link rel="stylesheet" href="{% static 'style/posts/posts.css' %}">
+</style> {% endcomment %}
+<link rel="stylesheet" href="{% static 'style/posts/index.css' %}">
+<link rel="stylesheet" href="{% static 'style/articles/index.css' %}">
+<link rel="stylesheet" href="{% static 'style/articles/common.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'style/posts/posts.css' %}"> {% endcomment %}
 {% endblock style %}
 {% block content %}
 <main>
   <div class="article box">
+    <!--베너-->
     <section class="box">
       <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -55,37 +59,45 @@
         </button>
       </div>
     </section>
-    {% comment %} <section class="box">
-      <div id="container-posts">
-        <div class="box post-item">post1</div>
-        <div class="box post-item">post2</div>
-        <div class="box post-item">post3</div>
-        <div class="box post-item">post4</div>
-      </div>
-    </section> {% endcomment %}
-    <section class="box">
+
+    <section>
       <div id="container-posts">
         {% for post in posts %}
         <div class="post-item">
           <a href="{% url 'posts:detail' post.pk %}" class="card">
-            {% if post.image %}
-            <img src="{{ post.image.url }}" alt="여행사진" class="card-img-top" />
-            {% else %}
-            <img
+            <div class="position-relative">
+              {% for image in post.postimage_set.all %}
+                {% if forloop.first %}
+                  <img src="{{image.image.url}}" class="card-img-top" alt="img">
+                {% endif %}
+              {% empty %}
+              <img
               src="{% static 'img/noimage.jpg' %}"
               alt="이미지없음"
-              class="card-img-top noimage-img"
-            />
-            {% endif %}
-            <form action="{% url 'posts:post_likes' post.pk %}" method="POST">
-              {% csrf_token %}
-              {% if request.user in post.like_posts.all %}
-              <input class='like-user' type="submit" value="🤍">
-              {% else %}
-              <input class='like-user' type="submit" value="❤">
-              {% endif %}
-            </form>
-  
+              class="card-img-top"
+              />
+              {% endfor %}
+              <div class="d-flex card-bottom-info card-bottom-hidden">
+                <i class="bi bi-star-fill"><span class="mark-text">{{ post.rating }}</span>
+                </i>
+                <i class="bi bi-chat-dots-fill"><span class="mark-text">{{ post.postcomment_set.count }}</span></i>
+              </div>
+              <div class="card-top-info-container">
+                <div class="d-flex justify-content-between card-top-info mx-1">
+                  <p class="place ps-1 pe-2">
+                    <i class="bi bi-geo-alt">{{ post.region }}</i>
+                  </p>
+                  <form class="like-form" data-post-id="{{ post.pk }}">
+                    {% csrf_token %}
+                    {% if request.user in post.like_users.all %}
+                    <button type="submit" class="bi bi-heart-fill" id="like-btn"></button>
+                    {% else %}
+                    <button type="submit" class="bi bi-heart" id="like-btn"></button>
+                    {% endif %}
+                  </form>
+                </div>
+              </div>
+            </div>
   
             <div class="card-body">
               <div class="card-user">
@@ -104,16 +116,64 @@
                   />
                 </p>
                   {% endif %}
-                <span class="username">{{user}}</span>
+                <span class="username">{{post.user}}</span>
               </div>
               <h6 class="card-title">{{ post.title }}</h6>
+              <div class="post-date text-truncate">
+                {% if post.is_new %}
+                <span class="new">new</span>
+                {% endif %}
+                {{ post.created_string }}
+              </div>
             </div>
           </a>
         </div>
         {% endfor %}
-      </div>
+  
     </section>
-    <section class="box">articles</section>
+
+    <table class="article--table table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">제목</th>
+          <th scope="col">글쓴이</th>
+          <th scope="col">작성시간</th>
+          <th scope="col">조회수</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% for article in articles %}
+        <tr>
+          <th scope="row">{{ article.pk }}</th>
+          <td>
+            <a href="{% url 'articles:detail' article.pk %}">
+              {{ article.title }}({{ article.articlecomment_set.all|length }})
+            </a>
+          </td>
+          <td>
+            <a href="{% url 'accounts:profile' article.user %}">
+            <span class="profile--image--wrap">
+            {% if article.user.profile_image %}
+            <img class="profile--image" src="{{ article.user.profile_image.url }}" alt="profile-image">
+            {% else %}
+            <img class="profile--image" src="{% static 'img/cat_01.png' %}" alt="profile">
+            {% endif %}    
+            </span>
+            {{ article.user }}</a>
+          </td>
+          <td>{{ article.created_at }}</td>
+          <td>{{ article.views.all|length }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
   </div>
 </main>
 {% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'js/like.js' %}"></script>
+<script src="{% static 'js/card-bottom-info.js' %}"></script>
+<script src="{% static 'js/new.js' %}"></script>
+{% endblock javascript %}

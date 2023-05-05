@@ -55,7 +55,7 @@ class PostForm(forms.ModelForm):
     )
     class Meta:
         model = Post
-        fields = ('title', 'place', 'region', 'content', 'start_date', 'end_date', 'place_id', 'place_keyword', 'tags',)
+        fields = ('title', 'place', 'region', 'content', 'start_date', 'end_date', 'place_id', 'place_keyword', 'tags', 'rating',)
 
 
 class PostImageForm(forms.ModelForm):

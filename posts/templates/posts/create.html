@@ -42,6 +42,7 @@
           <input id="region-field" type="text" name="region" aria-label="Last name" class="form-control mb-3" placeholder="지역" readonly autocomplete="off">
         {% elif field.name == 'region' %}
         {% elif field.name == 'end_date' %}
+        {% elif field.name == 'rating' %}
         {% elif field.name == 'start_date' %}
           {% now "Y-m-d" as today %}
           <input type="date" value="{{ today }}" name="start_date" class="form-control mb-3" placeholder="시작">

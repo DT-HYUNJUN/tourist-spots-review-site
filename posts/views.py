@@ -39,10 +39,10 @@ def sorting(queryset, select_sorting):
         return queryset.order_by('-pk')
     elif select_sorting == '오래된순':
         return queryset.order_by('pk')
-    elif select_sorting == '인기순':
-        return queryset.order_by('-rating')
-    elif select_sorting == '평점순':
+    elif select_sorting == '좋아요순':
         return Post.objects.annotate(num_likes=Count('like_users')).order_by('-num_likes')
+    elif select_sorting == '별점순':
+        return queryset.order_by('-rating')
     else:
         return queryset
 
@@ -263,7 +263,7 @@ def new_posts(posts):
     now = timezone.now()
     for post in posts:
         time_diff = now - post.created_at
-        if time_diff < timezone.timedelta(days=1):
+        if time_diff < timezone.timedelta(hours=1):
             post.is_new = True
         else:
             post.is_new = False
