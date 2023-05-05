@@ -19,5 +19,6 @@ urlpatterns = [
     # 태그 목록을 볼 수 있는 url 
     path('tag/', views.TagCloudTV.as_view(), name='tag_cloud'),
     # 태그가 달린 객체들의 목록
-    path('tag/<str:tag>/', views.TaggedObjectLV.as_view(), name='tagged_object_list')
+    path('tag/<str:tag>/', views.TaggedObjectLV.as_view(), name='tagged_object_list'),
+    # path('<int:article_pk>/comments/<int:comment_pk>/update/', views.replyUpdate, name='replyUpdate'),
 ]

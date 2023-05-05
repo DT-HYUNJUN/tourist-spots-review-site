@@ -7,6 +7,7 @@
 {% endblock header %}
 
 {% block content %}
+
 <article class="main--article--container">
   <div class="article--title--wrap">
       <h3 class="article--title">
@@ -27,7 +28,7 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-      {% for article in object_list %} <!-- object_list 객체는 TaggedObjectLV 클래스형 뷰에서 넘겨주는 컨텍스트 변수로서 Post 리스트가 담겨있음-->
+      {% for article in object_list %} 
           <tr>
             <th scope="row">{{ article.pk }}</th>
             <td>

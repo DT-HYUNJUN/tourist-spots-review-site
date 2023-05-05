@@ -292,3 +292,17 @@ class TaggedObjectLV(ListView):
         context = super().get_context_data(**kwargs)
         context['tagname'] = self.kwargs['tag']
         return context
+    
+# def replyUpdate(request, article_pk, comment_pk):
+#     comment = ArticleComment.objects.filter(pk=comment_pk).first()
+#     context = {
+#         'result' : 'no'
+#     }
+#     if comment:
+#         comment.content = request.POST.get('content')
+#         comment.save()
+#         context = {
+#             'result' : 'ok'
+#         }
+#     return JsonResponse(context)
+

@@ -147,3 +147,44 @@ dis_commentforms.forEach(form => {
 //   })
 //   .catch(error => console.error(error));
 // });
+
+
+
+// const replyUpdate = (id) => {
+//   let tdReplyUpdate = document.querySelector(`.tdReplyUpdate${id}`);
+//   let tdReplyDelete = document.querySelector(`.tdReplyDelete${id}`);
+//   let tdReplySubmit = document.querySelector(`.tdReplySubmit${id}`);
+//   let tdReplyUpdateCancel = document.querySelector(`.tdReplyUpdateCancel${id}`);
+//   let replyContent = document.querySelector(`.replyContent${id}`);
+
+  
+//   // 수정버튼과 수정 취소 버튼이 나오는 부분, readonly를 풀어주는 부분
+//   tdReplyUpdate.style.display = 'none';
+//   tdReplyDelete.style.display = 'none';
+//   tdReplySubmit.style.display = 'inline-block';
+//   tdReplyUpdateCancel.style.display = 'inline-block';
+//   replyContent.readOnly = false;
+// }
+
+// const replySubmit = (id) => {
+//   let replyContent = document.querySelector(`.replyContent${id}`).value;
+//   let param = {
+//     'comment_id' : id,
+//     'content' : replyContent
+//   }
+
+//   $.ajax({
+//     url: `/articles/${articleId}/comments/${commentId}/update/`,
+//     type: 'post',
+//     data: param,
+//     headers: {
+//       'X-CSRFTOKEN': '{{ csrf_token }}'
+//     },
+//     success: function(response) {
+//       console.log(response)
+//     },
+//     error: function(){
+//       alert('안돼 돌아가, 안 바꿔줘')
+//     }
+//   })
+// }
