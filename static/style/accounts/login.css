@@ -1,13 +1,21 @@
 
-.main--article--container{
-max-width: 1000px;
-flex-direction: column;
-padding: 30px 0;
-}
+.main--accounts--section--container {
+    max-width: 680px;
+    flex-direction: column;
+    padding: 30px 0;
+    margin: auto;
+    }
+
 .main--login {
 display: flex;
 justify-content: center;
 }
 h2 {
 text-align: center;
+}
+hr {
+    margin: 1rem;
+}
+.main--login--form input{
+    margin-top: 0.7rem;
 }

@@ -2,28 +2,30 @@
 {% load static %}
 {% load socialaccount %}
 {% block header %}
-<link rel="stylesheet" href="{% static 'style/accounts/signup.css' %}">
-<link rel="stylesheet" href="{% static 'style/accounts/common.css' %}">
+<link rel="stylesheet" href="{% static 'style/accounts/login.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'style/accounts/common.css' %}"> {% endcomment %}
 {% endblock header %}
 
 {% block content %}
     <article class="main--article--container">
-      <section class="section--form--wrap">
-        <div class="main--login">
-          <img class="" src="{% static 'img/triptopper_c_logo_01.png' %}" alt="image">
-        </div>
-        <h2>Sign up</h2>
-        <form class="d-grid" action="{% url 'accounts:signup' %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-          <input type="submit" value="sign up" class="btn btn-success">
-        </form>
-      </section>
-      <hr>
-      <section class="d-grid">
-        <a  type="button" class="btn btn-warning" href="{% provider_login_url 'kakao' method='oauth2' %}">
-          KakaoTalk Sign up
-        </a>
-      </section>
+      <div class="main--accounts--section--container">
+        <section class="section--form--wrap">
+          <div class="main--login">
+            <img class="" src="{% static 'img/triptopper_c_logo_01.png' %}" alt="image">
+          </div>
+          <h2>Sign up</h2>
+          <form class="d-grid main--login--form" action="{% url 'accounts:signup' %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.as_p }}
+            <input type="submit" value="sign up" class="btn btn-success">
+          </form>
+        </section>
+        <hr>
+        <section class="d-grid">
+          <a  type="button" class="btn btn-warning" href="{% provider_login_url 'kakao' method='oauth2' %}">
+            KakaoTalk Sign up
+          </a>
+        </section>
+      </div>
     </article>
 {% endblock content %}

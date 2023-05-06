@@ -27,13 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [
     'port-0-triptopper-f69b2mlhaa9b38.sel4.cloudtype.app',
-    # '127.0.0.1',
-    # 'localhost',
+    '127.0.0.1',
+    'localhost',
 ]
 
 

@@ -11,7 +11,7 @@ hr {
 
 /* atticle layout & title style */
 .main--article--container {
-  max-width: 850px;
+  max-width: ;
   margin: auto;
 }
 .article--title--wrap {
@@ -96,6 +96,8 @@ hr {
   color: #dc3545;
 }
 
+
+/* hover */
 /* underline */
 .success--underline{
   text-decoration: underline #28a745;
@@ -115,7 +117,12 @@ hr {
 .danger--underline:hover {
   text-decoration: wavy underline #dc3545;
 }
-
+.warning--underline:hover {
+  text-decoration: underline #ffc107;
+}
+.warning--underline:hover {
+  text-decoration: wavy underline #ffc107;
+}
 /* shadow */
 .comment--card:hover {
   box-shadow: 5px 5px 0px 0px rgba(40,167,69, .2);
@@ -123,6 +130,8 @@ hr {
 .comment--create:hover {
   box-shadow: 5px 5px 0px 0px rgba(40,167,69, .2);
 }
+
+
 
 /* flex */
 .form--wrap--flex {
