@@ -166,9 +166,18 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+# SOCIALACCOUNT_PROVIDERS = {
+#     'naver': {'APP': {
+#                         'client_id': 'BtmSNGQr6dOoN20Mt6wp',
+#                         'secret': '2onKz6blc9',
+#                         'key': ''
+#                 }},
+# }
+
+
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = 'https://port-0-triptopper-f69b2mlhaa9b38.sel4.cloudtype.app/account/kakao/login/callback/'  # 로그인 후 리다이렉트 될 경로
+LOGIN_REDIRECT_URL = '/'  # 로그인 후 리다이렉트 될 경로
 ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')  
 
 
