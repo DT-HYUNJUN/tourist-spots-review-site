@@ -57,25 +57,21 @@ def create(request):
     return render(request, 'articles/create.html', context)
 
 
-
+# view
 def detail(request, article_pk):
     article = Article.objects.get(pk=article_pk)
-    # view
-    if request.user not in article.views.all():
-        article.views.add(request.user)
-
-    comment_form = ArticleCommentForm()
     comments = article.articlecomment_set.all()[::-1]
-
     tags = article.tags.all()
-
-
+    comment_form = ArticleCommentForm()
     context = {
-        'article': article,
-        'comment_form' : comment_form,
-        'comments' : comments,
-        'tags' : tags
-    }
+            'article': article,
+            'comment_form' : comment_form,
+            'comments' : comments,
+            'tags' : tags
+        }
+    if request.user.is_authenticated:
+        if request.user not in article.views.all():
+            article.views.add(request.user)
     return render(request, 'articles/detail.html', context)
 
 
