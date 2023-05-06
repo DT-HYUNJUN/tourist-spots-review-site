@@ -109,7 +109,7 @@
                 {% if post.user.profile_image %}
                 <img
                   class="user-profile"
-                  src="{{ post.user.profile_image }}"
+                  src="{{ post.user.profile_image.url }}"
                   alt="사용자프로필이미지"
                 />
                 {% else %}
