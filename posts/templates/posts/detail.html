@@ -152,9 +152,9 @@
                   <div class="d-flex align-items-start gap-2">
                     <!-- 프로필 사진 -->
                     <div class="border rounded-circle position-relative mt-1 profile-img-sm">
-                      {% if comment.user.image %}
+                      {% if comment.user.profile_image %}
                       <a href="{% url 'accounts:profile' comment.user.username %}">
-                        <img src="{{ comment.user.image.url }}" alt="{{ comment.user }}" class="rounded-circle profile-img-sm">
+                        <img src="{{ comment.user.profile_image.url }}" alt="{{ comment.user }}" class="rounded-circle profile-img-sm">
                       </a>
                       {% else %}
                       <a href="{% url 'accounts:profile' comment.user.username %}">
