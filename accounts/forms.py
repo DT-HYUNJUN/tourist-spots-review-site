@@ -9,7 +9,7 @@ class Birthday(forms.DateInput):
 class CustomUserUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = get_user_model()
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'birthday', 'email', 'profile_image',)
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'birthday', 'email', 'profile_image', 'mbti',)
     username = forms.CharField(
         required=True,
         label='ID',
