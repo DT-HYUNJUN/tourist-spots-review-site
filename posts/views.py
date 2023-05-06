@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from articles.models import Article
 # import requests
 
 # Create your views here.
@@ -206,7 +207,8 @@ def update(request, post_pk):
                 if delete_images_form.is_valid():
                     delete_images_form.save()
                 return redirect('posts:detail', post.pk)
-            
+            else:
+                print(form.errors)        
         else:
             initial_tags = ', '.join(post.tags.all().values_list('name', flat=True))
             form = PostForm(instance=post, initial={'tags': initial_tags})
@@ -310,11 +312,13 @@ class TagCloudTV(TemplateView):
 
 class TaggedObjectLV(ListView):
     template_name = 'taggit/taggit_post_list.html'
-    model = Post
+    model = Post, Article
 
     def get_queryset(self):
-        return Post.objects.filter(tags__name=self.kwargs.get('tag'))
-    
+       post = Post.objects.filter(tags__name=self.kwargs.get('tag'))
+       article = Article.objects.filter(tags__name=self.kwargs.get('tag'))     
+       return post or article
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tagname'] = self.kwargs['tag']
