@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="{% static 'style/articles/common.css' %}">
 {% endblock header %}
 
-
 {% block content %}
 <article class="main--article--container">
   <div class="article--title--wrap">
@@ -22,7 +21,7 @@
       {% for tag in tags %}
       {% if tag.name  and tag.num_times %}
         <span class="tag--box tag-{{tag.weight|floatformat:0}}"> <!-- style 관련-->
-          <a href="{% url 'articles:tagged_object_list' tag.name %}">{{ tag.name }}({{ tag.num_times }})</a>
+          <a href="{% url 'posts:tagged_object_list' tag.name %}">{{ tag.name }}({{ tag.num_times }})</a>
         </span>
         {% endif %}
         {% endfor %}

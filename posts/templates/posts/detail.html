@@ -61,9 +61,10 @@
                 {% for image in post.postimage_set.all %}
                   {% if forloop.counter <= 4 %}
                     <img src="{{ image.image.url }}" class="multi-image" alt="img">
+                  {% else %}
+                  <span>...</span>
                   {% endif %}
                 {% endfor %}
-                  <span>...</span>
               {% else %}
               {% endif %}
           </button>
