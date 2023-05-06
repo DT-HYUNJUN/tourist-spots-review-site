@@ -53,6 +53,9 @@ class PostForm(forms.ModelForm):
             }
         )
     )
+    rating = forms.IntegerField(
+        required=False
+    )
     class Meta:
         model = Post
         fields = ('title', 'place', 'region', 'content', 'start_date', 'end_date', 'place_id', 'place_keyword', 'tags', 'rating',)
