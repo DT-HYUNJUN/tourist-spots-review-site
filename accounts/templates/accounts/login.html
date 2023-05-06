@@ -6,31 +6,38 @@
 <link rel="stylesheet" href="{% static 'style/accounts/login.css' %}">
 {% endblock header %}
 
+{% block style %}
+<style>
+</style>
+{% endblock style %}
+
 {% block content %}
 {% load static %}
   <article class="main--article--container">
-    <section class="section--form--wrap">
-      <div class="main--login">
-        <img class="" src="{% static 'img/triptopper_c_logo_01.png' %}" alt="image">
-      </div>
-      <h2>Log in</h2>
-      <form class="d-grid" action="{% url 'accounts:login' %}" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="log in" class="btn btn-success">
-      </form>
-    </section>
-    <hr>
-    <section class="d-grid">
-      <a  type="button" class="btn btn-warning" href="{% provider_login_url 'kakao' method='oauth2' %}">
-        KakaoTalk Log in
-      </a>
-    </section>
-    <section class="d-grid mt-2">
-      <a  type="button" class="btn btn-success" href="{% provider_login_url 'naver'%}">
-        NAVER Log in
-      </a>
-    </section>
+    <div class="main--accounts--section--container">
+      <section class="section--form--wrap">
+        <div class="main--login">
+          <img class="" src="{% static 'img/triptopper_c_logo_01.png' %}" alt="image">
+        </div>
+        <h2>Log in</h2>
+        <form class="d-grid main--login--form" action="{% url 'accounts:login' %}" method="POST">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" value="log in" class="btn btn-success">
+        </form>
+      </section>
+      <hr>
+      <section class="d-grid">
+        <a type="button" class="btn btn-warning" href="{% provider_login_url 'kakao' method='oauth2' %}">
+          KakaoTalk Sign up
+        </a>
+      </section>
+      <section class="d-grid mt-2">
+        <a  type="button" class="btn btn-success" href="{% provider_login_url 'naver'%}">
+          NAVER Log in
+        </a>
+      </section>
+    </div>
   </article>
 {% endblock content %}
 {% block javascript %}

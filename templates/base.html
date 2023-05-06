@@ -10,27 +10,33 @@
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/tenten_favicon_01.png' %}">
     <link rel="stylesheet" href="{% static 'style/common.css' %}">
+    <link rel="stylesheet" href="{% static 'style/articles/common.css' %}">
     <link rel="stylesheet" href="{% static 'style/base.css' %}">
     {% block header %}{% endblock header %}
     <title>10.TenTen(TripTopper)</title>
     
     {% block style %}{% endblock style %}
+    <style>
+    </style>
   </head>
   <body>
-    <header class="item  position-fixed fixed-top">
+    <header class="item header--container position-fixed fixed-top">
       <div class="header--sm--grid--wrap">
         <div class="header--wrap">
           <div class="header--left--wrap">
             <a href="https://port-0-triptopper-f69b2mlhaa9b38.sel4.cloudtype.app/">
-              <img class="logo--image" src="{% static 'img/triptopper_w_logo_01.png' %}" alt="logo image">
+              <img class="header--logo--image" src="{% static 'img/triptopper_w_logo_01.png' %}" alt="logo image">
             </a>
-            <nav class="nav--wrap">
-              <ul class="nav--flex">
-                <li class="nav__posts">
-                  <a class="menu-btn-trip" href="{% url 'posts:index' %}">여행일지</a>
+            <nav class="header--nav--wrap">
+              <ul class="header--nav--flex header--nav">
+                <li>
+                  <a class="nav--btn" href="{% url 'posts:index' %}">여행일지</a>
                 </li>
                 <li>
-                  <a class="menu-btn-cmt" href="{% url 'articles:index' %}">커뮤니티</a>
+                  <a class="nav--btn" href="{% url 'articles:index' %}">커뮤니티</a>
+                </li>
+                <li>
+                  <a class="nav--btn" href="#10_tenten">만든이들</a>
                 </li>
               </ul>
             </nav>
@@ -38,7 +44,8 @@
           <div class="header--right--wrap">
             {% if user.is_authenticated %}
             <div class="header--login--wrap">
-              <a class="header--login" href="{% url 'accounts:profile' user.username%}">{{user}}님의 profile</a>
+              <a class="header--login" href="{% url 'accounts:profile' user.username%}">
+                <span class="nav--btn">{{user}}</span>님 안녕하세요!</a>
               <form action="{% url 'accounts:logout' %}" method="POST">
                 {% csrf_token %}
                 <input class="btn btn-outline-danger" type="submit" value="log out">
@@ -46,87 +53,103 @@
             </div>
             {% else %}
             <div class="header--login--wrap">
-              <a class="header--login" href="{% url 'accounts:login' %}">log in</a>
+              <a class="header--login nav--btn" href="{% url 'accounts:login' %}">log in</a>
               <a href="{% url 'accounts:signup' %}" type="button" class="btn btn-outline-success">sign up</a>
             </div>
             {% endif %}
             <div class="header--search--form--wrap">
               <form class="search--form" 
-            {% if request.resolver_match.app_name == 'articles' %}
+              {% if request.resolver_match.app_name == 'articles' %}
               action='{% url 'articles:search' %}' 
-            {% else %}
+              {% else %}
               action='{% url 'posts:search' %}' 
-            {% endif %}
-            role='search'>
+              {% endif %}
+              role='search'>
               <input class="search--input form-control form-control-sm" type="search" placeholder="search" name='q' aria-label="Search">
               <button type="submit"><i class="bi bi-search"></i></button>
             </form>
             </div>
           </div>
         </div>
-        {% comment %} search 2 {% endcomment %}
-        <div class="sm--hader">
-          <form class="search--form sm--search--form" 
-          {% if request.resolver_match.app_name == 'articles' %}
-              action='{% url 'articles:search' %}' 
-            {% else %}
-              action='{% url 'posts:search' %}' 
-            {% endif %}
-            role='search'>
-              <input class="search--input form-control form-control-sm" type="search" placeholder="search" name='q' aria-label="Search">
-              <button type="submit"><i class="bi bi-search"></i></button>
+        {% comment %} max-width 850px {% endcomment %}
+        <div class="sm--hader-container">
+          <div class="sm--header--search--wrap">
+            <form class="search--form sm--search--form" 
+              {% if request.resolver_match.app_name == 'articles' %}
+                action='{% url 'articles:search' %}' 
+              {% else %}
+                action='{% url 'posts:search' %}' 
+              {% endif %}
+              role='search'>
+                <input class="sm-search--input form-control form-control-sm" type="search" placeholder="search" name='q' aria-label="Search">
+                <button type="submit"><i class="bi bi-search"></i></button>
             </form>
+          </div>
           <nav class="sm--nav--wrap">
-            <ul class="sm--nav--grid">
+            <ul class="sm--nav--menu">
               <li>
                 <a href="{% url 'posts:index' %}" class="sm--nav__icon--wrap">
-                  <i class="bi bi-image"></i>
-                  <span>posts</span>
+                  <i class="bi bi-postcard-heart-fill"></i>
+                  <span>여행일지</span>
                 </a>
               </li>
               <li>
                 <a href="{% url 'articles:index' %}" class="sm--nav__icon--wrap">
-                  <i class="bi bi-person-lines-fill"></i>
-                  <span>community</span>
+                  <i class="bi bi-person-vcard"></i>
+                  <span>커뮤니티</span>
                 </a>
               </li>
               <li>
-                {% if user.is_authenticated %}
-                  <form action="{% url 'accounts:logout' %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" value="log out" class="sm--nav__icon--wrap">
-                      <i class="bi bi-box-arrow-in-right" style='text-align: left'></i>
-                      <span>log out</span>
-                    </button>
-                  </form>
-                {% else %}
-                <a href="{% url 'accounts:login' %}" class="sm--nav__icon--wrap">
-                  <i class="bi bi-person-square"></i>
-                  <span>log in</span>
-                {% endif %}
+                <a href="#10_tenten" class="sm--nav__icon--wrap">
+                  <i class="bi bi-people-fill"></i>
+                  <span>만든이들</span>
                 </a>
               </li>
               <li>
-                {% if user.is_authenticated %}
-                <a href="{% url 'accounts:profile' user.username %}"  class="sm--nav__icon--wrap">
-                  <i class="bi bi-person-square"></i>
-                  <span>profile</span>
-                {% else %}
-                <a href="{% url 'accounts:signup' %}"  class="sm--nav__icon--wrap">
-                  <i class="bi bi-box-arrow-in-right"></i>
-                  <span>sign up</span>
-                {% endif %}
-                </a>
+                <div>
+                  {% if user.is_authenticated %}
+                    <form action="{% url 'accounts:logout' %}" method="POST">
+                      {% csrf_token %}
+                      <button type="submit" value="log out" class="sm--nav__icon--wrap">
+                        <i class="bi bi-box-arrow-right" style='text-align: left'></i>
+                        <span class="sm--nav--logout">로그아웃</span>
+                      </button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'accounts:login' %}" class="sm--nav__icon--wrap">
+                      <i class="bi bi-box-arrow-in-right"></i>
+                      <span>로그인</span>
+                    </a>
+                  {% endif %}
+                </div>
+              </li>
+              <li>
+                <div>
+                  {% if user.is_authenticated %}
+                    <a href="{% url 'accounts:profile' user.username %}"  class="sm--nav__icon--wrap">
+                      <i class="bi-person-video"></i>
+                      <span>내 프로필</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'accounts:signup' %}"  class="sm--nav__icon--wrap">
+                      <i class="bi bi-person-fill-add"></i>
+                      <span>회원가입</span>
+                    </a>
+                  {% endif %}
+                </div>
               </li>
             </ul>
           </nav>
+          <div class="sm--header--user--hello">
+            <span class="nav--btn">{{user}}</span>님 안녕하세요!
+          </div>
         </div>
       </div>
     </header>
 
     <aside class="aside--container">
       <div class="aside--top--wrap z-5">
-        <a href="#"><i class="bi bi-airplane-fill"></i></button></a>
+        <a href="#"><i class="bi bi-airplane-fill"></i></a>
       </div>
     </aside>
 
@@ -137,7 +160,7 @@
     {% endblock content %}
     </main>
 
-    <footer class="item footer--container">
+    <footer id="10_tenten" class="item footer--container">
       <h2 class="footer--title">10조, TenTen</h2>
       <div class="footer--wrap">
         <div class="footer--section--wrap">
@@ -151,7 +174,7 @@
               </div>
               <ul class="footer--info--area">
                 <li>Backend</li>
-                <li><a class="link-underline-success" href="https://github.com/DT-HYUNJUN">
+                <li><a class="link-underline-success success--underline" href="https://github.com/DT-HYUNJUN">
                   https://github.com/DT-HYUNJUN</a></li>
               </ul>
             </div>
@@ -166,7 +189,7 @@
               </div>
               <ul class="footer--info--area">
                 <li>Frontend</li>
-                <li><a class="link-underline-success" href="https://github.com/menduck">
+                <li><a class="link-underline-success success--underline" href="https://github.com/menduck">
                   https://github.com/menduck</a></li>
               </ul>
             </div>
@@ -182,9 +205,9 @@
               <ul class="footer--info--area">
                 <li>Backend</li>
                 <li></li>
-                <li><a class="link-underline-success" href="https://github.com/Choi-jw-96">
+                <li><a class="link-underline-success success--underline" href="https://github.com/Choi-jw-96">
                   https://github.com/Choi-jw-96</a></li>
-                <li><a class="link-underline-warning" href="https://support-u-oneday.tistory.com/">
+                <li><a class="link-underline-warning warning--underline" href="https://support-u-oneday.tistory.com/">
                   https://support-u-oneday.tistory.com/</a></li>
               </ul>
               <br>
@@ -200,7 +223,7 @@
               </div>
               <ul class="footer--info--area">
                 <li>Frontend</li>
-                <li><a class="link-underline-success" href="https://github.com/qloeo">
+                <li><a class="link-underline-success success--underline" href="https://github.com/qloeo">
                   https://github.com/qloeo</a></li>
               </ul>
             </div>
