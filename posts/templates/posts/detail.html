@@ -84,7 +84,7 @@
             <a href="{% url 'accounts:profile' post.user %}">
             <div class="user-info d-flex">
                 {% if post.user.profile_image %}
-                <img src="{{ post.user.profile_image.url }}" alt="사용자프로필이미지" />
+                <img class="rounded-circle" src="{{ post.user.profile_image.url }}" alt="사용자프로필이미지" />
                 {% else %}
                 <img src="{% static 'img/user_profile.png' %}" alt="기본프로필이미지" />
                 {% endif %}
