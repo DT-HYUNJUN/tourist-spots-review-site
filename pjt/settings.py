@@ -178,7 +178,8 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'  # 로그인 후 리다이렉트 될 경로
-ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')  
+ACCOUNT_LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')
+ACCOUNT_LOGOUT_ON_GET = True 
 
 
 TAGGIT_CASE_INSENSITIVE = True
