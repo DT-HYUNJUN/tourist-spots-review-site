@@ -26,7 +26,7 @@ class CustomUserUserCreationForm(UserCreationForm):
         widget= forms.TextInput(
           attrs = {
             'class' : 'form-control',
-            'placeholder' : '성을 입력하세요.',
+            'placeholder' : '이름을 입력하세요.',
           } 
         )
     )
@@ -36,7 +36,7 @@ class CustomUserUserCreationForm(UserCreationForm):
         widget= forms.TextInput(
           attrs = {
             'class' : 'form-control',
-            'placeholder' : '이름을 입력하세요.',
+            'placeholder' : '성을 입력하세요.',
           }
         )
     )
