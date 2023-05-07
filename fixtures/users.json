@@ -1,0 +1,138 @@
+[
+{
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$t54hazYhdMrkL7aPC5KvnV$rH58HBhMQY+UdDDwEmLC8Ds0payRHzWj7lY1u4LmElg=",
+        "last_login": "2023-05-07T12:49:40.666Z",
+        "is_superuser": false,
+        "username": "Park",
+        "email": "park@email.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-07T12:47:26.041Z",
+        "profile_image": "profiles/Park/main_image_star-forming_region_carina_nircam_final-5mb.jpg",
+        "birthday": "1998-03-07",
+        "mbti": "INTJ",
+        "first_name": "현준",
+        "last_name": "박",
+        "groups": [],
+        "user_permissions": [],
+        "followers": [
+            2
+        ]
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$vHXy2R51EPsDfZLRdxoRCI$u3FoIH6DX2sbyQmwD4ou0hoqTy8pHoWR8lrevQg9j50=",
+        "last_login": "2023-05-07T13:00:17.790Z",
+        "is_superuser": false,
+        "username": "test",
+        "email": "adfs@adad.kr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-07T13:00:17.702Z",
+        "profile_image": "profiles/test/m_20200122230101_wxuhplzv.jpg",
+        "birthday": "1994-05-18",
+        "mbti": "istp",
+        "first_name": "dad",
+        "last_name": "adad",
+        "groups": [],
+        "user_permissions": [],
+        "followers": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$qa20la8S42QDWaTZ0hdZLf$L06BO20K3aASqyMhrow1jyReYPkmL8cmb3kyYkm4VEo=",
+        "last_login": "2023-05-07T13:50:27.562Z",
+        "is_superuser": false,
+        "username": "minsun",
+        "email": "dsfere@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-07T13:50:27.472Z",
+        "profile_image": "profiles/minsun/20221217_205841.jpg",
+        "birthday": "1996-08-30",
+        "mbti": "INFP",
+        "first_name": "김",
+        "last_name": "민선",
+        "groups": [],
+        "user_permissions": [],
+        "followers": [
+            2
+        ]
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$7N97zsupEJayIa51ruc5O1$txhFCKJDhG+TgnK13cRogT/Y0NItTUAv0QbJVRIVtSM=",
+        "last_login": "2023-05-07T14:21:42.432Z",
+        "is_superuser": false,
+        "username": "minsu",
+        "email": "dsfere@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-07T13:54:19.082Z",
+        "profile_image": "",
+        "birthday": "1988-08-15",
+        "mbti": "ENFP",
+        "first_name": "이",
+        "last_name": "민수",
+        "groups": [],
+        "user_permissions": [],
+        "followers": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$CDnDyKR9qWKrssiojbu2xY$rHqxpjc/JIJQ+SEPTjOyD8NOcKDCJBpItmxjtNrstr8=",
+        "last_login": "2023-05-07T14:08:16.139Z",
+        "is_superuser": false,
+        "username": "miyomi",
+        "email": "hi@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-07T14:08:16.058Z",
+        "profile_image": "profiles/miyomi/스크린샷_2023-04-05_오후_11.42.52.jpg",
+        "birthday": "2023-05-09",
+        "mbti": "INTP",
+        "first_name": "미영",
+        "last_name": "정",
+        "groups": [],
+        "user_permissions": [],
+        "followers": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$ZmlHbp3IT3L0RiPZRmoFYk$XuJkLv5oLI/5pZTO1tycR6nHOYJI2WMMZDnMqkl12U0=",
+        "last_login": "2023-05-07T14:08:27.232Z",
+        "is_superuser": false,
+        "username": "qwer1234",
+        "email": "mde123@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-05-07T14:08:27.157Z",
+        "profile_image": "",
+        "birthday": "2000-08-31",
+        "mbti": "ESTJ",
+        "first_name": "황",
+        "last_name": "춘식",
+        "groups": [],
+        "user_permissions": [],
+        "followers": []
+    }
+}
+]

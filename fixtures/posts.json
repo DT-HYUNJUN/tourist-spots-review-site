@@ -1,0 +1,342 @@
+[
+{
+    "model": "posts.post",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "title": "제주도에 스누피가 산다고?",
+        "content": "제주도에 있는 스누피 가든입니다.\r\n\r\n생각보다 넓고 재밌는 시간 보냈어요.\r\n\r\n추천드립니다.",
+        "created_at": "2023-05-07T12:51:05.611Z",
+        "updated_at": "2023-05-07T12:51:05.611Z",
+        "is_new": false,
+        "place": "제주특별자치도 제주시 구좌읍 송당리 2303-1",
+        "region": "제주특별자치도",
+        "place_id": "852041742",
+        "place_keyword": "스누피가든",
+        "start_date": "2022-07-09",
+        "end_date": "2022-07-13",
+        "rating": 5,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "title": "시원한 바다를 보고싶다면?",
+        "content": "제주도 용머리 해안입니다. (실제 용 아님)\r\n\r\n미끄러질수도 있으니 주의하세요",
+        "created_at": "2023-05-07T12:54:34.722Z",
+        "updated_at": "2023-05-07T12:54:34.722Z",
+        "is_new": false,
+        "place": "제주특별자치도 서귀포시 안덕면 사계리 112-3",
+        "region": "제주특별자치도",
+        "place_id": "1991858741",
+        "place_keyword": "용머리해안매표소",
+        "start_date": "2022-07-09",
+        "end_date": "2022-07-13",
+        "rating": 4,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "title": "별 보러 가자",
+        "content": "노을 맛집인 운여 해변은 은하수가 예쁘게 담기는 곳으로도 유명해요.\r\n\r\n오렌지빛 노을이 잠잠해진 후 조금만 기다리면 바다, 바다에 비친 소나무 그리고 하늘의 별이 환상적인 조화를 그려내는 풍경을 만날 수 있어요.",
+        "created_at": "2023-05-07T12:57:10.400Z",
+        "updated_at": "2023-05-07T12:57:10.400Z",
+        "is_new": false,
+        "place": "충남 태안군 고남면 장곡리",
+        "region": "충남",
+        "place_id": "22961655",
+        "place_keyword": "운여해변",
+        "start_date": "2023-03-14",
+        "end_date": "2023-03-14",
+        "rating": 4,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 4,
+    "fields": {
+        "user": 2,
+        "title": "하와이가 한국에?",
+        "content": "한국에 있는 경포해수욕장! 야자수가 있는 해수욕장이 있습니다.\r\n하지만, 여기밖에 볼게 없으니 그리 추천하지 않아 3점 드립니다!",
+        "created_at": "2023-05-07T13:02:13.452Z",
+        "updated_at": "2023-05-07T13:02:13.452Z",
+        "is_new": false,
+        "place": "강원 강릉시 강문동 산 1",
+        "region": "강원",
+        "place_id": "8199114",
+        "place_keyword": "경포해수욕장",
+        "start_date": "2023-05-07",
+        "end_date": "2023-05-07",
+        "rating": 4,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 5,
+    "fields": {
+        "user": 1,
+        "title": "여행과 운동을 같이할 수 있다?",
+        "content": "경치를 보면서 운동을 하는 게 가능하다구요?\r\n\r\n네, 가능합니다. 레일바이크 하세요!\r\n\r\n오히려 좋아!",
+        "created_at": "2023-05-07T13:03:02.627Z",
+        "updated_at": "2023-05-07T13:03:02.627Z",
+        "is_new": false,
+        "place": "경기 가평군 가평읍 읍내리 395-1",
+        "region": "경기",
+        "place_id": "27092396",
+        "place_keyword": "가평레일파크",
+        "start_date": "2014-08-16",
+        "end_date": "2014-08-16",
+        "rating": 5,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 6,
+    "fields": {
+        "user": 2,
+        "title": "누가 산을 걸어서 올라가나?",
+        "content": "나는 케이블카 타고 올라가지롱~",
+        "created_at": "2023-05-07T13:03:09.355Z",
+        "updated_at": "2023-05-07T13:03:22.243Z",
+        "is_new": false,
+        "place": "강원 양양군 서면 오색리",
+        "region": "강원",
+        "place_id": "21764909",
+        "place_keyword": "설악산",
+        "start_date": "2023-05-07",
+        "end_date": "2023-05-07",
+        "rating": 5,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 7,
+    "fields": {
+        "user": 2,
+        "title": "차가 없어도 난 달린다 해양고속도로",
+        "content": "덥지만, 이쁘다!\r\n터널에서 댄스파티가 재밌었당\r\n그래도 힘들어서 다신 안갈듯?",
+        "created_at": "2023-05-07T13:05:07.605Z",
+        "updated_at": "2023-05-07T13:05:07.605Z",
+        "is_new": false,
+        "place": "강원 삼척시 근덕면 용화리 225-4",
+        "region": "강원",
+        "place_id": "25079883",
+        "place_keyword": "삼척해양레일바이크전용주차장",
+        "start_date": "2023-05-07",
+        "end_date": "2023-05-07",
+        "rating": 4,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 8,
+    "fields": {
+        "user": 2,
+        "title": "내 미래보다 밝다 통일전망대!",
+        "content": "경치가 기가막혀~~~",
+        "created_at": "2023-05-07T13:06:32.604Z",
+        "updated_at": "2023-05-07T13:06:32.604Z",
+        "is_new": false,
+        "place": "강원 고성군 현내면 마차진리 188",
+        "region": "강원",
+        "place_id": "11272167",
+        "place_keyword": "통일전망대",
+        "start_date": "2023-05-07",
+        "end_date": "2023-05-07",
+        "rating": 5,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 9,
+    "fields": {
+        "user": 1,
+        "title": "경주 동궁과 월지, 숨겨진 보물 같은 여행지",
+        "content": "밤에 가면 물에 비치는 아름다운 모습을 볼 수 있어요!\r\n\r\n가셔서 사진 한방 찍으셔야쥬?",
+        "created_at": "2023-05-07T13:08:13.257Z",
+        "updated_at": "2023-05-07T13:08:13.257Z",
+        "is_new": false,
+        "place": "경북 경주시 인왕동 506-1",
+        "region": "경북",
+        "place_id": "8179010",
+        "place_keyword": "동궁과월지",
+        "start_date": "2021-02-06",
+        "end_date": "2021-02-06",
+        "rating": 4,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 10,
+    "fields": {
+        "user": 2,
+        "title": "롯데 캐슬엔 못 살아서 롯데 리조트에 왔습니다",
+        "content": "이 곳에서 살고 싶네요. 체크 아웃하지 말까요~~~~?ㅎㅎㅎㅎㅎ",
+        "created_at": "2023-05-07T13:08:33.031Z",
+        "updated_at": "2023-05-07T13:51:10.512Z",
+        "is_new": false,
+        "place": "강원 속초시 대포동 908-1",
+        "region": "강원",
+        "place_id": "27392264",
+        "place_keyword": "롯데리조트 속초",
+        "start_date": "2023-05-07",
+        "end_date": "2023-05-07",
+        "rating": 4,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 11,
+    "fields": {
+        "user": 3,
+        "title": "부산에 고래가 나타났어요!!",
+        "content": "광안리로 1박 2일 놀러갔다 왔습니다.\r\n저녁에 산책 겸 광안리 걷는데 드론쇼를 하는 거 있죠??\r\n저는 시간대를 검색을 안해서 처음부터 못 봤지만 다른 분들은 시간대 검색하셔서 꼭 처음부터 보세요!\r\n너무 재밌었습니다.",
+        "created_at": "2023-05-07T13:53:26.889Z",
+        "updated_at": "2023-05-07T13:53:26.889Z",
+        "is_new": false,
+        "place": "부산 수영구 광안동 192-20",
+        "region": "부산",
+        "place_id": "8202423",
+        "place_keyword": "광안리해수욕장",
+        "start_date": "2023-03-04",
+        "end_date": "2023-03-05",
+        "rating": 5,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 12,
+    "fields": {
+        "user": 4,
+        "title": "꽃맛집 직지사",
+        "content": "김천 직지사 가보셨나요??\r\n진짜 꽃이 너무 이뻐서 와이프 데려갔더니 칭찬 받았습니다.\r\n바로 옆에 사명대사공원도 너무 이쁘니깐 한번 둘러보세요\r\n다들 가족들과 놀러오시면 좋을 거 같아요!\r\n주차공간도 넓어서 좋습니다. 아니면 절 앞에도 주차 공간이 있으니깐, 다들 한번 놀러오세요.",
+        "created_at": "2023-05-07T13:58:17.892Z",
+        "updated_at": "2023-05-07T13:58:17.892Z",
+        "is_new": false,
+        "place": "경북 김천시 대항면 운수리 216",
+        "region": "경북",
+        "place_id": "8095894",
+        "place_keyword": "직지사",
+        "start_date": "2023-03-14",
+        "end_date": "2023-03-15",
+        "rating": 4,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 13,
+    "fields": {
+        "user": 4,
+        "title": "태어나서 처음으로 남산타워 다녀왔습니다.",
+        "content": "애들이랑 가족 단위로 남산 타워 다녀왔습니다.\r\n\r\n날이 너무 더워서.... 애들은 찡찡대고 큰일날 뻔 했습니다.\r\n여러분들은 꼭 케이블카 예약하시고 가세요. \r\n줄이 길어서 표 사는데도 힘들었습니다!!",
+        "created_at": "2023-05-07T14:05:58.055Z",
+        "updated_at": "2023-05-07T14:05:58.055Z",
+        "is_new": false,
+        "place": "서울 용산구 용산동2가 산 1-3",
+        "region": "서울",
+        "place_id": "1913983226",
+        "place_keyword": "남산서울타워",
+        "start_date": "2022-07-07",
+        "end_date": "2022-07-07",
+        "rating": 2,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 14,
+    "fields": {
+        "user": 2,
+        "title": "너희 지역엔 없지? 에버랜드!",
+        "content": "에버랜드에서 퍼레이드만 보고 집 가는 사람은 하수!\r\n진정한 고수는 불꽃놀이까지 본다!\r\nBut 에버랜드 필수 준비물은 여자친구 입니다 :>",
+        "created_at": "2023-05-07T14:06:16.274Z",
+        "updated_at": "2023-05-07T14:06:16.274Z",
+        "is_new": false,
+        "place": "경기 용인시 처인구 포곡읍 전대리 310",
+        "region": "경기",
+        "place_id": "784414359",
+        "place_keyword": "에버랜드",
+        "start_date": "2023-05-07",
+        "end_date": "2023-05-07",
+        "rating": 5,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 15,
+    "fields": {
+        "user": 5,
+        "title": "한라산 등산 다녀왔습니다!",
+        "content": "한라산(漢拏山, Hallasan)의 이름의 유래를 아시나요? 한라산은 운한(은하수, 높은 하늘)을 당긴다는 뜻으로 은하수를 붙잡을 정도로 높은 산이라는 뜻이라고 해요. 지리산, 금강산과 함께 대한민국 삼신산 중 하나로 불린다고 합니다.",
+        "created_at": "2023-05-07T14:15:59.836Z",
+        "updated_at": "2023-05-07T14:15:59.836Z",
+        "is_new": false,
+        "place": "제주특별자치도 서귀포시 서홍동 산 1-1",
+        "region": "제주특별자치도",
+        "place_id": "15174204",
+        "place_keyword": "한라산",
+        "start_date": "2023-05-01",
+        "end_date": "2023-05-03",
+        "rating": 5,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 16,
+    "fields": {
+        "user": 6,
+        "title": "뮤지엄 산!",
+        "content": "다들 원주에 계신 뮤지엄 산 다녀오셨나요???\r\n드라마 마임 촬영지로 유명한 곳입니다. 정말 건물도 크고 안에 전시물도 멋있더라고요\r\n명상을 신청하시면 사진과 같이 안에서 명상도 할 수 있습니다.",
+        "created_at": "2023-05-07T14:18:01.422Z",
+        "updated_at": "2023-05-07T14:18:01.422Z",
+        "is_new": false,
+        "place": "강원 원주시 지정면 월송리 999-13",
+        "region": "강원",
+        "place_id": "21674777",
+        "place_keyword": "뮤지엄산",
+        "start_date": "2023-04-14",
+        "end_date": "2023-04-16",
+        "rating": 5,
+        "like_users": []
+    }
+},
+{
+    "model": "posts.post",
+    "pk": 17,
+    "fields": {
+        "user": 5,
+        "title": "여수 꽃놀이 다녀왔어요!",
+        "content": "여수 밤바다 이 조명에 담긴 아름다운 얘기가 있어\r\n네게 들려주고파 전활 걸어 뭐하고 있냐고\r\n나는 지금 여수 밤바다 여수 밤바다\r\n아 아 아\r\n아 아 어 어\r\n너와 함께 걷고 싶다\r\n이 바다를 너와 함께 걷고 싶어\r\n이 거리를 너와 함께 걷고 싶다\r\n이 바다를 너와 함께 걷고 싶어\r\n여수 밤바다\r\n여수 밤바다 이 바람에 걸린 알 수 없는 향기가 있어\r\n네게 전해주고파 전활 걸어 뭐하고 있냐고\r\n나는 지금 여수 밤바다 여수 밤바다\r\n아 아 아\r\n아 아 어 어\r\n너와 함께 걷고 싶다\r\n이 바다를 너와 함께 걷고 싶어\r\n이 거리를 너와 함께 걷고 싶다\r\n이 바다를 너와 함께 너와 함께 오\r\n바다 이 조명에 담긴 아름다운 얘기가 있어\r\n네게 들려주고파 전활 걸어 뭐하고 있냐고\r\n나는 지금 여수 밤바다 여수 밤바다\r\n아 바다 아아아아\r\n하아아아 허어어어\r\n허 어어어 허 어\r\n뭐하고 있냐고 나는 지금 여수 밤바다",
+        "created_at": "2023-05-07T14:21:35.747Z",
+        "updated_at": "2023-05-07T14:21:35.747Z",
+        "is_new": false,
+        "place": "전남 여수시 돌산읍 우두리 794-89",
+        "region": "전남",
+        "place_id": "387675092",
+        "place_keyword": "여수해상케이블카",
+        "start_date": "2023-04-04",
+        "end_date": "2023-04-07",
+        "rating": 5,
+        "like_users": []
+    }
+}
+]

@@ -1,0 +1,127 @@
+[
+{
+    "model": "articles.article",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "title": "안녕하세요! 저도 여행 좋아하는데, 잘 부탁 드립니다!",
+        "content": "잘 부탁 드립니다! 행님덜!",
+        "created_at": "2023-05-07T13:04:55.783Z",
+        "updated_at": "2023-05-07T13:04:55.783Z",
+        "like_users": [
+            2,
+            5
+        ],
+        "bookmark_user": [
+            2
+        ],
+        "views": [
+            1,
+            2,
+            5,
+            6
+        ]
+    }
+},
+{
+    "model": "articles.article",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "title": "부산 맛집 추천 좀 부탁드립니다",
+        "content": "회랑 소주랑 바다가 있음 좋겠네요",
+        "created_at": "2023-05-07T13:13:27.649Z",
+        "updated_at": "2023-05-07T13:13:27.649Z",
+        "like_users": [],
+        "bookmark_user": [],
+        "views": [
+            1,
+            2
+        ]
+    }
+},
+{
+    "model": "articles.article",
+    "pk": 3,
+    "fields": {
+        "user": 6,
+        "title": "안녕하세요 처음 인사드립니다.",
+        "content": "안녕하세요.\r\n이런 글 처음 쓰니깐 쑥스럽네요. \r\n많은 정보 얻고 싶어서 들어왔습니다. 저도 글을 많이 남기겠습니다~",
+        "created_at": "2023-05-07T14:10:12.806Z",
+        "updated_at": "2023-05-07T14:10:12.806Z",
+        "like_users": [
+            5
+        ],
+        "bookmark_user": [],
+        "views": [
+            1,
+            5,
+            6
+        ]
+    }
+},
+{
+    "model": "articles.article",
+    "pk": 4,
+    "fields": {
+        "user": 2,
+        "title": "강원도에서 화폐가 감자라는 게 사실인가요?",
+        "content": "저희 집엔 감자 없는데, 사야하나요?",
+        "created_at": "2023-05-07T14:13:45.334Z",
+        "updated_at": "2023-05-07T14:13:45.334Z",
+        "like_users": [
+            5
+        ],
+        "bookmark_user": [],
+        "views": [
+            1,
+            2,
+            5,
+            6
+        ]
+    }
+},
+{
+    "model": "articles.article",
+    "pk": 5,
+    "fields": {
+        "user": 6,
+        "title": "[5/10] 부산 여행 같이 갈 분",
+        "content": "혼자 가려니 너무 심심해서 한번 글 올려봅니다.\r\n혹시 5/10일에 부산 여행 같이 갈 사람 계신가요??\r\n아직 일정은 안 짰고 인원 모이면 계획 할 예정입니다. 많은 댓글 부탁드려요",
+        "created_at": "2023-05-07T14:21:13.572Z",
+        "updated_at": "2023-05-07T14:21:13.572Z",
+        "like_users": [
+            5
+        ],
+        "bookmark_user": [
+            5
+        ],
+        "views": [
+            1,
+            2,
+            4,
+            5
+        ]
+    }
+},
+{
+    "model": "articles.article",
+    "pk": 6,
+    "fields": {
+        "user": 1,
+        "title": "예, 감자 화폐 맞습니다.",
+        "content": "뭐 어쩌실레요",
+        "created_at": "2023-05-07T14:26:22.463Z",
+        "updated_at": "2023-05-07T14:26:32.278Z",
+        "like_users": [
+            2
+        ],
+        "bookmark_user": [],
+        "views": [
+            1,
+            2,
+            5
+        ]
+    }
+}
+]
