@@ -1,0 +1,189 @@
+[
+{
+    "model": "articles.articlecomment",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "article": 1,
+        "content": "잘 부탁한다~ 아우야~",
+        "created_at": "2023-05-07T13:12:29.956Z",
+        "updated_at": "2023-05-07T13:12:29.956Z",
+        "like_users": [
+            5
+        ],
+        "dislike_user": []
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "article": 2,
+        "content": "아웃백 추천드려요!",
+        "created_at": "2023-05-07T13:14:16.816Z",
+        "updated_at": "2023-05-07T13:14:16.816Z",
+        "like_users": [],
+        "dislike_user": [
+            2
+        ]
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "article": 3,
+        "content": "환영해요!!!",
+        "created_at": "2023-05-07T14:13:10.324Z",
+        "updated_at": "2023-05-07T14:13:10.324Z",
+        "like_users": [
+            5
+        ],
+        "dislike_user": []
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 4,
+    "fields": {
+        "user": 6,
+        "article": 1,
+        "content": "ㅋㅋㅋㅋ정보 공유해요",
+        "created_at": "2023-05-07T14:18:49.373Z",
+        "updated_at": "2023-05-07T14:18:49.373Z",
+        "like_users": [
+            5
+        ],
+        "dislike_user": []
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 6,
+    "fields": {
+        "user": 4,
+        "article": 5,
+        "content": "오? 재밌을거 같네요. 같이 가고싶어요",
+        "created_at": "2023-05-07T14:22:37.389Z",
+        "updated_at": "2023-05-07T14:22:37.389Z",
+        "like_users": [
+            5
+        ],
+        "dislike_user": []
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 7,
+    "fields": {
+        "user": 5,
+        "article": 5,
+        "content": "부산 안갈래요~",
+        "created_at": "2023-05-07T14:22:45.974Z",
+        "updated_at": "2023-05-07T14:22:45.974Z",
+        "like_users": [],
+        "dislike_user": [
+            5
+        ]
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 8,
+    "fields": {
+        "user": 5,
+        "article": 4,
+        "content": "저는 거지네요 ㅠㅠ",
+        "created_at": "2023-05-07T14:23:32.058Z",
+        "updated_at": "2023-05-07T14:23:32.058Z",
+        "like_users": [],
+        "dislike_user": []
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 9,
+    "fields": {
+        "user": 5,
+        "article": 3,
+        "content": "굿굿 반가워요 ㅋㅋ",
+        "created_at": "2023-05-07T14:24:28.548Z",
+        "updated_at": "2023-05-07T14:24:28.548Z",
+        "like_users": [],
+        "dislike_user": []
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 10,
+    "fields": {
+        "user": 5,
+        "article": 1,
+        "content": "오냐~",
+        "created_at": "2023-05-07T14:25:59.536Z",
+        "updated_at": "2023-05-07T14:25:59.536Z",
+        "like_users": [],
+        "dislike_user": []
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 11,
+    "fields": {
+        "user": 2,
+        "article": 5,
+        "content": "요즘 이런데 신천지 많다는데.. hoxy?",
+        "created_at": "2023-05-07T14:26:54.634Z",
+        "updated_at": "2023-05-07T14:26:54.634Z",
+        "like_users": [],
+        "dislike_user": [
+            1,
+            5
+        ]
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 13,
+    "fields": {
+        "user": 5,
+        "article": 6,
+        "content": "앗!! 감자캐러 갑시다",
+        "created_at": "2023-05-07T14:27:52.266Z",
+        "updated_at": "2023-05-07T14:27:52.266Z",
+        "like_users": [],
+        "dislike_user": []
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 14,
+    "fields": {
+        "user": 1,
+        "article": 5,
+        "content": "오! 좋아요! 부산 맛집 아웃백 어때요?",
+        "created_at": "2023-05-07T14:27:52.474Z",
+        "updated_at": "2023-05-07T14:27:52.475Z",
+        "like_users": [
+            2,
+            5
+        ],
+        "dislike_user": []
+    }
+},
+{
+    "model": "articles.articlecomment",
+    "pk": 15,
+    "fields": {
+        "user": 2,
+        "article": 6,
+        "content": "ㄴㅇ0ㅇㄱ 이마트에서 감자 사가야지!",
+        "created_at": "2023-05-07T14:28:29.669Z",
+        "updated_at": "2023-05-07T14:28:29.669Z",
+        "like_users": [],
+        "dislike_user": []
+    }
+}
+]

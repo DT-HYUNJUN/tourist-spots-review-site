@@ -1,0 +1,266 @@
+[
+{
+    "model": "posts.postcomment",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "post": 4,
+        "content": "코코넛은 없나요?",
+        "created_at": "2023-05-07T13:08:34.764Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "post": 1,
+        "content": "스누피가 너무 귀엽네요! march like me~",
+        "created_at": "2023-05-07T13:08:58.577Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "post": 6,
+        "content": "지상파카는 없나요?",
+        "created_at": "2023-05-07T13:10:48.849Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 4,
+    "fields": {
+        "user": 2,
+        "post": 4,
+        "content": "없습니다ㅠㅠ 야자수 시드렀어요!",
+        "created_at": "2023-05-07T13:10:50.281Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 5,
+    "fields": {
+        "user": 1,
+        "post": 8,
+        "content": "그래도 저의 미래가 더 밝은 것 같아요!",
+        "created_at": "2023-05-07T13:11:23.877Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 6,
+    "fields": {
+        "user": 2,
+        "post": 6,
+        "content": "운영자님, 댓글에 삭제 부탁드립니다 :>",
+        "created_at": "2023-05-07T13:11:31.466Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 7,
+    "fields": {
+        "user": 1,
+        "post": 10,
+        "content": "조만간 감옥에서 뵐 듯 하네요.",
+        "created_at": "2023-05-07T13:11:34.255Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 8,
+    "fields": {
+        "user": 2,
+        "post": 9,
+        "content": "사진 누가 찍었나요? 좀 찍네요!",
+        "created_at": "2023-05-07T13:12:08.938Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 9,
+    "fields": {
+        "user": 2,
+        "post": 10,
+        "content": "오 따라 오시나여???",
+        "created_at": "2023-05-07T13:13:48.566Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 10,
+    "fields": {
+        "user": 2,
+        "post": 8,
+        "content": "사실 저도ㅎㅎㅎㅎㅎ",
+        "created_at": "2023-05-07T13:14:09.862Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 11,
+    "fields": {
+        "user": 2,
+        "post": 5,
+        "content": "오히려 안 좋아!",
+        "created_at": "2023-05-07T13:15:25.554Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 12,
+    "fields": {
+        "user": 2,
+        "post": 3,
+        "content": "제목이 박보검이 따로 없네요!",
+        "created_at": "2023-05-07T13:16:01.618Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 13,
+    "fields": {
+        "user": 1,
+        "post": 11,
+        "content": "저는 고래상어 좋아합니다.",
+        "created_at": "2023-05-07T14:00:00.632Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 14,
+    "fields": {
+        "user": 2,
+        "post": 11,
+        "content": "부산엔 고래가 많네요!",
+        "created_at": "2023-05-07T14:00:51.429Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 15,
+    "fields": {
+        "user": 2,
+        "post": 12,
+        "content": "저도 결혼하면 꼭 가봐야겠네요!",
+        "created_at": "2023-05-07T14:01:55.417Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 16,
+    "fields": {
+        "user": 1,
+        "post": 12,
+        "content": "인증 부탁드려요.",
+        "created_at": "2023-05-07T14:04:49.813Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 17,
+    "fields": {
+        "user": 2,
+        "post": 13,
+        "content": "처음 갔을 때 길 잃었던 기억이 새록새록하네요!",
+        "created_at": "2023-05-07T14:08:07.055Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 18,
+    "fields": {
+        "user": 1,
+        "post": 13,
+        "content": "오! 개척자 스타일이신가봐요!",
+        "created_at": "2023-05-07T14:08:29.043Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 20,
+    "fields": {
+        "user": 1,
+        "post": 14,
+        "content": "막줄에서 거릅니다",
+        "created_at": "2023-05-07T14:10:45.318Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 21,
+    "fields": {
+        "user": 2,
+        "post": 15,
+        "content": "한라산이 바다네요!",
+        "created_at": "2023-05-07T14:17:02.971Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 22,
+    "fields": {
+        "user": 1,
+        "post": 16,
+        "content": "오! 명상 신청해야겠어요!",
+        "created_at": "2023-05-07T14:20:01.959Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 23,
+    "fields": {
+        "user": 2,
+        "post": 16,
+        "content": "너무 이쁘네요!",
+        "created_at": "2023-05-07T14:20:27.072Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 24,
+    "fields": {
+        "user": 1,
+        "post": 17,
+        "content": "꽃 좋죠!",
+        "created_at": "2023-05-07T14:29:06.601Z",
+        "like_users": []
+    }
+},
+{
+    "model": "posts.postcomment",
+    "pk": 25,
+    "fields": {
+        "user": 2,
+        "post": 17,
+        "content": "장범준씨가 객원 가수로 오는군요!",
+        "created_at": "2023-05-07T14:29:39.659Z",
+        "like_users": []
+    }
+}
+]
