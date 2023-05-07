@@ -76,7 +76,7 @@
       {{ delete_images_form.as_p}}
     {% endif %}
     <div class="d-flex gap-3">
-      <button class="btn btn-secondary flex-grow-1">취소</button>
+      <a href="{% url 'posts:index' %}" class="btn btn-secondary flex-grow-1">취소</a>
       <button class="btn btn-success flex-grow-1">수정 완료</button>
     </div>
   </form>
